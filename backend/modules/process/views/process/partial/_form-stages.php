@@ -27,11 +27,11 @@ DynamicFormWidget::begin([
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
-            <th class="col-md-3">Статус</th>
-            <th class="text-center">Время</th>
-            <th class="text-center">Начальный статус</th>
-            <th class="col-md-6">Доступные действия</th>
-            <th class="text-center" style="width:90px;">
+            <th class="col-md-2">Статус</th>
+            <th class="col-md-1 text-center">Время</th>
+            <th class="col-md-1 text-center">Начальный статус</th>
+            <th class="col-md-7">Доступные действия</th>
+            <th class="col-md-1 text-center" style="width:90px;">
                 <button type="button" class="add-stage btn btn-success btn-xs" title="Добавить статус">
                     <span class="glyphicon glyphicon-plus"></span>
                 </button>
@@ -56,12 +56,12 @@ DynamicFormWidget::begin([
                 </td>
 
                 <td class="vcenter">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <?= $form->field($modelStage, $fieldName . 'time_limit')->label(false)
                             ->textInput(['maxlength' => true]); ?>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <?= $form->field($modelStage, $fieldName . 'time_unit')->label(false)
                             ->dropDownList(\common\components\helpers\TimeHelper::$unitList); ?>
                     </div>

@@ -1,11 +1,6 @@
 <?php
-use yii\helpers\Html;
-
-$this->beginContent('@common/views/layouts/base.php');
+$this->beginContent('@app/views/layouts/main.php');
 ?>
-
-<?= $this->render('_header'); ?>
-
 <?php $menuItems = $this->context->module->getMenuItems(); ?>
 
 <?php if (!empty($menuItems)) : ?>
@@ -16,7 +11,7 @@ $this->beginContent('@common/views/layouts/base.php');
                 'encodeLabels' => false,
                 'items'        => $menuItems,
                 'options'      => [
-                    'class' => 'nav nav-pills'
+                    'class' => 'nav nav-tabs'
                 ]
             ]); ?>
         </div>
@@ -25,6 +20,6 @@ $this->beginContent('@common/views/layouts/base.php');
     <div class="clearfix"></div>
 <?php endif; ?>
 
-<?= $this->render('_content', ['content' => $content]); ?>
+<?= $content; ?>
 
 <?php $this->endContent(); ?>

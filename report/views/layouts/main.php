@@ -1,5 +1,10 @@
 <?php
-$this->beginContent('@common/views/layouts/base.php');
-echo $this->render('_header');
-echo $this->render('_content', ['content' => $content]);
-$this->endContent();
+$items = [
+    [
+        'label'  => 'По времени обработки заказов',
+        'url'    => ['/time/index'],
+        'active' => (bool)strstr(Yii::$app->request->url, 'report/time/')
+    ],
+];
+
+echo $this->render('@common/views/layouts/main', ['menuItems' => $items, 'content' => $content]);

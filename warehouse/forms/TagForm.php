@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\common\forms;
+namespace warehouse\forms;
 
 use common\models\tag\Tag;
 

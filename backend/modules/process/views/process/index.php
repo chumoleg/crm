@@ -9,7 +9,7 @@ $this->title = 'Список процессов';
 
 echo $this->context->getCreateButton('Добавить новый процесс');
 
-Pjax::begin(['id' => 'productGrid']);
+Pjax::begin(['id' => 'process-grid']);
 echo GridView::widget([
     'dataProvider' => $dataProvider,
     'filterModel'  => $searchModel,

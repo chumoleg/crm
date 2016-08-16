@@ -1,10 +1,10 @@
 <?php
 
-namespace backend\modules\common\assets;
+namespace warehouse\assets;
 
 class ProductAsset extends \yii\web\AssetBundle
 {
-    public $sourcePath = '@app/modules/common/assets/source/js';
+    public $sourcePath = '@app/assets/source/js';
     public $js
         = [
             'form-append.js',
@@ -12,6 +12,6 @@ class ProductAsset extends \yii\web\AssetBundle
 
     public $depends
         = [
-            'backend\assets\AppAsset',
+            'warehouse\assets\AppAsset',
         ];
 }

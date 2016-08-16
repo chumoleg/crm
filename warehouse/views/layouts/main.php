@@ -1,25 +1,15 @@
 <?php
-use yii\helpers\Html;
+$items = [
+    [
+        'label'  => 'Tags',
+        'url'    => ['/tag/index'],
+        'active' => (bool)strstr(Yii::$app->request->url, 'warehouse/tag')
+    ],
+    [
+        'label'  => 'Products',
+        'url'    => ['/product/index'],
+        'active' => (bool)strstr(Yii::$app->request->url, 'warehouse/product')
+    ]
+];
 
-?>
-
-<?php $this->beginContent('@common/views/layouts/base.php'); ?>
-    <div class="row">
-        <div class="col-sm-12">
-            <?php if (!empty($this->title)) : ?>
-                <legend><?= Html::encode($this->title); ?></legend>
-            <?php endif; ?>
-
-            <?php
-            if (!empty($this->context->breadCrumbs)) {
-                echo \yii\widgets\Breadcrumbs::widget([
-                    'links' => $this->context->breadCrumbs,
-                ]);
-            }
-            ?>
-
-            <?= $content; ?>
-        </div>
-    </div>
-
-<?php $this->endContent(); ?>
+echo $this->render('@common/views/layouts/main', ['menuItems' => $items, 'content' => $content]);
