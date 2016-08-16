@@ -1,10 +1,10 @@
 <?php
 
-namespace backend\modules\management\modules\common\controllers;
+namespace backend\modules\common\controllers;
 
 use common\components\controllers\CrudController;
 use common\models\user\UserSearch;
-use backend\modules\management\modules\common\forms\UserForm;
+use backend\modules\common\forms\UserForm;
 
 class UserController extends CrudController
 {

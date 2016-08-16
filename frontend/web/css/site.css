@@ -113,7 +113,7 @@ a.desc:after {
 }
 
 .mainContainer {
-    padding: 20px 20px 70px;
+    padding: 70px 20px 70px;
     min-height: 100%;
     margin-bottom: -60px;
 }

@@ -3,7 +3,7 @@ use kartik\form\ActiveForm;
 
 $model = $this->context->model;
 
-$this->context->addBreadCrumb('Список источников', ['/management/common/source/index']);
+$this->context->addBreadCrumb('Список источников', ['/common/source/index']);
 $this->context->addBreadCrumb($this->title);
 ?>
 

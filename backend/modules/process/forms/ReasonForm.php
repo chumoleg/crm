@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\management\modules\process\forms;
+namespace backend\modules\process\forms;
 
 use common\models\reason\Reason;
 

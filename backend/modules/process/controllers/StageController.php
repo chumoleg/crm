@@ -1,10 +1,10 @@
 <?php
 
-namespace backend\modules\management\modules\process\controllers;
+namespace backend\modules\process\controllers;
 
 use common\components\controllers\CrudController;
 use common\models\stage\StageSearch;
-use backend\modules\management\modules\process\forms\StageForm;
+use backend\modules\process\forms\StageForm;
 
 class StageController extends CrudController
 {

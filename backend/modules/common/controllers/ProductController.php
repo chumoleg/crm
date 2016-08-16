@@ -1,13 +1,13 @@
 <?php
 
-namespace backend\modules\management\modules\common\controllers;
+namespace backend\modules\common\controllers;
 
 use Yii;
 use common\components\controllers\CrudController;
 use common\models\product\ProductSearch;
 use common\models\product\ProductPrice;
 use common\components\helpers\JsonHelper;
-use backend\modules\management\modules\common\forms\ProductForm;
+use backend\modules\common\forms\ProductForm;
 
 class ProductController extends CrudController
 {

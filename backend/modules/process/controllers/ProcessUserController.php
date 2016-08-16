@@ -1,9 +1,9 @@
 <?php
 
-namespace backend\modules\management\modules\process\controllers;
+namespace backend\modules\process\controllers;
 
 use Yii;
-use backend\modules\management\modules\process\forms\ProcessStageUserForm;
+use backend\modules\process\forms\ProcessStageUserForm;
 use common\components\controllers\BaseController;
 use common\models\process\Process;
 use yii\web\NotFoundHttpException;
@@ -19,7 +19,7 @@ class ProcessUserController extends BaseController
 
         if (!empty(Yii::$app->request->post())) {
             if ($model->saveForm()) {
-                return $this->redirect(['management/process/index']);
+                return $this->redirect(['/process/index']);
             }
         }
 

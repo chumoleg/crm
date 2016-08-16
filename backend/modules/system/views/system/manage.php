@@ -2,7 +2,7 @@
 
 $this->title = 'Настройка параметров системы ' . $this->context->model->name;
 
-$this->context->addBreadCrumb('Список систем', ['/management/system/system/index']);
+$this->context->addBreadCrumb('Список систем', ['/system/system/index']);
 $this->context->addBreadCrumb($this->title);
 ?>
 

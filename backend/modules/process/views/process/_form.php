@@ -3,10 +3,10 @@ use kartik\form\ActiveForm;
 
 $model = $this->context->model;
 
-$this->context->addBreadCrumb('Список процессов', ['/management/process/process/index']);
+$this->context->addBreadCrumb('Список процессов', ['/process/process/index']);
 $this->context->addBreadCrumb($this->title);
 
-\backend\modules\management\modules\process\assets\ProcessAsset::register($this);
+\backend\modules\process\assets\ProcessAsset::register($this);
 ?>
 
 <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>

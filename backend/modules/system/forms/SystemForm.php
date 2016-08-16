@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\management\modules\system\forms;
+namespace backend\modules\system\forms;
 
 use common\models\system\System;
 

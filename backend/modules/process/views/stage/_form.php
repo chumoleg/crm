@@ -3,7 +3,7 @@ use kartik\form\ActiveForm;
 
 $model = $this->context->model;
 
-$this->context->addBreadCrumb('Список статусов', ['/management/process/stage/index']);
+$this->context->addBreadCrumb('Список статусов', ['/process/stage/index']);
 $this->context->addBreadCrumb($this->title);
 ?>
 

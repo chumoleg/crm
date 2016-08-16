@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\management\modules\common\forms;
+namespace backend\modules\common\forms;
 
 use common\models\source\Source;
 use common\components\helpers\ArrayHelper;

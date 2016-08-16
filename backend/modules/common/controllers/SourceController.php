@@ -1,10 +1,10 @@
 <?php
 
-namespace backend\modules\management\modules\common\controllers;
+namespace backend\modules\common\controllers;
 
 use common\components\controllers\CrudController;
 use common\models\source\SourceSearch;
-use backend\modules\management\modules\common\forms\SourceForm;
+use backend\modules\common\forms\SourceForm;
 
 class SourceController extends CrudController
 {

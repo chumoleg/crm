@@ -1,10 +1,10 @@
 <?php
 
-namespace backend\modules\management\modules\process\controllers;
+namespace backend\modules\process\controllers;
 
 use common\components\controllers\CrudController;
 use common\models\action\ActionSearch;
-use backend\modules\management\modules\process\forms\ActionForm;
+use backend\modules\process\forms\ActionForm;
 
 class ActionController extends CrudController
 {

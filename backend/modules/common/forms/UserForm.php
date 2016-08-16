@@ -1,5 +1,5 @@
 <?php
-namespace backend\modules\management\modules\common\forms;
+namespace backend\modules\common\forms;
 
 use common\models\user\User;
 use common\components\Role;

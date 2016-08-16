@@ -1,10 +1,10 @@
 <?php
 
-namespace backend\modules\management\modules\process;
+namespace backend\modules\process;
 
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'backend\modules\management\modules\process\controllers';
+    public $controllerNamespace = 'backend\modules\process\controllers';
 
     public function getMenuItems()
     {
@@ -13,23 +13,23 @@ class Module extends \yii\base\Module
         return [
             [
                 'label'  => 'Действия',
-                'url'    => ['/management/process/action/index'],
-                'active' => (bool)strstr($url, 'management/process/action/')
+                'url'    => ['/process/action/index'],
+                'active' => (bool)strstr($url, 'process/action/')
             ],
             [
                 'label'  => 'Причины для действий',
-                'url'    => ['/management/process/reason/index'],
-                'active' => (bool)strstr($url, 'management/process/reason/')
+                'url'    => ['/process/reason/index'],
+                'active' => (bool)strstr($url, 'process/reason/')
             ],
             [
                 'label'  => 'Статусы заказов',
-                'url'    => ['/management/process/stage/index'],
-                'active' => (bool)strstr($url, 'management/process/stage/')
+                'url'    => ['/process/stage/index'],
+                'active' => (bool)strstr($url, 'process/stage/')
             ],
             [
                 'label'  => 'Процессы обработки заказов',
-                'url'    => ['/management/process/process/index'],
-                'active' => (bool)strstr($url, 'management/process/process')
+                'url'    => ['/process/process/index'],
+                'active' => (bool)strstr($url, 'process/process')
             ],
         ];
     }

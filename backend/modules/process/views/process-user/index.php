@@ -5,7 +5,7 @@ use common\models\user\User;
 
 $this->title = 'Процесс "' . $process->name . '". Назначение операторов';
 
-$this->context->addBreadCrumb('Список процессов', ['/management/process/process/index']);
+$this->context->addBreadCrumb('Список процессов', ['/process/process/index']);
 $this->context->addBreadCrumb($this->title);
 
 $operators = User::getListByRole(\common\components\Role::OPERATOR);
@@ -47,6 +47,6 @@ $operators = User::getListByRole(\common\components\Role::OPERATOR);
     </div>
 
     <div class="clearfix"></div>
-<?= \common\components\helpers\FormButton::getButtons(['management/process/index']); ?>
+<?= \common\components\helpers\FormButton::getButtons(['process/index/index']); ?>
 
 <?php ActiveForm::end(); ?>

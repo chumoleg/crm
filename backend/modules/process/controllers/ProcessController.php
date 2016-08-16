@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\management\modules\process\controllers;
+namespace backend\modules\process\controllers;
 
 use Yii;
 use common\models\process\Process;
@@ -10,7 +10,7 @@ use common\components\helpers\ArrayHelper;
 use common\models\process\ProcessStage;
 use common\models\process\ProcessStageAction;
 use yii\web\NotFoundHttpException;
-use backend\modules\management\modules\process\forms\ProcessForm;
+use backend\modules\process\forms\ProcessForm;
 
 class ProcessController extends CrudController
 {

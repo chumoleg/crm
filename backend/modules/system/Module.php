@@ -1,10 +1,10 @@
 <?php
 
-namespace backend\modules\management\modules\system;
+namespace backend\modules\system;
 
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'backend\modules\management\modules\system\controllers';
+    public $controllerNamespace = 'backend\modules\system\controllers';
 
     public function getMenuItems()
     {

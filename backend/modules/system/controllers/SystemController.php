@@ -1,13 +1,13 @@
 <?php
 
-namespace backend\modules\management\modules\system\controllers;
+namespace backend\modules\system\controllers;
 
 use Yii;
 use common\models\system\SystemUrl;
 use common\components\controllers\CrudController;
 use common\models\system\SystemSearch;
 use common\models\system\SystemStage;
-use backend\modules\management\modules\system\forms\SystemForm;
+use backend\modules\system\forms\SystemForm;
 
 class SystemController extends CrudController
 {

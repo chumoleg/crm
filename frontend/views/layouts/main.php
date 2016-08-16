@@ -19,7 +19,7 @@ $items = [
 if (Yii::$app->user->isGuest) {
     $items[] = ['label' => 'Login', 'url' => ['/site/login']];
 } else {
-    $items[] = ['label' => 'Login', 'url' => ['/site/logout']];
+    $items[] = ['label' => 'Logout', 'url' => ['/site/logout']];
 }
 
 echo Nav::widget([

@@ -1,10 +1,10 @@
 <?php
 
-namespace backend\modules\management\modules\common;
+namespace backend\modules\common;
 
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'backend\modules\management\modules\common\controllers';
+    public $controllerNamespace = 'backend\modules\common\controllers';
 
     public function getMenuItems()
     {
@@ -13,23 +13,23 @@ class Module extends \yii\base\Module
         return [
             [
                 'label'  => 'Пользователи',
-                'url'    => ['/management/common/user/index'],
-                'active' => (bool)strstr($url, 'management/common/user/')
+                'url'    => ['/common/user/index'],
+                'active' => (bool)strstr($url, 'common/user/')
             ],
             [
                 'label'  => 'Товары',
-                'url'    => ['/management/common/product/index'],
-                'active' => (bool)strstr($url, 'management/common/product/')
+                'url'    => ['/common/product/index'],
+                'active' => (bool)strstr($url, 'common/product/')
             ],
             [
                 'label'  => 'Источники',
-                'url'    => ['/management/common/source/index'],
-                'active' => (bool)strstr($url, 'management/common/source/')
+                'url'    => ['/common/source/index'],
+                'active' => (bool)strstr($url, 'common/source/')
             ],
             [
                 'label'  => 'Теги',
-                'url'    => ['/management/common/tag/index'],
-                'active' => (bool)strstr($url, 'management/common/tag/')
+                'url'    => ['/common/tag/index'],
+                'active' => (bool)strstr($url, 'common/tag/')
             ],
         ];
     }
