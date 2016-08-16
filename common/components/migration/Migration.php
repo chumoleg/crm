@@ -10,4 +10,5 @@ class Migration extends \yii\db\Migration
     const INT_FIELD_NOT_NULL = 'INT(10) UNSIGNED NOT NULL';
     const TIMESTAMP_FIELD = 'TIMESTAMP NULL';
     const TINYINT_FIELD = 'TINYINT(1) UNSIGNED NOT NULL';
+    const VARCHAR_FIELD = 'VARCHAR(300) NOT NULL';
 }

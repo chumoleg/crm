@@ -14,7 +14,7 @@ return [
     'controllerMap'       => [
         'migrate' => [
             'class'        => 'yii\console\controllers\MigrateController',
-            'templateFile' => '/templates/migration/templateView.php'
+            'templateFile' => '@console/templates/migration/templateView.php'
         ],
     ],
     'components' => [
