@@ -7,28 +7,68 @@ $params = array_merge(
 );
 
 return [
-    'id' => 'app-frontend',
-    'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'id'                  => 'app-frontend',
+    'basePath'            => dirname(__DIR__),
+    'bootstrap'           => ['log', 'frontend\components\UserParams'],
     'controllerNamespace' => 'frontend\controllers',
-    'components' => [
-        'request' => [
+    'layout'              => '@app/views/layouts/base',
+    'modules'             => [
+        'api'        => [
+            'basePath' => '@app/modules/api',
+            'class'    => 'frontend\modules\api\Module'
+        ],
+        'clientBase' => [
+            'basePath'  => '@app/modules/clientBase',
+            'class'     => 'frontend\modules\clientBase\Module',
+            'as access' => [
+                'class' => 'yii\filters\AccessControl',
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ]
+                ]
+            ],
+        ],
+        'report'     => [
+            'basePath'  => '@app/modules/report',
+            'class'     => 'frontend\modules\report\Module',
+            'as access' => [
+                'class' => 'yii\filters\AccessControl',
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['ADMIN'],
+                    ]
+                ]
+            ],
+        ],
+        'order'      => [
+            'basePath'  => '@app/modules/order',
+            'class'     => 'frontend\modules\order\Module',
+            'as access' => [
+                'class' => 'yii\filters\AccessControl',
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ]
+                ]
+            ],
+        ]
+    ],
+    'components'          => [
+        'request'      => [
             'csrfParam' => '_csrf-frontend',
         ],
-        'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
-        ],
-        'session' => [
-            // this is the name of the session cookie used for login on the frontend
+        'session'      => [
             'name' => 'advanced-frontend',
         ],
-        'log' => [
+        'log'          => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets' => [
+            'targets'    => [
                 [
-                    'class' => 'yii\log\FileTarget',
+                    'class'  => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
             ],
@@ -36,14 +76,15 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
-        'urlManager' => [
+        'urlManager'   => [
             'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
+            'showScriptName'  => false,
+            'rules'           => [
+                '<module:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<module>/<controller>/<action>',
+                '<controller:\w+>/<action:\w+>/<id:\d+>'              => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>'                       => '<controller>/<action>',
+            ]
         ],
-        */
     ],
-    'params' => $params,
+    'params'              => $params,
 ];

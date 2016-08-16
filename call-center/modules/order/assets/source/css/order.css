@@ -1,0 +1,35 @@
+.orderInnerBlock {
+    background-color: #ececec;
+    min-height: 265px;
+}
+
+.topBlock {
+    min-height: 325px;
+    max-height: 325px;
+    overflow-y: auto;
+}
+
+#orderProductsBlock {
+    max-height: 260px;
+    overflow-y: auto;
+}
+
+#orderCommentBlock {
+    min-height: 200px;
+    max-height: 200px;
+    background-color: white;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.commentTime {
+    font-style: italic;
+}
+
+.managementButtonsBlock {
+    min-height: 200px;
+}
+
+.changeStatusButton {
+    margin-bottom: 3px;
+}

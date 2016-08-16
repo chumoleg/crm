@@ -72,13 +72,8 @@ a.desc:after {
     content: "\e156";
 }
 
-.grid-view td {
+.grid-view th {
     white-space: nowrap;
-}
-
-.grid-view .filters input,
-.grid-view .filters select {
-    min-width: 50px;
 }
 
 .hint-block {
@@ -95,17 +90,101 @@ a.desc:after {
     margin: 0 0 15px 0;
 }
 
-/* align the logout "link" (button in form) of the navbar */
-.nav > li > form {
-    padding: 8px;
+#bigPreLoader {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999999;
 }
 
-@media(max-width:768px) {
-	.nav li > form {
-	    padding: 3px;
-	}
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+    padding: 0 5px;
 }
 
-.nav > li > form > button:hover {
-    text-decoration: none;
+.row {
+    margin: 0 -5px;
+}
+
+.clearfix {
+    margin-bottom: 10px;
+}
+
+.mainContainer {
+    padding: 20px 20px 70px;
+    min-height: 100%;
+    margin-bottom: -60px;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.preLoader {
+    position: relative;
+    text-align: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+}
+
+.well {
+    margin-bottom: 10px;
+}
+
+.divider.dropdown-header {
+    padding: 0;
+}
+
+.mainMenuButton, .mainMenuButton .btn {
+    width: 100%;
+    height: 42px;
+    padding-top: 5px;
+}
+
+a.mainMenuButton {
+    padding-top: 9px;
+}
+
+#modalHeaderTitle h3 {
+    margin-top: 10px;
+}
+
+.borderedBlock {
+    border: 2px solid lightgray;
+    border-radius: 5px;
+    padding: 9px;
+    background-color: whitesmoke;
+    overflow-x: hidden;
+}
+
+.modal-header {
+    padding-bottom: 5px;
+}
+
+.vcenter {
+    vertical-align: middle !important;
+}
+
+.full-width {
+    display: block;
+}
+
+.orderStageHistoryRow {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.tableLabel.label {
+    margin-bottom: 1px;
+    display: inline-block;
+    padding: 0.4em 0.6em 0.5em;
+}
+
+.stageHistoryBlock .orderStageHistoryRow {
+    white-space: pre-wrap;
 }
