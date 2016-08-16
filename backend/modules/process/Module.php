@@ -5,6 +5,7 @@ namespace backend\modules\process;
 class Module extends \yii\base\Module
 {
     public $controllerNamespace = 'backend\modules\process\controllers';
+    public $layout = '@app/views/layouts/manageTabs';
 
     public function getMenuItems()
     {

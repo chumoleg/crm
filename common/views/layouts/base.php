@@ -24,7 +24,11 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody(); ?>
 
-<?= $content; ?>
+<div class="mainContainer">
+    <div class="container-fluid">
+        <?= $content; ?>
+    </div>
+</div>
 
 <?php
 Modal::begin([

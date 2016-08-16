@@ -3,8 +3,9 @@
 require(__DIR__ . DIRECTORY_SEPARATOR . 'container.php');
 
 return [
-    'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
-    'components' => [
+    'vendorPath'   => dirname(dirname(__DIR__)) . '/vendor',
+    'defaultRoute' => 'site/index',
+    'components'   => [
         'consoleRunner' => [
             'class' => 'vova07\console\ConsoleRunner',
             'file'  => '@yiiBase/yii'
@@ -57,5 +58,14 @@ return [
                 ],
             ],
         ],
+        'request'       => [
+            'csrfParam' => '_csrf-param',
+        ],
+        'session'       => [
+            'name' => 'advanced-session-key',
+        ],
+        'errorHandler'  => [
+            'errorAction' => 'site/error',
+        ]
     ],
 ];

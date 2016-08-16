@@ -12,16 +12,5 @@ return [
     'bootstrap'           => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'layout'              => '@app/views/layouts/main',
-    'components'          => [
-        'request'      => [
-            'csrfParam' => '_csrf-frontend',
-        ],
-        'session'      => [
-            'name' => 'advanced-frontend',
-        ],
-        'errorHandler' => [
-            'errorAction' => 'site/error',
-        ],
-    ],
     'params'              => $params,
 ];

@@ -1,6 +1,5 @@
 <?php
 use common\models\client\Client;
-use common\components\Role;
 
 ?>
 
@@ -15,39 +14,15 @@ use common\components\Role;
                 'items' => [
                     [
                         'label' => 'Клиенты',
-                        'url'   => '/order/client/index'
+                        'url'   => ['/order/client/index']
                     ],
                     [
                         'label' => 'Заказы',
-                        'url'   => '/order/order/index',
-                    ],
-                    [
-                        'label'   => '',
-                        'options' => ['class' => 'divider'],
-                    ],
-                    [
-                        'label'   => 'Управление (общее)',
-                        'url'     => '/management/common/user/index',
-                        'visible' => Yii::$app->user->can(Role::ADMIN)
-                    ],
-                    [
-                        'label'   => 'Управление бизнес-процессами',
-                        'url'     => '/management/process/action/index',
-                        'visible' => Yii::$app->user->can(Role::ADMIN)
-                    ],
-                    [
-                        'label'   => 'Управление внешними системами',
-                        'url'     => '/management/system/system/index',
-                        'visible' => Yii::$app->user->can(Role::ADMIN)
-                    ],
-                    [
-                        'label'   => 'Отчеты',
-                        'url'     => '/report/index/index',
-                        'visible' => Yii::$app->user->can(Role::ADMIN)
+                        'url'   => ['/order/order/index'],
                     ],
                     [
                         'label' => 'Клиентские базы',
-                        'url'   => '/clientBase/index/index',
+                        'url'   => ['/clientBase/index/index'],
                     ]
                 ],
             ]);

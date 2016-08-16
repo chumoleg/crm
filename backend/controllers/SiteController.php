@@ -3,9 +3,6 @@ namespace backend\controllers;
 
 use yii\web\Controller;
 
-/**
- * Site controller
- */
 class SiteController extends Controller
 {
     /**
@@ -18,5 +15,10 @@ class SiteController extends Controller
                 'class' => 'yii\web\ErrorAction',
             ],
         ];
+    }
+
+    public function actionIndex()
+    {
+        return $this->render('index');
     }
 }

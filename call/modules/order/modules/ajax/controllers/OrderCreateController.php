@@ -2,8 +2,8 @@
 
 namespace call\modules\order\modules\ajax\controllers;
 
-use common\components\helpers\JsonHelper;
 use Yii;
+use common\components\helpers\JsonHelper;
 use common\forms\CreateOrderForm;
 use common\components\controllers\BaseController;
 use common\models\product\ProductPrice;

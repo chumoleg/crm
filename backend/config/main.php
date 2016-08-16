@@ -7,34 +7,23 @@ $params = array_merge(
 );
 
 return [
-    'id' => 'app-backend',
-    'basePath' => dirname(__DIR__),
+    'id'                  => 'app-backend',
+    'basePath'            => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
-    'bootstrap' => ['log'],
+    'bootstrap'           => ['log'],
+    'layout'              => '@app/views/layouts/main',
     'modules'             => [
-        'common'        => [
+        'common'  => [
             'basePath' => '@app/modules/common',
             'class'    => 'backend\modules\common\Module'
         ],
-        'process'        => [
+        'process' => [
             'basePath' => '@app/modules/process',
             'class'    => 'backend\modules\process\Module'
         ],
-        'system'        => [
+        'system'  => [
             'basePath' => '@app/modules/system',
             'class'    => 'backend\modules\system\Module'
-        ],
-    ],
-    'components' => [
-        'request' => [
-            'csrfParam' => '_csrf-backend',
-        ],
-        'session' => [
-            // this is the name of the session cookie used for login on the backend
-            'name' => 'advanced-backend',
-        ],
-        'errorHandler' => [
-            'errorAction' => 'site/error',
         ],
     ],
     'params' => $params,

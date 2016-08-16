@@ -5,7 +5,7 @@ use yii\bootstrap\Nav;
 $this->beginContent('@common/views/layouts/base.php');
 
 NavBar::begin([
-    'brandLabel' => 'My Company',
+    'brandLabel' => 'Index Page',
     'brandUrl'   => Yii::$app->homeUrl,
     'options'    => [
         'class' => 'navbar-inverse navbar-fixed-top',
@@ -28,12 +28,6 @@ echo Nav::widget([
 ]);
 NavBar::end();
 
-?>
+echo $content;
 
-<div class="mainContainer">
-    <div class="container-fluid">
-        <?= $content; ?>
-    </div>
-</div>
-
-<?php $this->endContent(); ?>
+$this->endContent();

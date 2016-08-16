@@ -11,15 +11,19 @@ use yii\helpers\Html;
     $modules = [
         [
             'label' => 'Call-центр',
-            'href'  => Url::to(['/call/order/order']),
+            'href'  => Url::to(['/call/']),
         ],
         [
             'label' => 'Склад',
-            'href'  => Url::to(['/warehouse/order/order']),
+            'href'  => Url::to(['/warehouse/']),
+        ],
+        [
+            'label' => 'Отчеты',
+            'href'  => Url::to(['/report/']),
         ],
         [
             'label' => 'Админка',
-            'href'  => Url::to(['/backend/order/order']),
+            'href'  => Url::to(['/backend/']),
         ]
     ];
     ?>

@@ -1,15 +1,10 @@
 <?php
 use yii\helpers\Html;
 
-$this->beginContent('@app/views/layouts/base.php');
+$this->beginContent('@common/views/layouts/base.php');
 ?>
 
-<?php
-if (!Yii::$app->user->isGuest) {
-    echo $this->render('_header');
-}
-?>
-
+<?= $this->render('_header'); ?>
     <div class="clearfix"></div>
 
 <?php

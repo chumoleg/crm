@@ -4,7 +4,10 @@ use common\components\Role;
 
 ?>
 
-<?php $this->beginContent('@app/views/layouts/base.php'); ?>
+<?php $this->beginContent('@common/views/layouts/base.php'); ?>
+
+<?= $this->render('_header'); ?>
+    <div class="clearfix"></div>
 
     <div class="row">
         <div class="col-sm-12">
