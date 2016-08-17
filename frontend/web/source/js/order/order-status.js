@@ -8,7 +8,7 @@ $(document).ready(function () {
         };
 
         preLoaderShow();
-        $.post('/order/ajax/order-status/action', params, function (result) {
+        $.post('/call/order/ajax/order-status/action', params, function (result) {
             if (!checkJsonAnswer(result)) {
                 preLoaderHide();
                 return;
@@ -45,7 +45,7 @@ $(document).ready(function () {
         };
 
         preLoaderShow();
-        $.post('/order/ajax/order-status/change', params, function (result) {
+        $.post('/call/order/ajax/order-status/change', params, function (result) {
             if (!checkJsonAnswer(result)) {
                 preLoaderHide();
                 return;

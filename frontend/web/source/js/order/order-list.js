@@ -5,7 +5,7 @@ $(document).ready(function () {
             operator: $(this).val()
         };
 
-        $.post('/order/ajax/order/set-current-operator', params, function (result) {
+        $.post('/call/order/ajax/order/set-current-operator', params, function (result) {
             checkJsonAnswer(result);
         }, 'json');
     });

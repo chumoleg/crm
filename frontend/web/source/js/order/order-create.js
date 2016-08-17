@@ -7,7 +7,7 @@ $(document).ready(function () {
             counter: parseInt($('.rowCounter:last').val()) + 1
         };
 
-        $.post('/order/ajax/order-create/add-product', params, function (result) {
+        $.post('/call/order/ajax/order-create/add-product', params, function (result) {
             if (!checkJsonAnswer(result)) {
                 return;
             }
