@@ -46,19 +46,19 @@ echo GridView::widget([
             'value'     => 'process.name'
         ],
         [
-            'attribute' => 'currentStage',
+            'attribute' => 'current_stage_id',
             'filter'    => \common\models\stage\Stage::getList(),
-            'value'     => 'currentOrderStage.stage.name'
+            'value'     => 'currentStage.name'
         ],
         [
             'attribute' => 'date_create',
             'format'    => 'datetime',
             'filter'    => DatePicker::getInput($searchModel)
         ],
-        [
-            'class'    => 'common\components\grid\ActionColumn',
-            'template' => '{view}',
-        ],
+//        [
+//            'class'    => 'common\components\grid\ActionColumn',
+//            'template' => '{view}',
+//        ],
     ],
 ]);
 Pjax::end();

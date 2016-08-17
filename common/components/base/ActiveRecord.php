@@ -7,14 +7,13 @@ use yii\data\ActiveDataProvider;
 use common\components\Status;
 use common\components\helpers\ArrayHelper;
 use common\models\user\User;
-use yii\db\Expression;
 
 class ActiveRecord extends \yii\db\ActiveRecord
 {
     /**
      * @param int $id
      *
-     * @return array|\yii\db\ActiveRecord
+     * @return static|null
      */
     public static function findById($id)
     {
@@ -22,7 +21,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
             return null;
         }
 
-        return self::find()->andWhere(['id' => $id])->one();
+        return self::find()->andWhere(['id' => (int)$id])->one();
     }
 
     public function beforeSave($insert)

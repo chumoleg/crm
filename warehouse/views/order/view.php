@@ -6,11 +6,11 @@
 use common\models\order\Order;
 use yii\helpers\Html;
 
-\call\modules\order\assets\OrderAsset::register($this);
+\common\assets\order\OrderAsset::register($this);
 
 $this->title = 'Заказ #' . $this->context->model->id;
 
-$this->context->addBreadCrumb('Список заказов', ['/order/order/index']);
+$this->context->addBreadCrumb('Список заказов', ['/order/index']);
 $this->context->addBreadCrumb($this->title);
 ?>
 

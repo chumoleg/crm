@@ -9,23 +9,14 @@ use yii\web\AssetBundle;
  */
 class AppAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public $sourcePath = '@app/web/source';
     public $css
         = [
             'css/site.css',
         ];
 
-    public $js
-        = [
-            'js/main.js',
-            'js/modal-form.js',
-            'js/pjax-action.js',
-        ];
-
     public $depends
         = [
-            'yii\web\YiiAsset',
-            'yii\bootstrap\BootstrapAsset',
+            'common\assets\AppAsset',
         ];
 }

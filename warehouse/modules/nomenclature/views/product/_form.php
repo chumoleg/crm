@@ -5,10 +5,10 @@ use yii\helpers\Url;
 
 $model = $this->context->model;
 
-$this->context->addBreadCrumb('Список товаров', ['/common/product/index']);
+$this->context->addBreadCrumb('Список товаров', ['/nomenclature/product/index']);
 $this->context->addBreadCrumb($this->title);
 
-\warehouse\modules\nomenclature\assets\ProductAsset::register($this);
+\common\assets\FormAppendAsset::register($this);
 ?>
 
 <?php $form = ActiveForm::begin(['id' => 'productForm']); ?>
@@ -51,7 +51,7 @@ $this->context->addBreadCrumb($this->title);
 
             <div class="clearfix"></div>
             <?= Html::button('Добавить цену', [
-                'data-url'   => Url::toRoute(['/product/add-price']),
+                'data-url'   => Url::toRoute(['/nomenclature/product/add-price']),
                 'data-title' => 'Добавление цены',
                 'class'      => 'showModalButton btn btn-default'
             ]); ?>

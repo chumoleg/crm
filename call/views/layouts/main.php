@@ -4,6 +4,8 @@ use yii\helpers\Html;
 $this->beginContent('@common/views/layouts/base.php');
 ?>
 
+<?php \call\assets\AppAsset::register($this); ?>
+
 <?= $this->render('_header'); ?>
     <div class="clearfix"></div>
 

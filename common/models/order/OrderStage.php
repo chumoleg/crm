@@ -52,11 +52,15 @@ class OrderStage extends ActiveRecord
     {
         $model = new self();
         $model->order_id = $order->id;
-        $model->stage_id = $processStage->stage->id;
+        $model->stage_id = $processStage->stage_id;
         $model->time_limit = TimeHelper::getInSecond($processStage->time_limit, $processStage->time_unit);
         $model->status = Status::STATUS_ACTIVE;
+        if ($model->save()) {
+            $order->updateCurrentStage($model->stage_id);
+            return true;
+        }
 
-        return $model->save();
+        return false;
     }
 
     /**
@@ -145,17 +149,6 @@ class OrderStage extends ActiveRecord
         $this->user_id = Yii::$app->user->id;
 
         return $this->setStatus(Status::STATUS_ARCHIVE);
-    }
-
-    /**
-     * @return ProcessStage|array|null
-     */
-    public function getProcessStage()
-    {
-        return ProcessStage::find()
-            ->andWhere(['process_id' => $this->order->process_id])
-            ->andWhere(['stage_id' => $this->stage_id])
-            ->one();
     }
 
     public function setTimeSpent()

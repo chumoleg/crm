@@ -15,7 +15,7 @@ abstract class CrudController extends BaseController
         $model = $this->_getSearchClassName();
 
         $searchModel = new $model();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $this->_getDefaultOrderSearch());
 
         return $this->render('index', [
             'searchModel'  => $searchModel,
@@ -107,5 +107,10 @@ abstract class CrudController extends BaseController
     protected function _getPostParams()
     {
         return Yii::$app->request->post();
+    }
+
+    protected function _getDefaultOrderSearch()
+    {
+        return [];
     }
 }

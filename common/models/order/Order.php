@@ -2,7 +2,7 @@
 
 namespace common\models\order;
 
-use common\components\helpers\ArrayHelper;
+use common\models\process\ProcessStage;
 use Yii;
 use common\components\Status;
 use common\components\base\ActiveRecord;
@@ -16,17 +16,19 @@ use common\models\client\ClientPhone;
 use common\components\models\OrderSetOperator;
 use common\models\product\ProductTag;
 use common\models\tag\Tag;
+use common\models\stage\Stage;
 
 /**
  * This is the model class for table "order".
  *
  * @property integer            $id
  * @property integer            $source_id
+ * @property integer            $process_id
+ * @property integer            $current_stage_id
  * @property integer            $client_id
  * @property integer            $client_phone_id
  * @property integer            $client_personal_data_id
  * @property integer            $address_id
- * @property integer            $process_id
  * @property integer            $type_payment
  * @property integer            $type_delivery
  * @property string             $price
@@ -51,6 +53,7 @@ use common\models\tag\Tag;
  * @property OrderProduct[]     $orderProducts
  * @property OrderStage[]       $orderStages
  * @property OrderStage         $currentOrderStage
+ * @property Stage              $currentStage
  */
 class Order extends ActiveRecord
 {
@@ -97,6 +100,7 @@ class Order extends ActiveRecord
                     'source_id',
                     'address_id',
                     'process_id',
+                    'current_stage_id',
                     'type_payment',
                     'type_delivery',
                     'currency',
@@ -123,6 +127,7 @@ class Order extends ActiveRecord
             'client_personal_data_id' => 'ФИО',
             'address_id'              => 'Адрес',
             'process_id'              => 'Процесс',
+            'current_stage_id'        => 'Текущий статус',
             'type_payment'            => 'Тип оплаты',
             'type_delivery'           => 'Тип доставки',
             'price'                   => 'Общая стоимость',
@@ -241,6 +246,19 @@ class Order extends ActiveRecord
             ->andOnCondition(['order_stage.status' => Status::STATUS_ACTIVE]);
     }
 
+    public function getCurrentStage()
+    {
+        return $this->hasOne(Stage::className(), ['id' => 'current_stage_id']);
+    }
+
+    public function updateCurrentStage($stageId)
+    {
+        $this->current_stage_id = $stageId;
+        if (!$this->getIsNewRecord()) {
+            self::updateAll(['current_stage_id' => $stageId], 'id = ' . $this->id);
+        }
+    }
+
     /**
      * @return bool
      */
@@ -278,9 +296,10 @@ class Order extends ActiveRecord
 
     public function checkAccessManageOrder()
     {
-        $currentStage = $this->currentOrderStage;
-        $checker = (Yii::$app->user->can(\common\components\Role::ADMIN) || Yii::$app->user->id == $this->current_user_id)
-            && (empty($currentStage) || $currentStage->time_limit != 0);
+        $currentOrderStage = $this->currentOrderStage;
+        $checker = (Yii::$app->user->can(\common\components\Role::ADMIN)
+                || Yii::$app->user->id == $this->current_user_id)
+            && (empty($currentOrderStage) || $currentOrderStage->time_limit != 0);
 
         return $checker;
     }
@@ -311,5 +330,16 @@ class Order extends ActiveRecord
         $innerQuery = ProductTag::find()->select(['tag_id'])->andWhere(['IN', 'product_id', $orderProductQuery]);
 
         return Tag::find()->andWhere(['IN', 'id', $innerQuery])->all();
+    }
+
+    /**
+     * @return ProcessStage|array|null
+     */
+    public function getProcessStage()
+    {
+        return ProcessStage::find()
+            ->andWhere(['process_id' => $this->process_id])
+            ->andWhere(['stage_id' => $this->current_stage_id])
+            ->one();
     }
 }

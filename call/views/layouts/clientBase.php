@@ -1,10 +1,11 @@
 <?php
 use yii\helpers\Html;
 use common\components\Role;
-
 ?>
 
 <?php $this->beginContent('@common/views/layouts/base.php'); ?>
+
+<?php \call\assets\AppAsset::register($this); ?>
 
 <?= $this->render('_header'); ?>
     <div class="clearfix"></div>

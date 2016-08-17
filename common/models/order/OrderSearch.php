@@ -12,7 +12,6 @@ class OrderSearch extends Order
     public $tag_id;
     public $fio;
     public $phone;
-    public $currentStage;
 
     /**
      * @inheritdoc
@@ -24,8 +23,8 @@ class OrderSearch extends Order
                 [
                     'id',
                     'process_id',
+                    'current_stage_id',
                     'source_id',
-                    'currentStage',
                     'current_user_id',
                     'date_create',
                     'fio',
@@ -43,27 +42,28 @@ class OrderSearch extends Order
     public function attributeLabels()
     {
         return ArrayHelper::merge([
-            'fio'          => 'ФИО клиента',
-            'phone'        => 'Телефон',
-            'currentStage' => 'Текущий статус',
-            'tag_id'       => 'Теги',
+            'fio'    => 'ФИО клиента',
+            'phone'  => 'Телефон',
+            'tag_id' => 'Теги',
         ], parent::attributeLabels());
     }
 
     /**
      * @param array $params
+     * @param array $defaultOrder
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $defaultOrder = [])
     {
         $query = parent::find()
             ->joinWith('process')
+            ->joinWith('currentStage')
             ->joinWith('source')
             ->joinWith('clientPhone')
             ->joinWith('clientPersonalData');
 
-        $dataProvider = $this->getDataProvider($query);
+        $dataProvider = $this->getDataProvider($query, $defaultOrder);
         $this->load($params);
         if (!$this->validate()) {
             return $dataProvider;
@@ -74,21 +74,13 @@ class OrderSearch extends Order
         }
 
         $query->andFilterWhere([
-            'order.id'              => $this->id,
-            'order.date_create'     => $this->date_create,
-            'order.process_id'      => $this->process_id,
-            'order.source_id'       => $this->source_id,
-            'order.current_user_id' => $this->current_user_id
+            'order.id'               => $this->id,
+            'order.date_create'      => $this->date_create,
+            'order.process_id'       => $this->process_id,
+            'order.current_stage_id' => $this->current_stage_id,
+            'order.source_id'        => $this->source_id,
+            'order.current_user_id'  => $this->current_user_id,
         ]);
-
-        if (!empty($this->currentStage)) {
-            $innerQuery = OrderStage::find()
-                ->select(['order_id'])
-                ->andWhere(['stage_id' => $this->currentStage])
-                ->andWhere(['status' => Status::STATUS_ACTIVE]);
-
-            $query->andWhere(['IN', 'order.id', $innerQuery]);
-        }
 
         if (!empty($this->tag_id)) {
             $tagId = $this->tag_id;

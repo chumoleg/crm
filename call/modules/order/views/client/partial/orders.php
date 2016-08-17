@@ -23,10 +23,9 @@ $model = $this->context->model;
 
             <?php $sumPrices = 0; ?>
             <?php foreach ($model->orders as $order) : ?>
-                <?php $currentStage = $order->currentOrderStage; ?>
                 <tr data-id="<?= $order->id; ?>">
                     <td><?= $order->id; ?></td>
-                    <td><?= ArrayHelper::getValue($currentStage, 'stage.name'); ?></td>
+                    <td><?= ArrayHelper::getValue($order->currentStage, 'name'); ?></td>
                     <td><?= Yii::$app->formatter->asDecimal($order->price, 2); ?></td>
                     <td><?= Yii::$app->formatter->asDatetime($order->date_create); ?></td>
                     <td>

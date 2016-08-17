@@ -12,6 +12,6 @@ class ProcessAsset extends \yii\web\AssetBundle
 
     public $depends
         = [
-            'backend\assets\AppAsset',
+            'common\assets\AppAsset',
         ];
 }

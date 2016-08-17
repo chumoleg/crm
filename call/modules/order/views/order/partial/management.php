@@ -8,9 +8,8 @@ if (!$model->checkAccessManageOrder()) {
     return;
 }
 
-$currentOrderStage = $model->currentOrderStage;
-
-$accessToCall = ArrayHelper::getValue($currentOrderStage, 'stage.call');
+$currentStage = $model->currentStage;
+$accessToCall = ArrayHelper::getValue($currentStage, 'call');
 ?>
 
 <div class="borderedBlock orderInnerBlock">
@@ -22,10 +21,10 @@ $accessToCall = ArrayHelper::getValue($currentOrderStage, 'stage.call');
     <?php endif; ?>
 
     <?php
-    if (!empty($currentOrderStage)) {
-        $processStages = $currentOrderStage->getProcessStage();
-        if (!empty($processStages)) {
-            foreach ($processStages->actions as $stageAction) {
+    if (!empty($currentStage)) {
+        $processStage = $model->getProcessStage();
+        if (!empty($processStage)) {
+            foreach ($processStage->actions as $stageAction) {
                 echo Html::button($stageAction->action->name, [
                     'class'       => 'btn btn-block btn-default stageActionButton',
                     'data-action' => $stageAction->action_id,

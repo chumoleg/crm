@@ -34,7 +34,7 @@ class OrderStatusController extends OrderManageController
 
     public function actionAction()
     {
-        list($currentOrderStage, $processStageAction) = $this->_getCurrentData();
+        $processStageAction = $this->_getProcessStageAction();
         $actionReasons = $processStageAction->processStageActionReasons;
 
         if ($this->_actionModel->hold == Status::STATUS_ACTIVE) {
@@ -59,27 +59,25 @@ class OrderStatusController extends OrderManageController
             ]);
         }
 
-        return $this->_changeStatus($currentOrderStage, $processStageAction);
+        return $this->_changeStatus($processStageAction);
     }
 
     public function actionChange()
     {
-        list($currentOrderStage, $processStageAction) = $this->_getCurrentData();
-        return $this->_changeStatus($currentOrderStage, $processStageAction);
+        $processStageAction = $this->_getProcessStageAction();
+        return $this->_changeStatus($processStageAction);
     }
 
     /**
-     * @param OrderStage         $currentOrderStage
      * @param ProcessStageAction $processStageAction
      *
      * @return array
      */
-    private function _changeStatus($currentOrderStage, $processStageAction)
+    private function _changeStatus($processStageAction)
     {
-        $reasonModel = Reason::findById((int)Yii::$app->request->post('reason'));
-
         $this->model->client->setIsNotNew();
 
+        $reasonModel = Reason::findById(Yii::$app->request->post('reason'));
         $actionComment = 'Действие: ' . $this->_actionModel->name;
         if (!empty($reasonModel)) {
             $actionComment .= '. Причина: ' . $reasonModel->name;
@@ -95,6 +93,7 @@ class OrderStatusController extends OrderManageController
 
         $this->model->save();
 
+        $currentOrderStage = $this->model->currentOrderStage;
         if (!empty($reasonModel)) {
             $currentOrderStage->reason_id = $reasonModel->id;
         }
@@ -108,6 +107,7 @@ class OrderStatusController extends OrderManageController
                 $currentOrderStage->setDisabled();
 
                 OrderStage::addStageRow($this->model, $processStage);
+
                 $commentList = $this->_addOrderComment('Статус изменен на: ' . $followToStage->name);
 
                 $this->model->setOrderOperator();
@@ -122,22 +122,23 @@ class OrderStatusController extends OrderManageController
     }
 
     /**
-     * @return array
+     * @return ProcessStageAction|null
      */
-    private function _getCurrentData()
+    private function _getProcessStageAction()
     {
-        $currentOrderStage = $this->model->currentOrderStage;
-        if (empty($currentOrderStage)) {
+        $currentStage = $this->model->currentStage;
+        if (empty($currentStage)) {
             JsonHelper::answerError('Процесс обработки настроен некорректно!');
         }
 
         $processStageAction = ProcessStageAction::findByProcessStageAndAction(
-            $currentOrderStage->getProcessStage(), $this->_actionModel);
+            $this->model->getProcessStage(), $this->_actionModel);
+
         if (empty($processStageAction)) {
             JsonHelper::answerSuccess(['reload' => true]);
         }
 
-        return [$currentOrderStage, $processStageAction];
+        return $processStageAction;
     }
 
     private function _returnAnswer($commentList = null, $modalHtml = null, $reload = true)

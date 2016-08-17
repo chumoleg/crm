@@ -29,12 +29,12 @@ class OrderSetOperator
             return false;
         }
 
-        $currentStage = $this->_model->currentOrderStage;
+        $currentStage = $this->_model->currentStage;
         if (empty($currentStage)) {
             return false;
         }
 
-        $this->_processStage = ProcessStage::findByProcessAndStage($this->_model->process, $currentStage->stage);
+        $this->_processStage = ProcessStage::findByProcessAndStage($this->_model->process, $currentStage);
         if (empty($this->_processStage)) {
             return false;
         }

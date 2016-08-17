@@ -3,7 +3,7 @@ use kartik\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-\call\modules\order\assets\OrderCreateAsset::register($this);
+\common\assets\order\OrderCreateAsset::register($this);
 
 $this->title = 'Создание нового заказа';
 

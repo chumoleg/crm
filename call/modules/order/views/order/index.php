@@ -19,7 +19,7 @@ if ($checkOrders) {
 
 echo Html::tag('div', '&nbsp;');
 
-\call\modules\order\assets\OrderListAsset::register($this);
+\common\assets\order\OrderListAsset::register($this);
 
 $operatorList = \common\models\user\User::getListByRole(Role::OPERATOR);
 
@@ -65,9 +65,9 @@ echo GridView::widget([
             'value'     => 'process.name'
         ],
         [
-            'attribute' => 'currentStage',
+            'attribute' => 'current_stage_id',
             'filter'    => \common\models\stage\Stage::getList(),
-            'value'     => 'currentOrderStage.stage.name'
+            'value'     => 'currentStage.name'
         ],
         [
             'attribute' => 'date_create',

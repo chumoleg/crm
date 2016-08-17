@@ -3,10 +3,9 @@
 /* @var $content string */
 
 use yii\helpers\Html;
-use frontend\assets\AppAsset;
 use yii\bootstrap\Modal;
 
-AppAsset::register($this);
+\common\assets\AppAsset::register($this);
 ?>
 
 <?php $this->beginPage(); ?>
@@ -48,7 +47,7 @@ Modal::end();
 </footer>
 
 <div id="bigPreLoader" class="text-center">
-    <img src="/images/bigPreLoader.gif" alt="Пожалуйста, подождите..."/>
+    <img src="/source/images/bigPreLoader.gif" alt="Пожалуйста, подождите..."/>
 </div>
 
 <?php $this->endBody(); ?>
