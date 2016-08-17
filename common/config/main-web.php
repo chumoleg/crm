@@ -1,8 +1,16 @@
 <?php
 
-return [
-    'defaultRoute' => 'site/index',
-    'components'   => [
+$config = [
+    'defaultRoute'      => 'site/index',
+    'as AccessBehavior' => [
+        'class'         => 'common\components\AccessBehavior',
+        'allowedRoutes' => [
+            '/',
+            ['/site/login'],
+        ],
+        'redirectUri'   => '/site/login'
+    ],
+    'components'        => [
         'consoleRunner' => [
             'class' => 'vova07\console\ConsoleRunner',
             'file'  => '@yiiBase/yii'
@@ -10,7 +18,7 @@ return [
         'user'          => [
             'class'           => 'common\components\base\User',
             'identityClass'   => 'common\models\user\User',
-            'loginUrl'        => ['/'],
+            'loginUrl'        => ['/site/login'],
             'enableAutoLogin' => true,
             'identityCookie'  => ['name' => '_identity-frontend', 'httpOnly' => true],
         ],
@@ -34,3 +42,14 @@ return [
         ],
     ],
 ];
+
+if (!YII_ENV_TEST) {
+    // configuration adjustments for 'dev' environment
+    $config['bootstrap'][] = 'debug';
+    $config['modules']['debug'] = [
+        'class'      => 'yii\debug\Module',
+        'allowedIPs' => ['*']
+    ];
+}
+
+return $config;

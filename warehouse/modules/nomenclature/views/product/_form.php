@@ -8,7 +8,7 @@ $model = $this->context->model;
 $this->context->addBreadCrumb('Список товаров', ['/common/product/index']);
 $this->context->addBreadCrumb($this->title);
 
-\warehouse\assets\ProductAsset::register($this);
+\warehouse\modules\nomenclature\assets\ProductAsset::register($this);
 ?>
 
 <?php $form = ActiveForm::begin(['id' => 'productForm']); ?>

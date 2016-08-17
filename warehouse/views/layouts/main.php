@@ -1,12 +1,17 @@
 <?php
 $items = [
     [
-        'label'  => 'Tags',
+        'label'  => 'Заказы',
+        'url'    => ['/order/index'],
+        'active' => (bool)strstr(Yii::$app->request->url, 'warehouse/tag')
+    ],
+    [
+        'label'  => 'Тэги',
         'url'    => ['/tag/index'],
         'active' => (bool)strstr(Yii::$app->request->url, 'warehouse/tag')
     ],
     [
-        'label'  => 'Products',
+        'label'  => 'Товары',
         'url'    => ['/product/index'],
         'active' => (bool)strstr(Yii::$app->request->url, 'warehouse/product')
     ]

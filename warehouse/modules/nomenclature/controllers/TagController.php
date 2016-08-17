@@ -1,10 +1,10 @@
 <?php
 
-namespace warehouse\controllers;
+namespace warehouse\modules\nomenclature\controllers;
 
 use common\components\controllers\CrudController;
 use common\models\tag\TagSearch;
-use warehouse\forms\TagForm;
+use warehouse\modules\nomenclature\forms\TagForm;
 
 class TagController extends CrudController
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace warehouse\forms;
+namespace warehouse\modules\nomenclature\forms;
 
 use common\models\product\Product;
 use common\components\Status;

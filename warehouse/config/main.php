@@ -12,5 +12,11 @@ return [
     'bootstrap'           => ['log'],
     'controllerNamespace' => 'warehouse\controllers',
     'layout'              => '@app/views/layouts/main',
+    'modules' => [
+        'nomenclature'        => [
+            'basePath' => '@app/modules/nomenclature',
+            'class'    => 'warehouse\modules\nomenclature\Module'
+        ],
+    ],
     'params'              => $params,
 ];

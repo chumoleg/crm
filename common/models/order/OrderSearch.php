@@ -9,6 +9,7 @@ use common\components\helpers\ArrayHelper;
 
 class OrderSearch extends Order
 {
+    public $tag_id;
     public $fio;
     public $phone;
     public $currentStage;
@@ -28,7 +29,8 @@ class OrderSearch extends Order
                     'current_user_id',
                     'date_create',
                     'fio',
-                    'phone'
+                    'phone',
+                    'tag_id'
                 ],
                 'safe'
             ],
@@ -44,7 +46,7 @@ class OrderSearch extends Order
             'fio'          => 'ФИО клиента',
             'phone'        => 'Телефон',
             'currentStage' => 'Текущий статус',
-            'tag'          => 'Теги',
+            'tag_id'       => 'Теги',
         ], parent::attributeLabels());
     }
 
@@ -80,8 +82,25 @@ class OrderSearch extends Order
         ]);
 
         if (!empty($this->currentStage)) {
-            $query->andWhere('order.id IN (SELECT order_id FROM ' . OrderStage::tableName()
-                . ' WHERE stage_id = ' . $this->currentStage . ' AND status = ' . Status::STATUS_ACTIVE . ')');
+            $innerQuery = OrderStage::find()
+                ->select(['order_id'])
+                ->andWhere(['stage_id' => $this->currentStage])
+                ->andWhere(['status' => Status::STATUS_ACTIVE]);
+
+            $query->andWhere(['IN', 'order.id', $innerQuery]);
+        }
+
+        if (!empty($this->tag_id)) {
+            $tagId = $this->tag_id;
+            $innerQuery = OrderProduct::find()
+                ->select(['order_id'])
+                ->joinWith([
+                    'product.productTags' => function ($q) use ($tagId) {
+                        $q->andWhere(['tag_id' => $tagId]);
+                    }
+                ]);
+
+            $query->andWhere(['IN', 'order.id', $innerQuery]);
         }
 
         return $dataProvider;

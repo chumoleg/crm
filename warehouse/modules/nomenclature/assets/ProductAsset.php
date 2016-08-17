@@ -1,6 +1,6 @@
 <?php
 
-namespace warehouse\assets;
+namespace warehouse\modules\nomenclature\assets;
 
 class ProductAsset extends \yii\web\AssetBundle
 {
