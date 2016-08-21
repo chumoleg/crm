@@ -1,6 +1,6 @@
 <?php
 
-namespace call\modules\order\modules\ajax\components;
+namespace common\components\controllers\order;
 
 use Yii;
 use common\components\controllers\BaseController;

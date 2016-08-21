@@ -2,16 +2,18 @@
 
 namespace warehouse\modules\nomenclature\forms;
 
-use common\models\product\Product;
+use warehouse\models\product\Product;
 use common\components\Status;
 use common\components\helpers\ArrayHelper;
 use common\models\product\ProductPrice;
 use common\models\product\ProductTag;
+use warehouse\models\product\ProductTechList;
 
 class ProductForm extends Product
 {
     public $priceData = [];
     public $tagData = [];
+    public $techList;
 
     /**
      * @inheritdoc
@@ -19,7 +21,7 @@ class ProductForm extends Product
     public function rules()
     {
         return ArrayHelper::merge([
-            [['tagData'], 'required'],
+            [['tagData', 'techList'], 'required'],
             [['priceData'], 'safe'],
         ], parent::rules());
     }
@@ -27,6 +29,7 @@ class ProductForm extends Product
     public function attributeLabels()
     {
         return ArrayHelper::merge(parent::attributeLabels(), [
+            'techList'  => 'Тех.лист',
             'tagData'   => 'Теги товара',
             'priceData' => 'Цены товара'
         ]);
@@ -43,6 +46,7 @@ class ProductForm extends Product
     {
         $this->_savePriceData();
         $this->_saveTagData();
+        $this->_saveTechList();
 
         parent::afterSave($insert, $changedAttributes);
     }
@@ -52,6 +56,7 @@ class ProductForm extends Product
         parent::afterFind();
 
         $this->tagData = ArrayHelper::getColumn($this->productTags, 'tag_id');
+        $this->techList = ArrayHelper::getValue($this->productTechList, 'tech_list_id');
     }
 
     private function _savePriceData()
@@ -83,5 +88,20 @@ class ProductForm extends Product
             $model->tag_id = $item;
             $model->save();
         }
+    }
+
+    private function _saveTechList()
+    {
+        ProductTechList::deleteAll(['product_id' => $this->id]);
+        if (empty($this->techList)) {
+            return;
+        }
+
+//        foreach ($this->tagData as $item) {
+            $model = new ProductTechList();
+            $model->product_id = $this->id;
+            $model->tech_list_id = $this->techList;
+            $model->save();
+//        }
     }
 }

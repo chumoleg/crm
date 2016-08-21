@@ -1,12 +1,13 @@
 <?php
 
-namespace warehouse\controllers;
+namespace warehouse\modules\order\controllers;
 
 use common\components\controllers\CrudController;
+use common\models\order\Order;
 use common\models\order\OrderSearch;
-use warehouse\forms\OrderForm;
+use common\forms\CreateOrderForm;
 
-class OrderController extends CrudController
+class IndexController extends CrudController
 {
     protected function _getSearchClassName()
     {
@@ -15,11 +16,11 @@ class OrderController extends CrudController
 
     protected function _getModelById($id)
     {
-        return OrderForm::findById($id);
+        return Order::findById($id);
     }
 
     protected function _getFormClassName()
     {
-        return OrderForm::className();
+        return CreateOrderForm::className();
     }
 }

@@ -6,7 +6,7 @@ use Yii;
 use common\components\helpers\JsonHelper;
 use common\models\product\ProductPrice;
 use common\models\order\OrderProduct;
-use call\modules\order\modules\ajax\components\OrderManageController;
+use common\components\controllers\order\OrderManageController;
 
 class OrderProductController extends OrderManageController
 {

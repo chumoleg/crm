@@ -18,6 +18,9 @@ $this->context->addBreadCrumb($this->title);
             <?php
             echo $form->field($model, 'category')->dropDownList(\common\models\product\Product::$categoryList);
             echo $form->field($model, 'name')->textInput();
+            echo $form->field($model, 'article')->textInput();
+            echo $form->field($model, 'description')->textarea();
+
             echo $form->field($model, 'tagData')->widget(\kartik\widgets\Select2::className(), [
                 'data'    => \common\models\tag\Tag::getList(),
                 'options' => [
@@ -26,8 +29,12 @@ $this->context->addBreadCrumb($this->title);
                 ]
             ]);
 
-            echo $form->field($model, 'article')->textInput();
-            echo $form->field($model, 'description')->textarea();
+            echo $form->field($model, 'techList')->widget(\kartik\widgets\Select2::className(), [
+                'data'    => \warehouse\models\techList\TechList::getList(),
+                'options' => [
+                    'placeholder' => '',
+                ]
+            ]);
             ?>
         </div>
         <div class="col-md-5 col-md-offset-1">

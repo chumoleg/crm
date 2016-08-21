@@ -12,10 +12,18 @@ return [
     'bootstrap'           => ['log'],
     'controllerNamespace' => 'warehouse\controllers',
     'layout'              => '@app/views/layouts/main',
-    'modules' => [
-        'nomenclature'        => [
+    'modules'             => [
+        'order'        => [
+            'basePath' => '@app/modules/order',
+            'class'    => 'warehouse\modules\order\Module'
+        ],
+        'nomenclature' => [
             'basePath' => '@app/modules/nomenclature',
             'class'    => 'warehouse\modules\nomenclature\Module'
+        ],
+        'stock'        => [
+            'basePath' => '@app/modules/stock',
+            'class'    => 'warehouse\modules\stock\Module'
         ],
     ],
     'params'              => $params,
