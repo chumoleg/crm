@@ -2,9 +2,8 @@
 
 namespace common\models\order;
 
-use common\components\helpers\DepartmentHelper;
-use common\components\Status;
 use Yii;
+use common\components\helpers\DepartmentHelper;
 use yii\data\ActiveDataProvider;
 use common\components\helpers\ArrayHelper;
 
@@ -13,6 +12,7 @@ class OrderSearch extends Order
     public $tag_id;
     public $fio;
     public $phone;
+    public $department;
 
     /**
      * @inheritdoc
@@ -25,6 +25,7 @@ class OrderSearch extends Order
                     'id',
                     'process_id',
                     'current_stage_id',
+                    'department',
                     'source_id',
                     'current_user_id',
                     'date_create',
@@ -43,9 +44,10 @@ class OrderSearch extends Order
     public function attributeLabels()
     {
         return ArrayHelper::merge([
-            'fio'    => 'ФИО клиента',
-            'phone'  => 'Телефон',
-            'tag_id' => 'Теги',
+            'fio'        => 'ФИО клиента',
+            'phone'      => 'Телефон',
+            'tag_id'     => 'Теги',
+            'department' => 'Отдел',
         ], parent::attributeLabels());
     }
 
@@ -83,6 +85,7 @@ class OrderSearch extends Order
             'order.current_stage_id' => $this->current_stage_id,
             'order.source_id'        => $this->source_id,
             'order.current_user_id'  => $this->current_user_id,
+            'stage.department'       => $this->department,
         ]);
 
         if (!empty($this->tag_id)) {

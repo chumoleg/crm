@@ -6,6 +6,7 @@ use yii\widgets\Pjax;
 use yii\helpers\Html;
 use common\components\helpers\DatePicker;
 use common\components\Role;
+use yii\helpers\ArrayHelper;
 
 $this->title = 'Список заказов';
 
@@ -22,6 +23,7 @@ echo Html::tag('div', '&nbsp;');
 \common\assets\order\OrderListAsset::register($this);
 
 $operatorList = \common\models\user\User::getListByRole(Role::OPERATOR);
+$departmentList = \common\components\helpers\DepartmentHelper::$departmentList;
 
 Pjax::begin(['id' => 'orderGrid']);
 echo GridView::widget([
@@ -63,6 +65,13 @@ echo GridView::widget([
             'attribute' => 'process_id',
             'filter'    => \common\models\process\Process::getList(),
             'value'     => 'process.name'
+        ],
+        [
+            'attribute' => 'department',
+            'filter'    => $departmentList,
+            'value'     => function ($model) use ($departmentList) {
+                return ArrayHelper::getValue($departmentList, ArrayHelper::getValue($model, 'currentStage.department'));
+            }
         ],
         [
             'attribute' => 'current_stage_id',
