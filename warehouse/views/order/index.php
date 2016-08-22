@@ -55,10 +55,10 @@ echo GridView::widget([
             'format'    => 'datetime',
             'filter'    => DatePicker::getInput($searchModel)
         ],
-//        [
-//            'class'    => 'common\components\grid\ActionColumn',
-//            'template' => '{view}',
-//        ],
+        [
+            'class'    => 'common\components\grid\ActionColumn',
+            'template' => '{view}',
+        ],
     ],
 ]);
 Pjax::end();

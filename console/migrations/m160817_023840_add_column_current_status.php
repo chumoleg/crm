@@ -12,6 +12,11 @@ class m160817_023840_add_column_current_status extends Migration
         $this->addForeignKey('fk_order_current_stage_id', 'order', 'current_stage_id',
             'stage', 'id', 'SET NULL', 'CASCADE');
 
+        try {
+            $this->dropForeignKey('fk_order_stage_stage_id', 'order_stage');
+        } catch (\Exception $e){
+        }
+
         $this->delete('order_stage', 'stage_id NOT IN (SELECT id FROM stage)');
         $this->addForeignKey('fk_order_stage_stage_id', 'order_stage', 'stage_id',
             'stage', 'id', 'RESTRICT', 'CASCADE');

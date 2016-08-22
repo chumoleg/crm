@@ -3,26 +3,28 @@
 namespace common\models\product;
 
 use Yii;
-use \common\components\base\ActiveRecord;
+use common\components\base\ActiveRecord;
 use common\models\user\User;
 use common\models\order\OrderProduct;
+use warehouse\models\product\ProductTechList;
 
 /**
  * This is the model class for table "product".
  *
- * @property integer        $id
- * @property string         $name
- * @property string         $article
- * @property string         $description
- * @property integer        $category
- * @property integer        $status
- * @property integer        $user_id
- * @property string         $date_create
+ * @property integer         $id
+ * @property string          $name
+ * @property string          $article
+ * @property string          $description
+ * @property integer         $category
+ * @property integer         $status
+ * @property integer         $user_id
+ * @property string          $date_create
  *
- * @property OrderProduct[] $orderProducts
- * @property User           $user
- * @property ProductPrice[] $productPrices
- * @property ProductTag[]   $productTags
+ * @property OrderProduct[]  $orderProducts
+ * @property User            $user
+ * @property ProductPrice[]  $productPrices
+ * @property ProductTag[]    $productTags
+ * @property ProductTechList $productTechList
  */
 class Product extends ActiveRecord
 {
@@ -106,5 +108,13 @@ class Product extends ActiveRecord
     public function getProductTags()
     {
         return $this->hasMany(ProductTag::className(), ['product_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductTechList()
+    {
+        return $this->hasOne(ProductTechList::className(), ['product_id' => 'id']);
     }
 }

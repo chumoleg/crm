@@ -9,8 +9,8 @@ use Yii;
 use common\models\order\OrderComment;
 use common\components\helpers\JsonHelper;
 use common\models\geo\GeoAddress;
-use call\modules\order\modules\ajax\components\OrderManageController;
 use yii\base\Exception;
+use common\components\controllers\order\OrderManageController;
 
 class OrderController extends OrderManageController
 {

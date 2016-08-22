@@ -10,7 +10,7 @@ $this->title = 'Вход в систему';
 ?>
 
 <div class="row">
-    <div class="col-md-2 col-md-offset-5">
+    <div class="col-lg-2 col-lg-offset-5 col-md-4 col-md-offset-4">
         <div class="containerBlock">
             <?php $form = ActiveForm::begin([
                 'id'          => 'login-form',
