@@ -74,12 +74,28 @@ class m160816_101927_create_warehouse extends Migration
         $this->addForeignKey('fk_transaction_product_component_transaction_id', 'wh_transaction_product_component',
             'transaction_id', 'wh_transaction', 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('fk_transaction_product_component_product_component_id',
-            'wh_transaction_product_component',
-            'product_component_id', 'wh_product_component', 'id', 'CASCADE', 'CASCADE');
+            'wh_transaction_product_component', 'product_component_id',
+            'wh_product_component', 'id', 'CASCADE', 'CASCADE');
+
+        $this->createTable('wh_order_transaction', [
+            'id'             => self::PRIMARY_KEY,
+            'order_id'       => self::INT_FIELD_NOT_NULL,
+            'transaction_id' => self::INT_FIELD_NOT_NULL,
+            'date_create'    => self::TIMESTAMP_FIELD
+        ], self::TABLE_OPTIONS);
+
+        $this->addForeignKey('fk_order_transaction_order_id', 'wh_order_transaction', 'order_id',
+            'order', 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('fk_order_transaction_transaction_id', 'wh_order_transaction', 'transaction_id',
+            'wh_transaction', 'id', 'CASCADE', 'CASCADE');
     }
 
     public function down()
     {
+        $this->dropForeignKey('fk_order_transaction_order_id', 'wh_order_transaction');
+        $this->dropForeignKey('fk_order_transaction_transaction_id', 'wh_order_transaction');
+        $this->dropTable('wh_order_transaction');
+
         $this->dropForeignKey('fk_transaction_product_component_transaction_id', 'wh_transaction_product_component');
         $this->dropForeignKey('fk_transaction_product_component_product_component_id',
             'wh_transaction_product_component');

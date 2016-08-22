@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
 
-/** @var \common\models\order\Order $model */
+/** @var \warehouse\models\order\Order $model */
 
 $data = [];
 foreach ($model->getTagsFromProducts() as $tag) {

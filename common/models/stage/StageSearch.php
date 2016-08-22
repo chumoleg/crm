@@ -15,9 +15,9 @@ class StageSearch extends Stage
             [
                 [
                     'id',
+                    'department',
                     'name',
                     'alias',
-                    'call',
                     'date_create'
                 ],
                 'safe'
@@ -41,9 +41,9 @@ class StageSearch extends Stage
 
         $query->andFilterWhere([
             'id'          => $this->id,
+            'department'        => $this->department,
             'name'        => $this->name,
             'alias'       => $this->alias,
-            'call'        => $this->call,
             'date_create' => $this->date_create
         ]);
 

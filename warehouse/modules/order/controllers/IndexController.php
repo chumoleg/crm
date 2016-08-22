@@ -3,7 +3,7 @@
 namespace warehouse\modules\order\controllers;
 
 use common\components\controllers\CrudController;
-use common\models\order\Order;
+use warehouse\models\order\Order;
 use common\models\order\OrderSearch;
 use common\forms\CreateOrderForm;
 

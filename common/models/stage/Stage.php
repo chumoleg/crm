@@ -9,13 +9,14 @@ use common\models\process\ProcessStage;
  * This is the model class for table "stage".
  *
  * @property integer        $id
+ * @property integer        $department
  * @property string         $name
  * @property string         $alias
- * @property string         $call
  * @property integer        $user_id
  * @property string         $date_create
  *
  * @property ProcessStage[] $processStages
+ * @property StageMethod[]  $stageMethods
  */
 class Stage extends ActiveRecord
 {
@@ -33,8 +34,8 @@ class Stage extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'alias'], 'required'],
-            [['user_id', 'call'], 'integer'],
+            [['name', 'alias', 'department'], 'required'],
+            [['user_id', 'department'], 'integer'],
             [['date_create'], 'safe'],
             [['name', 'alias'], 'string', 'max' => 300]
         ];
@@ -47,9 +48,9 @@ class Stage extends ActiveRecord
     {
         return [
             'id'          => 'ID',
+            'department'  => 'Отделение',
             'name'        => 'Название',
             'alias'       => 'Алиас',
-            'call'        => 'Возможность звонить',
             'user_id'     => 'User ID',
             'date_create' => 'Дата создания',
         ];
@@ -75,5 +76,21 @@ class Stage extends ActiveRecord
         }
 
         return self::find()->andWhere(['alias' => $alias])->one();
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStageMethods()
+    {
+        return $this->hasMany(StageMethod::className(), ['stage_id' => 'id']);
+    }
+
+    public function existStageMethod($method)
+    {
+        return $this
+            ->getStageMethods()
+            ->andWhere(['method' => $method])
+            ->exists();
     }
 }

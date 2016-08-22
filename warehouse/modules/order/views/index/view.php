@@ -3,7 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $model Order */
 
-use common\models\order\Order;
+use warehouse\models\order\Order;
 use yii\helpers\Html;
 
 \common\assets\order\OrderAsset::register($this);

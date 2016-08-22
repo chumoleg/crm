@@ -12,7 +12,7 @@ use common\components\helpers\JsonHelper;
 use common\models\order\OrderStage;
 use common\models\process\ProcessStageAction;
 
-class OrderStatusController extends OrderManageController
+abstract class OrderStatusController extends OrderManageController
 {
     /**
      * @var Action
@@ -75,7 +75,7 @@ class OrderStatusController extends OrderManageController
      *
      * @return array
      */
-    private function _changeStatus($processStageAction)
+    protected function _changeStatus($processStageAction)
     {
         $this->model->client->setIsNotNew();
 
@@ -106,6 +106,8 @@ class OrderStatusController extends OrderManageController
         if (!empty($followToStage)) {
             $processStage = ProcessStage::findByProcessAndStage($this->model->process, $followToStage);
             if (!empty($processStage)) {
+                $this->_additionalOperationsForModule();
+
                 $currentOrderStage->setDisabled();
 
                 OrderStage::addStageRow($this->model, $processStage);
@@ -115,10 +117,6 @@ class OrderStatusController extends OrderManageController
                 $this->model->setOrderOperator();
 
                 $this->_sendRequestToForeignSystem($followToStage);
-
-                if (method_exists($this, '_writeProductComponents')) {
-                    $this->_writeProductComponents();
-                }
             }
         }
 
@@ -126,6 +124,8 @@ class OrderStatusController extends OrderManageController
 
         return $this->_returnAnswer($commentList);
     }
+
+    abstract protected function _additionalOperationsForModule();
 
     /**
      * @return ProcessStageAction|null

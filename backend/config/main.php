@@ -13,6 +13,10 @@ return [
     'bootstrap'           => ['log'],
     'layout'              => '@app/views/layouts/main',
     'modules'             => [
+        'order'  => [
+            'basePath' => '@app/modules/order',
+            'class'    => 'backend\modules\order\Module'
+        ],
         'common'  => [
             'basePath' => '@app/modules/common',
             'class'    => 'backend\modules\common\Module'

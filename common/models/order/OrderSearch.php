@@ -2,6 +2,7 @@
 
 namespace common\models\order;
 
+use common\components\helpers\DepartmentHelper;
 use common\components\Status;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -69,6 +70,8 @@ class OrderSearch extends Order
             return $dataProvider;
         }
 
+        $this->_compareWithCurrentApp($query);
+
         if (Yii::$app->user->can(\common\components\Role::OPERATOR)) {
             $query->andWhere(['order.current_user_id' => Yii::$app->user->id]);
         }
@@ -96,6 +99,16 @@ class OrderSearch extends Order
         }
 
         return $dataProvider;
+    }
+
+    private function _compareWithCurrentApp($query)
+    {
+        $department = DepartmentHelper::getDepartmentByApplication();
+        if (empty($department)) {
+            return;
+        }
+
+        $query->andWhere(['stage.department' => $department]);
     }
 
     /**

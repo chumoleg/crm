@@ -2,15 +2,37 @@
 
 namespace warehouse\modules\order\modules\ajax\controllers;
 
+use warehouse\models\order\Order;
 use warehouse\models\transaction\Transaction;
 use warehouse\models\transaction\TransactionProductComponent;
 use warehouse\modules\stock\forms\TransactionForm;
-use Yii;
 
 class OrderStatusController extends \common\components\controllers\order\OrderStatusController
 {
+    /**
+     * @var Order
+     */
+    public $model;
+
+    protected function _additionalOperationsForModule()
+    {
+        if ($this->model->accessWarehouseTransactionWritten()) {
+            $this->_writeProductComponents();
+        }
+
+        if ($this->model->accessWarehouseTransactionReturn()) {
+            $this->_returnProductComponents();
+        }
+    }
+
     protected function _writeProductComponents()
     {
+        $writtenOrderTransaction = $this->model->getWrittenOrderTransaction();
+        $returnOrderTransaction = $this->model->getReturnOrderTransaction();
+        if (!empty($writtenOrderTransaction) && empty($returnOrderTransaction)) {
+            return;
+        }
+
         $productComponents = [];
         foreach ($this->model->orderProducts as $orderProduct) {
             $productTechList = $orderProduct->product->productTechList;
@@ -47,6 +69,21 @@ class OrderStatusController extends \common\components\controllers\order\OrderSt
         $form->name = 'Списание комплектующих по заявке №' . $this->model->id;
         $form->type = Transaction::TYPE_WRITTEN;
         $form->transactionProductComponents = $transactionProductComponents;
+        $form->saveCreateForm();
+    }
+
+    protected function _returnProductComponents()
+    {
+        $writtenOrderTransaction = $this->model->getWrittenOrderTransaction();
+        $returnOrderTransaction = $this->model->getReturnOrderTransaction();
+        if (empty($writtenOrderTransaction) || !empty($returnOrderTransaction)) {
+            return;
+        }
+
+        $form = new TransactionForm();
+        $form->name = 'Возврат комплектующих по заявке №' . $this->model->id;
+        $form->type = Transaction::TYPE_INCOME;
+        $form->transactionProductComponents = $writtenOrderTransaction->transaction->transactionProductComponents;
         $form->saveCreateForm();
     }
 }

@@ -1,6 +1,5 @@
 <?php
 use yii\helpers\Html;
-use common\components\helpers\ArrayHelper;
 
 /** @var \common\models\order\Order $model */
 $model = $this->context->model;
@@ -9,11 +8,10 @@ if (!$model->checkAccessManageOrder()) {
 }
 
 $currentStage = $model->currentStage;
-$accessToCall = ArrayHelper::getValue($currentStage, 'call');
 ?>
 
 <div class="borderedBlock orderInnerBlock">
-    <?php if ($accessToCall) : ?>
+    <?php if ($model->accessCalling()) : ?>
         <button class="btn btn-block btn-primary callOrder">Позвонить</button>
         <!--    <button class="btn btn-block btn-default sendSmsOrder">Отправить смс</button>-->
 

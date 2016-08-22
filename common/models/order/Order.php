@@ -2,7 +2,9 @@
 
 namespace common\models\order;
 
+use common\components\helpers\ArrayHelper;
 use common\models\process\ProcessStage;
+use common\models\stage\StageMethod;
 use Yii;
 use common\components\Status;
 use common\components\base\ActiveRecord;
@@ -341,5 +343,14 @@ class Order extends ActiveRecord
             ->andWhere(['process_id' => $this->process_id])
             ->andWhere(['stage_id' => $this->current_stage_id])
             ->one();
+    }
+
+    public function accessCalling()
+    {
+        if (empty($this->currentStage)) {
+            return false;
+        }
+
+        return $this->currentStage->existStageMethod(StageMethod::METHOD_CALL);
     }
 }

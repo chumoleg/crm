@@ -2,6 +2,7 @@
 
 namespace warehouse\models\transaction;
 
+use Yii;
 use common\components\base\ActiveRecord;
 use common\components\Status;
 use warehouse\models\productComponent\ProductComponent;
@@ -73,13 +74,21 @@ class TransactionProductComponent extends ActiveRecord
 
     public function afterSave($insert, $changedAttributes)
     {
-        $this->_updateCurrentStock();
+        $transaction = Yii::$app->db->beginTransaction('SERIALIZABLE');
+        try {
+            $this->_updateCurrentStock();
+            $transaction->commit();
+
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+        }
 
         return parent::afterSave($insert, $changedAttributes);
     }
 
     private function _updateCurrentStock()
     {
+        /** @var ProductComponentStock $currentProductComponentStock */
         $currentProductComponentStock = ProductComponentStock::find()
             ->andWhere(['product_component_id' => $this->product_component_id])
             ->andWhere(['status' => Status::STATUS_ACTIVE])
@@ -88,6 +97,9 @@ class TransactionProductComponent extends ActiveRecord
         $currentQuantity = 0;
         if (!empty($currentProductComponentStock)) {
             $currentQuantity = $currentProductComponentStock->quantity;
+
+            $currentProductComponentStock->setDisabled();
+            $currentProductComponentStock->save();
         }
 
         if ($this->transaction->type == Transaction::TYPE_INCOME) {
@@ -99,9 +111,6 @@ class TransactionProductComponent extends ActiveRecord
         if ($quantity <= 0) {
             $quantity = 0;
         }
-
-        ProductComponentStock::updateAll(['status' => Status::STATUS_NOT_ACTIVE],
-            'product_component_id = ' . $this->product_component_id);
 
         $model = new ProductComponentStock();
         $model->product_component_id = $this->product_component_id;

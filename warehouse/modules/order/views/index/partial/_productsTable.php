@@ -1,5 +1,5 @@
 <?php
-/** @var \common\models\order\Order $model */
+/** @var \warehouse\models\order\Order $model */
 $model = $this->context->model;
 ?>
 

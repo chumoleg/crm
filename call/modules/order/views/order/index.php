@@ -10,13 +10,6 @@ use common\components\Role;
 $this->title = 'Список заказов';
 
 echo $this->context->getCreateButton('Создать новый заказ', ['/order/order-create/index'], false);
-
-$checkOrders = \common\models\order\Order::getOrderWithoutProcess(true);
-if ($checkOrders) {
-    echo Html::a('Запуск заказов без процессов', \yii\helpers\Url::to(['/order/order/update-process']),
-        ['class' => 'btn btn-primary']);
-}
-
 echo Html::tag('div', '&nbsp;');
 
 \common\assets\order\OrderListAsset::register($this);

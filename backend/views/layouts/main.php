@@ -1,6 +1,11 @@
 <?php
 $items = [
     [
+        'label'  => 'Заказы',
+        'url'    => ['/order/order/index'],
+        'active' => (bool)strstr(Yii::$app->request->url, '/order/')
+    ],
+    [
         'label'  => 'Управление (общее)',
         'url'    => ['/common/user/index'],
         'active' => (bool)strstr(Yii::$app->request->url, '/common/')

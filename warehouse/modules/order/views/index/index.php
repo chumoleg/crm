@@ -4,7 +4,6 @@
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use common\components\helpers\DatePicker;
-use common\components\Role;
 
 $this->title = 'Список заказов';
 

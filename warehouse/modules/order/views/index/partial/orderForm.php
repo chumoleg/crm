@@ -4,7 +4,7 @@ use common\models\geo\GeoRegion;
 use common\models\geo\GeoArea;
 use yii\helpers\ArrayHelper;
 
-/** @var \common\models\order\Order $model */
+/** @var \warehouse\models\order\Order $model */
 $model = $this->context->model;
 $address = $model->address;
 $region = ArrayHelper::getValue($address, 'area.region_id');

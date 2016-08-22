@@ -2,7 +2,7 @@
 use common\components\helpers\ArrayHelper;
 use common\components\helpers\TimeHelper;
 
-/** @var \common\models\order\Order $model */
+/** @var \warehouse\models\order\Order $model */
 $model = $this->context->model;
 
 if (!empty($model->process_id)) {
