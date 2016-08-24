@@ -38,15 +38,14 @@ class Asterisk
 
         $list = [
             'Action: originate',
+            'Exten: ' . $this->_getFormattedPhoneNumber($phoneNumber),
             'Async: true',
             'Priority: 1',
             'Channel: SIP/' . $workPlace,
             'Context: default',
             'Timeout: 30000',
-            'Exten: 102',
             'Callerid: auto-dial <' . $workPlace . '>',
-//            'Exten: ' . $this->_getFormattedPhoneNumber($phoneNumber),
-//            'Variable: CALLERID(name)=' . $workPlace,
+            'Variable: CALLERID(name)=' . $workPlace,
 //            'Variable: CDR(operator)=' . Yii::$app->user->id
         ];
 
@@ -125,13 +124,15 @@ class Asterisk
     private function _getFormattedPhoneNumber($phoneNumber)
     {
         $phoneNumber = str_replace([' ', '(', ')', '-', '_', '+'], '', $phoneNumber);
-        $firstNumber = substr($phoneNumber, 0, 1);
+        return $phoneNumber;
 
-        if ($firstNumber == 8) {
-            return '+7' . substr($phoneNumber, 1, strlen($phoneNumber) - 1);
-        }
-
-        return '+' . $phoneNumber;
+//        $firstNumber = substr($phoneNumber, 0, 1);
+//
+//        if ($firstNumber == 8) {
+//            return '+7' . substr($phoneNumber, 1, strlen($phoneNumber) - 1);
+//        }
+//
+//        return '+' . $phoneNumber;
     }
 
     /**
@@ -168,13 +169,13 @@ class Asterisk
         }
 
         $command = implode("\r\n", $commandList) . "\r\n\r\n";
-        echo 'QUERY: ' . "\r\n";
-        echo $command;
+//        echo 'QUERY: ' . "\r\n";
+//        echo $command;
         fputs($this->_socket, $command);
 
         $this->_readAnswer();
-        echo 'ANSWER: ' . "\r\n";
-        echo $this->_answer;
+//        echo 'ANSWER: ' . "\r\n";
+//        echo $this->_answer;
     }
 
     private function _setConfig()
