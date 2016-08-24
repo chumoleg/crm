@@ -10,6 +10,11 @@ NavBar::begin([
     ],
 ]);
 
+$menuItems[] = [
+    'label' => 'Выход из раздела',
+    'url' => '/'
+];
+
 echo Nav::widget([
     'options' => ['class' => 'navbar-nav navbar-right'],
     'items'   => $menuItems

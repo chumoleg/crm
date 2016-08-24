@@ -51,6 +51,6 @@ use common\models\client\Client;
     </div>
 
     <div class="col-md-1 col-sm-2 col-xs-6">
-        <a href="/site/logout" class="btn btn-default mainMenuButton">Выход</a>
+        <a href="/" class="btn btn-default mainMenuButton">Выход</a>
     </div>
 </div>
