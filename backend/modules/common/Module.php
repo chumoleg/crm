@@ -22,6 +22,11 @@ class Module extends \yii\base\Module
                 'url'    => ['/common/source/index'],
                 'active' => (bool)strstr($url, 'common/source/')
             ],
+            [
+                'label'  => 'Тэги',
+                'url'    => ['/common/tag/index'],
+                'active' => (bool)strstr($url, 'common/tag')
+            ],
         ];
     }
 }
