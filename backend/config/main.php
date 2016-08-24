@@ -8,12 +8,13 @@ $params = array_merge(
 
 return [
     'id'                  => 'app-backend',
+    'name'                => 'Администрирование',
     'basePath'            => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap'           => ['log'],
     'layout'              => '@app/views/layouts/main',
     'modules'             => [
-        'order'  => [
+        'order'   => [
             'basePath' => '@app/modules/order',
             'class'    => 'backend\modules\order\Module'
         ],
@@ -30,5 +31,5 @@ return [
             'class'    => 'backend\modules\system\Module'
         ],
     ],
-    'params' => $params,
+    'params'              => $params,
 ];

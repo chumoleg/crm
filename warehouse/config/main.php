@@ -8,6 +8,7 @@ $params = array_merge(
 
 return [
     'id'                  => 'app-warehouse',
+    'name'                => 'Склад',
     'basePath'            => dirname(__DIR__),
     'bootstrap'           => ['log'],
     'controllerNamespace' => 'warehouse\controllers',

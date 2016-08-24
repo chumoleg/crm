@@ -1,18 +1,57 @@
 <?php
+$url = Yii::$app->request->url;
+
 $items = [
     [
         'label'  => 'Заказы',
         'url'    => ['/order/order/index'],
-        'active' => (bool)strstr(Yii::$app->request->url, '/order/')
+        'active' => (bool)strstr($url, '/order/')
     ],
     [
         'label'  => 'Управление (общее)',
-        'url'    => ['/common/user/index'],
+        'items' => [
+            [
+                'label'  => 'Пользователи',
+                'url'    => ['/common/user/index'],
+                'active' => (bool)strstr($url, 'common/user/')
+            ],
+            [
+                'label'  => 'Источники',
+                'url'    => ['/common/source/index'],
+                'active' => (bool)strstr($url, 'common/source/')
+            ],
+            [
+                'label'  => 'Тэги',
+                'url'    => ['/common/tag/index'],
+                'active' => (bool)strstr($url, 'common/tag')
+            ],
+        ],
         'active' => (bool)strstr(Yii::$app->request->url, '/common/')
     ],
     [
         'label'  => 'Управление бизнес-процессами',
-        'url'    => ['/process/action/index'],
+        'items' => [
+            [
+                'label'  => 'Действия',
+                'url'    => ['/process/action/index'],
+                'active' => (bool)strstr($url, 'process/action/')
+            ],
+            [
+                'label'  => 'Причины для действий',
+                'url'    => ['/process/reason/index'],
+                'active' => (bool)strstr($url, 'process/reason/')
+            ],
+            [
+                'label'  => 'Статусы заказов',
+                'url'    => ['/process/stage/index'],
+                'active' => (bool)strstr($url, 'process/stage/')
+            ],
+            [
+                'label'  => 'Процессы обработки заказов',
+                'url'    => ['/process/process/index'],
+                'active' => (bool)strstr($url, 'process/process')
+            ],
+        ],
         'active' => (bool)strstr(Yii::$app->request->url, '/process/')
     ],
     [

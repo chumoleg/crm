@@ -8,6 +8,7 @@ $params = array_merge(
 
 return [
     'id'                  => 'app-call-center',
+    'name'                => 'Call-центр',
     'basePath'            => dirname(__DIR__),
     'bootstrap'           => ['log'],
     'controllerNamespace' => 'call\controllers',

@@ -8,6 +8,7 @@ $params = array_merge(
 
 return [
     'id'                  => 'app-report',
+    'name'                => 'Отчеты и статистика',
     'basePath'            => dirname(__DIR__),
     'bootstrap'           => ['log'],
     'controllerNamespace' => 'report\controllers',
