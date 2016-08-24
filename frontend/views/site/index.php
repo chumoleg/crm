@@ -3,7 +3,6 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 
 ?>
-
     HOME PAGE
 
 <?php if (!Yii::$app->user->getIsGuest()) : ?>
@@ -28,10 +27,18 @@ use yii\helpers\Html;
     ];
     ?>
 
-    <?php foreach ($modules as $module) : ?>
-        <div class="row">
-            <div class="col-md-12"><?= Html::a($module['label'], $module['href']); ?></div>
+    <div class="row">
+        <div class="col-md-12">
+            <?php foreach ($modules as $module) : ?>
+                <a href="<?= $module['href']; ?>">
+                <div class="col-md-4">
+                    <div class="well frontModulesBlock">
+                        <?= $module['label']; ?>
+                    </div>
+                </div>
+                </a>
+            <?php endforeach; ?>
         </div>
-    <?php endforeach; ?>
+    </div>
 
 <?php endif; ?>
