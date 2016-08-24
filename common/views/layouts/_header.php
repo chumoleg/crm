@@ -10,10 +10,12 @@ NavBar::begin([
     ],
 ]);
 
-$menuItems[] = [
-    'label' => 'Выход из раздела',
-    'url' => '/'
-];
+if (Yii::$app->id != 'app-frontend') {
+    $menuItems[] = [
+        'label' => 'Выход из раздела',
+        'url'   => '/'
+    ];
+}
 
 echo Nav::widget([
     'options' => ['class' => 'navbar-nav navbar-right'],
