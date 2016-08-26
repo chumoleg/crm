@@ -16,13 +16,8 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only'  => ['login', 'logout'],
+                'only'  => ['logout'],
                 'rules' => [
-                    [
-                        'actions' => ['login'],
-                        'allow'   => true,
-                        'roles'   => ['?'],
-                    ],
                     [
                         'actions' => ['logout'],
                         'allow'   => true,

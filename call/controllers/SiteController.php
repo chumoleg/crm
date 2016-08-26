@@ -1,9 +1,10 @@
 <?php
 namespace call\controllers;
 
-use yii\web\Controller;
+use Yii;
+use common\components\controllers\BaseController;
 
-class SiteController extends Controller
+class SiteController extends BaseController
 {
     /**
      * @inheritdoc

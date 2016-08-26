@@ -10,6 +10,14 @@ class BaseController extends Controller
 {
     public $breadCrumbs = [];
 
+    public function init()
+    {
+        parent::init();
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Yii::$app->user->loginUrl);
+        }
+    }
+
     /**
      * @param string            $label
      * @param null|string|array $url
