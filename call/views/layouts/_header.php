@@ -40,8 +40,8 @@ use common\models\client\Client;
 
     <div class="col-md-2 col-sm-2 col-xs-6">
         <div class="text-center borderedBlock">
-            <?= Yii::$app->user->identity->email;?>
             <?php
+//            echo Yii::$app->user->identity->email;
             $workPlace = Yii::$app->user->getWorkPlace();
             if (!empty($workPlace)) {
                 echo ' (' . $workPlace . ')';
@@ -51,6 +51,6 @@ use common\models\client\Client;
     </div>
 
     <div class="col-md-1 col-sm-2 col-xs-6">
-        <a href="/" class="btn btn-default mainMenuButton">Выход</a>
+        <a href="<?= 'http://' . Yii::$app->params['baseUrl']; ?>" class="btn btn-default mainMenuButton">Выход</a>
     </div>
 </div>

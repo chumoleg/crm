@@ -22,15 +22,20 @@ $config = [
             'enableAutoLogin' => true,
             'identityCookie'  => [
                 'name'     => '_identity',
-                'httpOnly' => true,
                 'domain'   => '.crm-advanced.doit-team.ru',
+                'httpOnly' => true,
             ],
+        ],
+        'request'       => [
+            'cookieValidationKey' => '65gqHETurm6vbfvEoebgMguxh9-jZZA4'
         ],
         'session'       => [
             'name'         => 'advanced-session-key',
             'cookieParams' => [
                 'domain'   => '.crm-advanced.doit-team.ru',
+                'path'     => '/',
                 'httpOnly' => true,
+                'secure'   => false,
             ],
         ],
         'urlManager'    => [

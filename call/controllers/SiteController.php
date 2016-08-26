@@ -2,9 +2,9 @@
 namespace call\controllers;
 
 use Yii;
-use common\components\controllers\BaseController;
+use yii\web\Controller;
 
-class SiteController extends BaseController
+class SiteController extends Controller
 {
     /**
      * @inheritdoc
@@ -20,19 +20,6 @@ class SiteController extends BaseController
 
     public function actionIndex()
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(Yii::$app->user->loginUrl);
-        }
-
         return $this->render('index');
-    }
-
-    public function actionLogin()
-    {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(Yii::$app->user->loginUrl);
-        } else {
-            return $this->goHome();
-        }
     }
 }

@@ -13,7 +13,7 @@ NavBar::begin([
 if (Yii::$app->id != 'app-frontend') {
     $menuItems[] = [
         'label' => 'Выход из раздела',
-        'url'   => Yii::$app->params['baseUrl']
+        'url'   => 'http://' . Yii::$app->params['baseUrl']
     ];
 }
 
