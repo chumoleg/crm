@@ -36,16 +36,18 @@ class Asterisk
     {
         $this->_connect();
 
+        $phoneNumber = $this->_getFormattedPhoneNumber($phoneNumber);
+
         $list = [
             'Action: originate',
-            'Exten: ' . $this->_getFormattedPhoneNumber($phoneNumber),
             'Async: true',
             'Priority: 1',
             'Channel: SIP/' . $workPlace,
-            'Context: default',
+            'Context: outbound-allroutes',
             'Timeout: 30000',
-            'Callerid: auto-dial <' . $workPlace . '>',
-            'Variable: CALLERID(name)=' . $workPlace,
+            'Callerid: auto-dial <' . $phoneNumber . '>',
+            'Exten: ' . $phoneNumber,
+//            'Variable: CALLERID(name)=' . $workPlace,
 //            'Variable: CDR(operator)=' . Yii::$app->user->id
         ];
 
