@@ -26,9 +26,6 @@ $config = [
                 'httpOnly' => true,
             ],
         ],
-        'request'       => [
-            'cookieValidationKey' => '65gqHETurm6vbfvEoebgMguxh9-jZZA4'
-        ],
         'session'       => [
             'name'         => 'advanced-session-key',
             'cookieParams' => [
@@ -48,7 +45,8 @@ $config = [
             ]
         ],
         'request'       => [
-            'csrfParam' => '_csrf-param',
+            'csrfParam'           => '_csrf-param',
+            'cookieValidationKey' => '65gqHETurm6vbfvEoebgMguxh9-jZZA4'
         ],
         'errorHandler'  => [
             'errorAction' => 'site/error',

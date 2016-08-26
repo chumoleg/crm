@@ -41,7 +41,7 @@ use common\models\client\Client;
     <div class="col-md-2 col-sm-2 col-xs-6">
         <div class="text-center borderedBlock">
             <?php
-//            echo Yii::$app->user->identity->email;
+            echo Yii::$app->user->identity->email;
             $workPlace = Yii::$app->user->getWorkPlace();
             if (!empty($workPlace)) {
                 echo ' (' . $workPlace . ')';
