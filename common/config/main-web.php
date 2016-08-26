@@ -20,10 +20,18 @@ $config = [
             'identityClass'   => 'common\models\user\User',
             'loginUrl'        => 'http://crm-advanced.doit-team.ru/site/login',
             'enableAutoLogin' => true,
-            'identityCookie'  => ['name' => '_identityCommon'],
+            'identityCookie'  => [
+                'name'     => '_identity',
+                'httpOnly' => true,
+                'domain'   => '.crm-advanced.doit-team.ru',
+            ],
         ],
         'session'       => [
-            'name' => 'advanced-session-key',
+            'name'         => 'advanced-session-key',
+            'cookieParams' => [
+                'domain'   => '.crm-advanced.doit-team.ru',
+                'httpOnly' => true,
+            ],
         ],
         'urlManager'    => [
             'enablePrettyUrl' => true,
