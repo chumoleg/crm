@@ -1,28 +1,23 @@
-<?php
-use yii\helpers\Url;
-use yii\helpers\Html;
-
-?>
-    HOME PAGE
+<legend>HOME PAGE</legend>
 
 <?php if (!Yii::$app->user->getIsGuest()) : ?>
     <?php
     $modules = [
         [
             'label' => 'Call-центр',
-            'href'  => 'http://call.' . Yii::$app->urlManager->baseUrl,
+            'href'  => 'http://call.' . Yii::$app->params['baseUrl'],
         ],
         [
             'label' => 'Склад',
-            'href'  => Url::to(['/warehouse/']),
+            'href'  => 'http://warehouse.' . Yii::$app->params['baseUrl'],
         ],
         [
             'label' => 'Отчеты',
-            'href'  => Url::to(['/report/']),
+            'href'  => 'http://report.' . Yii::$app->params['baseUrl'],
         ],
         [
             'label' => 'Админка',
-            'href'  => Url::to(['/backend/']),
+            'href'  => 'http://backend.' . Yii::$app->params['baseUrl'],
         ]
     ];
     ?>
@@ -31,11 +26,11 @@ use yii\helpers\Html;
         <div class="col-md-12">
             <?php foreach ($modules as $module) : ?>
                 <a href="<?= $module['href']; ?>">
-                <div class="col-md-4">
-                    <div class="well frontModulesBlock">
-                        <?= $module['label']; ?>
+                    <div class="col-md-4">
+                        <div class="well frontModulesBlock">
+                            <?= $module['label']; ?>
+                        </div>
                     </div>
-                </div>
                 </a>
             <?php endforeach; ?>
         </div>
