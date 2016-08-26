@@ -5,7 +5,7 @@ $config = [
     'as AccessBehavior' => [
         'class'         => 'common\components\AccessBehavior',
         'allowedRoutes' => [
-            ['/']
+            ['/'],
             ['/site/login'],
         ],
         'redirectUri'   => 'http://crm-advanced.doit-team.ru/site/login'
@@ -20,7 +20,10 @@ $config = [
             'identityClass'   => 'common\models\user\User',
             'loginUrl'        => 'http://crm-advanced.doit-team.ru/site/login',
             'enableAutoLogin' => true,
-            'identityCookie'  => ['name' => '_identity-frontend', 'httpOnly' => true],
+            'identityCookie'  => ['name' => '_identityCommon'],
+        ],
+        'session'       => [
+            'name' => 'advanced-session-key',
         ],
         'urlManager'    => [
             'enablePrettyUrl' => true,
@@ -33,9 +36,6 @@ $config = [
         ],
         'request'       => [
             'csrfParam' => '_csrf-param',
-        ],
-        'session'       => [
-            'name' => 'advanced-session-key',
         ],
         'errorHandler'  => [
             'errorAction' => 'site/error',
