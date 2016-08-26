@@ -10,7 +10,7 @@ use yii\helpers\Html;
     $modules = [
         [
             'label' => 'Call-центр',
-            'href'  => Url::to(['/call/']),
+            'href'  => 'http://call.' . Yii::$app->urlManager->baseUrl,
         ],
         [
             'label' => 'Склад',

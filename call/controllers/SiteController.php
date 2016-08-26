@@ -1,7 +1,6 @@
 <?php
 namespace call\controllers;
 
-use Yii;
 use common\components\controllers\BaseController;
 
 class SiteController extends BaseController
