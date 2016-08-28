@@ -85,9 +85,9 @@ class AccessBehavior extends Behavior
             $this->redirectUri = Yii::$app->getUser()->loginUrl;
         }
 
-        if (Yii::$app->getUser()->isGuest
-            && Yii::$app->getRequest()->url !== Url::to($this->redirectUri)
-            && !in_array(Yii::$app->getRequest()->url, $this->allowedUrls)
+        if (Yii::$app->getUser()->getIsGuest()
+            && Yii::$app->getRequest()->getUrl() !== Url::to($this->redirectUri)
+            && !in_array(Yii::$app->getRequest()->getUrl(), $this->allowedUrls)
         ) {
             Yii::$app->getResponse()->redirect($this->redirectUri)->send();
             Yii::$app->end();

@@ -2,6 +2,7 @@
 
 return \common\components\helpers\ArrayHelper::merge([
     'defaultRoute' => 'site/index',
+    'bootstrap'           => ['log', 'common\components\UserParams'],
 //    'as AccessBehavior' => [
 //        'class'         => 'common\components\AccessBehavior',
 //        'allowedRoutes' => [

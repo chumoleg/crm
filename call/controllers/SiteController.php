@@ -2,24 +2,7 @@
 namespace call\controllers;
 
 use Yii;
-use common\components\controllers\BaseController;
 
-class SiteController extends BaseController
+class SiteController extends \common\components\controllers\SiteController
 {
-    /**
-     * @inheritdoc
-     */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-        ];
-    }
-
-    public function actionIndex()
-    {
-        return $this->render('index');
-    }
 }

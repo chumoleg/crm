@@ -9,7 +9,7 @@ class User extends \yii\web\User
     public function init()
     {
         parent::init();
-        $this->loginUrl = 'http://' . Yii::$app->params['baseUrl'] . '/site/login';
+//        $this->loginUrl = 'http://' . Yii::$app->params['baseUrl'] . '/site/login';
     }
 
     public function getWorkPlace()

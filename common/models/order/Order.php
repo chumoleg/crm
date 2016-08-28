@@ -18,6 +18,7 @@ use common\components\models\OrderSetOperator;
 use common\models\product\ProductTag;
 use common\models\tag\Tag;
 use common\models\stage\Stage;
+use common\components\Role;
 
 /**
  * This is the model class for table "order".
@@ -300,8 +301,9 @@ class Order extends ActiveRecord
     public function checkAccessManageOrder()
     {
         $currentOrderStage = $this->currentOrderStage;
-        $checker = (Yii::$app->getUser()->can(\common\components\Role::ADMIN)
-                || Yii::$app->getUser()->getId() == $this->current_user_id)
+        $checker = !Yii::$app->getUser()->can(Role::OPERATOR)
+            || (Yii::$app->getUser()->can(Role::OPERATOR)
+                && Yii::$app->getUser()->getId() == $this->current_user_id)
             && (empty($currentOrderStage) || $currentOrderStage->time_limit != 0);
 
         return $checker;

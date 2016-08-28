@@ -2,9 +2,7 @@
 
 namespace warehouse\controllers;
 
-use common\components\controllers\BaseController;
-
-class SiteController extends BaseController
+class SiteController extends \common\components\controllers\SiteController
 {
     public function actions()
     {
