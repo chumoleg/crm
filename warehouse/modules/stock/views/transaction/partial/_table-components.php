@@ -13,9 +13,11 @@
     <?php foreach ($modelsProductComponent as $index => $modelComponent): ?>
         <tr class="product-component-item">
             <td class="vcenter">
+                <?= $modelComponent->productComponent->id; ?>
+            </td>
+            <td class="vcenter">
                 <?= $modelComponent->productComponent->name; ?>
             </td>
-
             <td class="vcenter">
                 <?= $modelComponent->quantity; ?>
             </td>
