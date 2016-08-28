@@ -55,7 +55,7 @@ use common\models\client\Client;
             <a href="<?= 'http://' . Yii::$app->params['baseUrl']; ?>"
                class="btn btn-default mainMenuButton">Выход из раздела</a>
         <?php else : ?>
-            <a href="<?= \yii\helpers\Url::to(['site/logout']); ?>"
+            <a href="<?= \yii\helpers\Url::to(['/site/logout']); ?>"
                class="btn btn-default mainMenuButton">Выход</a>
         <?php endif; ?>
     </div>
