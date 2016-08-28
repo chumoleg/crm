@@ -2,14 +2,14 @@
 
 namespace warehouse\controllers;
 
-use yii\web\Controller;
+use common\components\controllers\BaseController;
 
-class SiteController extends Controller
+class SiteController extends BaseController
 {
     public function actions()
     {
         return [
-            'error'   => [
+            'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
         ];

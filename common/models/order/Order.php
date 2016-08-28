@@ -299,8 +299,8 @@ class Order extends ActiveRecord
     public function checkAccessManageOrder()
     {
         $currentOrderStage = $this->currentOrderStage;
-        $checker = (Yii::$app->user->can(\common\components\Role::ADMIN)
-                || Yii::$app->user->id == $this->current_user_id)
+        $checker = (Yii::$app->getUser()->can(\common\components\Role::ADMIN)
+                || Yii::$app->getUser()->getId() == $this->current_user_id)
             && (empty($currentOrderStage) || $currentOrderStage->time_limit != 0);
 
         return $checker;

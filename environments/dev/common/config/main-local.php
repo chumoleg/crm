@@ -2,9 +2,9 @@
 return [
     'components' => [
         'db'     => [
-            'dsn'      => 'mysql:host=localhost;dbname=yii2advanced',
+            'dsn'      => 'mysql:host=localhost;dbname=crm',
             'username' => 'root',
-            'password' => '',
+            'password' => 'root',
         ],
         'mailer' => [
             'useFileTransport' => true,

@@ -26,7 +26,7 @@ echo GridView::widget([
             'attribute' => 'current_user_id',
             'filter'    => $searchModel->getCurrentUserList(),
             'format'    => 'raw',
-            'visible'   => Yii::$app->user->can(Role::ADMIN),
+            'visible'   => Yii::$app->getUser()->can(Role::ADMIN),
             'value'     => function ($data) use ($operatorList) {
                 return $this->render('_operatorList', ['model' => $data, 'operatorList' => $operatorList]);
             },

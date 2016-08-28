@@ -87,7 +87,7 @@ class OrderController extends OrderManageController
         $this->_checkAccess();
 
         try {
-            $workPlace = Yii::$app->user->getWorkPlace();
+            $workPlace = Yii::$app->getUser()->getWorkPlace();
             if (empty($workPlace)) {
                 throw new Exception('Не выставлен № компьютера');
             }

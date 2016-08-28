@@ -1,23 +1,23 @@
 <legend>HOME PAGE</legend>
 
-<?php if (!Yii::$app->user->getIsGuest()) : ?>
+<?php if (!Yii::$app->getUser()->getIsGuest()) : ?>
     <?php
     $modules = [
         [
             'label' => 'Call-центр',
-            'href'  => 'http://call.' . Yii::$app->params['baseUrl'],
+            'href'  => Yii::$app->params['callUrl'],
         ],
         [
             'label' => 'Склад',
-            'href'  => 'http://warehouse.' . Yii::$app->params['baseUrl'],
+            'href'  => Yii::$app->params['warehouseUrl'],
         ],
         [
             'label' => 'Отчеты',
-            'href'  => 'http://report.' . Yii::$app->params['baseUrl'],
+            'href'  => Yii::$app->params['reportUrl'],
         ],
         [
             'label' => 'Админка',
-            'href'  => 'http://backend.' . Yii::$app->params['baseUrl'],
+            'href'  => Yii::$app->params['backendUrl'],
         ]
     ];
     ?>
@@ -25,7 +25,7 @@
     <div class="row">
         <div class="col-md-12">
             <?php foreach ($modules as $module) : ?>
-                <a href="<?= $module['href']; ?>">
+                <a href="<?= 'http://' . $module['href']; ?>">
                     <div class="col-md-4">
                         <div class="well frontModulesBlock">
                             <?= $module['label']; ?>

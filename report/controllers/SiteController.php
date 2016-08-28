@@ -2,9 +2,9 @@
 
 namespace report\controllers;
 
-use yii\web\Controller;
+use common\components\controllers\BaseController;
 
-class SiteController extends Controller
+class SiteController extends BaseController
 {
     public function actions()
     {

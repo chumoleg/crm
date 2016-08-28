@@ -155,10 +155,10 @@ class CreateOrderForm extends Order
         $this->price = array_sum(array_column($this->product_data, 'price')) + $this->deliveryPrice;
         $this->delivery_price = $this->deliveryPrice;
         $this->currency = Currency::RUR;
-        $this->create_user_id = !empty($this->clientId) ? Yii::$app->user->id : null;
+        $this->create_user_id = !empty($this->clientId) ? Yii::$app->getUser()->getId() : null;
 
-        if (!empty(Yii::$app->user->id) && Yii::$app->user->can(Role::OPERATOR)) {
-            $this->current_user_id = Yii::$app->user->id;
+        if (!empty(Yii::$app->getUser()->getId()) && Yii::$app->getUser()->can(Role::OPERATOR)) {
+            $this->current_user_id = Yii::$app->getUser()->getId();
         }
 
         return parent::beforeSave($insert);
