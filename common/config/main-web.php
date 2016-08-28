@@ -1,6 +1,6 @@
 <?php
 
-$config = \common\components\helpers\ArrayHelper::merge([
+return \common\components\helpers\ArrayHelper::merge([
     'defaultRoute' => 'site/index',
 //    'as AccessBehavior' => [
 //        'class'         => 'common\components\AccessBehavior',
@@ -51,14 +51,3 @@ $config = \common\components\helpers\ArrayHelper::merge([
         ],
     ],
 ], require('main-web-local.php'));
-
-if (!YII_ENV_TEST) {
-    // configuration adjustments for 'dev' environment
-    $config['bootstrap'][] = 'debug';
-    $config['modules']['debug'] = [
-        'class'      => 'yii\debug\Module',
-        'allowedIPs' => ['*']
-    ];
-}
-
-return $config;
