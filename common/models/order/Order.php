@@ -2,7 +2,6 @@
 
 namespace common\models\order;
 
-use common\components\helpers\ArrayHelper;
 use common\models\process\ProcessStage;
 use common\models\stage\StageMethod;
 use Yii;
@@ -33,6 +32,7 @@ use common\models\stage\Stage;
  * @property integer            $address_id
  * @property integer            $type_payment
  * @property integer            $type_delivery
+ * @property string             $sending_tracker
  * @property string             $price
  * @property string             $delivery_price
  * @property integer            $currency
@@ -112,7 +112,7 @@ class Order extends ActiveRecord
                 'integer'
             ],
             [['price', 'delivery_price'], 'number'],
-            [['time_postponed', 'date_create', 'date_update'], 'safe'],
+            [['sending_tracker', 'time_postponed', 'date_create', 'date_update'], 'safe'],
         ];
     }
 
@@ -132,6 +132,7 @@ class Order extends ActiveRecord
             'current_stage_id'        => 'Текущий статус',
             'type_payment'            => 'Тип оплаты',
             'type_delivery'           => 'Тип доставки',
+            'sending_tracker'         => 'Трекер отправления',
             'price'                   => 'Общая стоимость',
             'delivery_price'          => 'Стоимость доставки',
             'currency'                => 'Валюта',

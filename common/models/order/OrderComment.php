@@ -65,12 +65,16 @@ class OrderComment extends ActiveRecord
      */
     public static function getTextCommentByField($fieldName, $oldValue, $newValue)
     {
+        $order = new Order();
         $geoAddress = new GeoAddress();
-        $fields = ArrayHelper::merge($geoAddress->attributeLabels(), [
-            'fio'             => 'ФИО',
-            'phone'           => 'Телефон',
-            'current_user_id' => 'Текущий оператор'
-        ]);
+        $fields = ArrayHelper::merge(
+            $geoAddress->attributeLabels(),
+            $order->attributeLabels(),
+            [
+                'fio'             => 'ФИО',
+                'phone'           => 'Телефон',
+                'current_user_id' => 'Текущий оператор'
+            ]);
 
         if ($fieldName == 'type_delivery') {
             $oldValue = TypeDelivery::getValue($oldValue);
