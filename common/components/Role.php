@@ -8,11 +8,13 @@ class Role
 {
     const ADMIN = 'ADMIN';
     const OPERATOR = 'OPERATOR';
+    const WAREHOUSE_MANAGER = 'WAREHOUSE_MANAGER';
 
     public static $rolesList
         = [
-            self::OPERATOR => 'Оператор',
-            self::ADMIN    => 'Администратор',
+            self::OPERATOR          => 'Оператор call-центра',
+            self::WAREHOUSE_MANAGER => 'Сотрудник склада',
+            self::ADMIN             => 'Администратор',
         ];
 
     /**

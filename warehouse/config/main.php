@@ -12,12 +12,12 @@ return [
     'basePath'            => dirname(__DIR__),
     'bootstrap'           => ['log'],
     'controllerNamespace' => 'warehouse\controllers',
-    'as access' => [
+    'as access'           => [
         'class' => 'common\components\AccessControl',
         'rules' => [
             [
                 'allow' => true,
-                'roles' => [\common\components\Role::ADMIN],
+                'roles' => [\common\components\Role::ADMIN, \common\components\Role::WAREHOUSE_MANAGER],
             ]
         ]
     ],
