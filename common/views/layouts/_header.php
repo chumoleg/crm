@@ -11,10 +11,17 @@ NavBar::begin([
 ]);
 
 if (Yii::$app->id != 'app-frontend') {
-    $menuItems[] = [
-        'label' => 'Выход из раздела',
-        'url'   => 'http://' . Yii::$app->params['baseUrl']
-    ];
+    if (Yii::$app->getUser()->can(\common\components\Role::ADMIN)) {
+        $menuItems[] = [
+            'label' => 'Выход из раздела',
+            'url'   => 'http://' . Yii::$app->params['baseUrl']
+        ];
+    } else {
+        $menuItems[] = [
+            'label' => 'Выход',
+            'url'   => \yii\helpers\Url::to(['/site/logout'])
+        ];
+    }
 }
 
 echo Nav::widget([
