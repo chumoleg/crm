@@ -3,7 +3,8 @@
 <table class="table table-bordered table-striped">
     <thead>
     <tr>
-        <th class="col-md-5">Комплектущая</th>
+        <th class="col-md-5">ID комплектующей</th>
+        <th class="col-md-5">Название комплектующей</th>
         <th class="col-md-5 text-center">Кол-во</th>
     </tr>
     </thead>

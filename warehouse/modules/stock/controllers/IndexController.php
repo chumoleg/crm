@@ -2,6 +2,10 @@
 
 namespace warehouse\modules\stock\controllers;
 
+use warehouse\models\productComponent\ProductComponentStock;
+use warehouse\models\transaction\Transaction;
+use warehouse\models\transaction\TransactionProductComponent;
+use warehouse\models\transaction\TransactionSearch;
 use Yii;
 use warehouse\models\productComponent\ProductComponentStockSearch;
 use warehouse\models\productComponent\ProductComponent;
@@ -25,8 +29,19 @@ class IndexController extends BaseController
     {
         $model = $this->_loadModel($id);
 
+        $modelTransaction = new TransactionSearch();
+        $dataProviderTransaction = $modelTransaction->search(Yii::$app->request->get(), function ($q) use ($model) {
+            $innerQuery = TransactionProductComponent::find()
+                ->select('transaction_id')
+                ->andWhere(['product_component_id' => $model->id]);
+
+            $q->andWhere(['IN', 'id', $innerQuery]);
+        });
+
         return $this->render('view', [
-            'model' => $model
+            'model'                   => $model,
+            'modelTransaction'        => $modelTransaction,
+            'dataProviderTransaction' => $dataProviderTransaction
         ]);
     }
 
@@ -38,11 +53,11 @@ class IndexController extends BaseController
      */
     private function _loadModel($id)
     {
-        $model = ProductComponent::findById($id);
-        if (empty($model)) {
+        $relModel = ProductComponentStock::findById($id);
+        if (empty($relModel)) {
             throw new NotFoundHttpException();
         }
 
-        return $model;
+        return $relModel->productComponent;
     }
 }

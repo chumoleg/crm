@@ -24,12 +24,12 @@ echo GridView::widget([
         'name',
         [
             'attribute' => 'date_create',
-            'format'    => 'date',
+            'format'    => 'datetime',
             'filter'    => DatePicker::getInput($searchModel)
         ],
         [
             'class'    => 'common\components\grid\ActionColumn',
-            'template' => '{update}',
+            'template' => '{view}',
         ],
     ],
 ]);

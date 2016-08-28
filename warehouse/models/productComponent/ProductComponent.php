@@ -3,6 +3,7 @@
 namespace warehouse\models\productComponent;
 
 use common\components\base\ActiveRecord;
+use common\components\Status;
 use warehouse\models\techList\TechListProductComponent;
 use warehouse\models\transaction\TransactionProductComponent;
 
@@ -15,6 +16,8 @@ use warehouse\models\transaction\TransactionProductComponent;
  *
  * @property TechListProductComponent[]    $techListProductComponents
  * @property TransactionProductComponent[] $transactionProductComponents
+ * @property ProductComponentStock[]       $productComponentStocks
+ * @property ProductComponentStock         $currentStock
  */
 class ProductComponent extends ActiveRecord
 {
@@ -64,5 +67,23 @@ class ProductComponent extends ActiveRecord
     public function getTransactionProductComponents()
     {
         return $this->hasMany(TransactionProductComponent::className(), ['product_component_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductComponentStocks()
+    {
+        return $this->hasMany(ProductComponentStock::className(), ['product_component_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCurrentStock()
+    {
+        return $this->getProductComponentStocks()
+            ->andWhere(['status' => Status::STATUS_ACTIVE])
+            ->one();
     }
 }

@@ -1,36 +1,68 @@
 <?php
-use kartik\form\ActiveForm;
+use yii\widgets\Pjax;
+use yii\grid\GridView;
+use yii\widgets\DetailView;
+use warehouse\models\transaction\Transaction;
+use common\components\helpers\DatePicker;
 
-$model = $this->context->model;
+$this->title = $model->name;
 
-$this->context->addBreadCrumb('Список операций', ['/stock/transaction/index']);
+$this->context->addBreadCrumb('Наличие комплектующих на складе', ['/stock/index/index']);
 $this->context->addBreadCrumb($this->title);
+
+$currentStock = $model->getCurrentStock();
+
+echo DetailView::widget([
+    'model'      => $model,
+    'attributes' => [
+        'id',
+        'name',
+        [
+            'attribute' => 'id',
+            'label'     => 'Текущий остаток',
+            'value'     => \yii\helpers\ArrayHelper::getValue($currentStock, 'quantity', 0)
+        ]
+    ],
+]);
 ?>
-
-<?php $form = ActiveForm::begin(); ?>
-
-    <div class="row">
-        <div class="col-md-4">
-            <?= $form->field($model, 'type')->dropDownList(
-                \warehouse\models\transaction\Transaction::$typeList,
-                ['disabled' => !$model->getIsNewRecord()]); ?>
-            <?= $form->field($model, 'name')->textInput(['disabled' => !$model->getIsNewRecord()]); ?>
-        </div>
-        <div class="col-md-7 col-md-offset-1">
-            <?php
-            if ($model->getIsNewRecord()) {
-                echo $this->render('partial/_form-components', ['form' => $form]);
-            } else {
-                echo $this->render('partial/_table-components');
+    <div class="clearfix">&nbsp;</div>
+<?php
+Pjax::begin(['id' => 'transaction-grid']);
+echo GridView::widget([
+    'dataProvider' => $dataProviderTransaction,
+    'filterModel'  => $modelTransaction,
+    'columns'      => [
+        'id',
+        [
+            'attribute' => 'type',
+            'filter'    => Transaction::$typeList,
+            'value'     => function ($model) {
+                return \yii\helpers\ArrayHelper::getValue(Transaction::$typeList, $model->type);
             }
-            ?>
-        </div>
-    </div>
+        ],
+        'name',
+        [
+            'attribute' => 'date_create',
+            'format'    => 'datetime',
+            'filter'    => DatePicker::getInput($modelTransaction)
+        ],
+        [
+            'label' => 'Кол-во',
+            'value' => function ($data) use ($model) {
+                $counts = 0;
+                foreach ($data->transactionProductComponents as $transactionProductComponent) {
+                    if ($transactionProductComponent->product_component_id == $model->id) {
+                        $counts += $transactionProductComponent->quantity;
+                    }
+                }
 
-    <div class="row">
-        <div class="col-md-4">
-            <?= \common\components\helpers\FormButton::getButtons(); ?>
-        </div>
-    </div>
-
-<?php ActiveForm::end(); ?>
+                return $data->type == Transaction::TYPE_INCOME ? $counts : -$counts;
+            }
+        ],
+//        [
+//            'class'    => 'common\components\grid\ActionColumn',
+//            'template' => '{view}',
+//        ],
+    ],
+]);
+Pjax::end();
