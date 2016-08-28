@@ -47,7 +47,8 @@ Modal::end();
 </footer>
 
 <div id="bigPreLoader" class="text-center">
-    <img src="/source/images/bigPreLoader.gif" alt="Пожалуйста, подождите..."/>
+    <img src="http://<?= Yii::$app->params['baseUrl']; ?>/source/images/bigPreLoader.gif"
+         alt="Пожалуйста, подождите..."/>
 </div>
 
 <?php $this->endBody(); ?>
