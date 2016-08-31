@@ -12,6 +12,7 @@ DynamicFormWidget::begin([
     'widgetBody'      => '.container-stages',
     'widgetItem'      => '.stage-item',
     'min'             => 1,
+    'insertPosition'  => 'top',
     'limit'           => count($stageList),
     'insertButton'    => '.add-stage',
     'deleteButton'    => '.remove-stage',
