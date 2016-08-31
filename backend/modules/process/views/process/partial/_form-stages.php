@@ -87,13 +87,9 @@ DynamicFormWidget::begin([
 
         <tfoot>
         <tr>
-            <th class="col-md-2">Статус</th>
-            <th class="col-md-1 text-center">Время</th>
-            <th class="col-md-1 text-center">Начальный статус</th>
-            <th class="col-md-7">Доступные действия</th>
-            <th class="col-md-1 text-center" style="width:90px;">
+            <th colspan="5" align="right">
                 <button type="button" class="add-stage btn btn-success btn-xs" title="Добавить статус">
-                    <span class="glyphicon glyphicon-plus"></span>
+                    <span class="glyphicon glyphicon-plus">Добавить статус</span>
                 </button>
             </th>
         </tr>
