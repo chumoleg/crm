@@ -25,12 +25,12 @@ class DbController extends Controller
 
         $db->createCommand()->truncateTable('comment')->execute();
 
-        $db->createCommand()->truncateTable('process')->execute();
-        $db->createCommand()->truncateTable('process_stage')->execute();
-        $db->createCommand()->truncateTable('process_stage_action')->execute();
-        $db->createCommand()->truncateTable('process_source')->execute();
-        $db->createCommand()->truncateTable('product')->execute();
-        $db->createCommand()->truncateTable('product_price')->execute();
+//        $db->createCommand()->truncateTable('process')->execute();
+//        $db->createCommand()->truncateTable('process_stage')->execute();
+//        $db->createCommand()->truncateTable('process_stage_action')->execute();
+//        $db->createCommand()->truncateTable('process_source')->execute();
+//        $db->createCommand()->truncateTable('product')->execute();
+//        $db->createCommand()->truncateTable('product_price')->execute();
 
         $db->createCommand('SET FOREIGN_KEY_CHECKS = 1')->execute();
     }
