@@ -21,10 +21,6 @@ $this->context->addBreadCrumb($this->title);
                     'label'   => 'URLs',
                     'content' => $this->render('partial/_urls'),
                 ],
-                [
-                    'label'   => 'Товары',
-                    'content' => $this->render('partial/_products'),
-                ],
             ],
             'options'      => [
                 'class' => 'nav nav-tabs'
