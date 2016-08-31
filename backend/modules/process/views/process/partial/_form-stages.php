@@ -12,7 +12,6 @@ DynamicFormWidget::begin([
     'widgetBody'      => '.container-stages',
     'widgetItem'      => '.stage-item',
     'min'             => 1,
-    'insertPosition'  => 'top',
     'limit'           => count($stageList),
     'insertButton'    => '.add-stage',
     'deleteButton'    => '.remove-stage',
@@ -32,11 +31,7 @@ DynamicFormWidget::begin([
             <th class="col-md-1 text-center">Время</th>
             <th class="col-md-1 text-center">Начальный статус</th>
             <th class="col-md-7">Доступные действия</th>
-            <th class="col-md-1 text-center" style="width:90px;">
-                <button type="button" class="add-stage btn btn-success btn-xs" title="Добавить статус">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </button>
-            </th>
+            <th class="col-md-1 text-center" style="width:90px;"></th>
         </tr>
         </thead>
 
@@ -89,6 +84,20 @@ DynamicFormWidget::begin([
             </tr>
         <?php endforeach; ?>
         </tbody>
+
+        <tfoot>
+        <tr>
+            <th class="col-md-2">Статус</th>
+            <th class="col-md-1 text-center">Время</th>
+            <th class="col-md-1 text-center">Начальный статус</th>
+            <th class="col-md-7">Доступные действия</th>
+            <th class="col-md-1 text-center" style="width:90px;">
+                <button type="button" class="add-stage btn btn-success btn-xs" title="Добавить статус">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </th>
+        </tr>
+        </tfoot>
     </table>
 
 <?php DynamicFormWidget::end(); ?>
