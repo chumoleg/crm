@@ -4,7 +4,7 @@ $(document).ready(function () {
     scrollDownHistory();
 
     $(document).on('change', '#regionSelect', function () {
-        $.post('/call/order/ajax/index/area-list', {region: $(this).val()}, function (result) {
+        $.post('/order/ajax/index/area-list', {region: $(this).val()}, function (result) {
             if (!checkJsonAnswer(result)) {
                 return;
             }
@@ -18,7 +18,7 @@ $(document).ready(function () {
 
     $(document).on('change', '#fieldTextComment', function () {
         var obj = $(this);
-        $.post('/call/order/ajax/order/add-comment', {orderId: orderId, text: obj.val()}, function (result) {
+        $.post('/order/ajax/order/add-comment', {orderId: orderId, text: obj.val()}, function (result) {
             if (checkJsonAnswer(result)) {
                 _addComment(result.response);
             }
@@ -40,7 +40,7 @@ $(document).ready(function () {
         };
 
         preLoaderShow();
-        $.post('/call/order/ajax/order/update', params, function (result) {
+        $.post('/order/ajax/order/update', params, function (result) {
             preLoaderHide();
             if (!checkJsonAnswer(result)) {
                 return;
@@ -69,7 +69,7 @@ $(document).ready(function () {
         };
 
         preLoaderShow();
-        $.post('/call/order/ajax/order-product/add', params, function (result) {
+        $.post('/order/ajax/order-product/add', params, function (result) {
             if (_changeProductList(result)) {
                 modal.modal('hide');
             }
@@ -83,7 +83,7 @@ $(document).ready(function () {
         };
 
         preLoaderShow();
-        $.post('/call/order/ajax/order-product/remove', params, function (result) {
+        $.post('/order/ajax/order-product/remove', params, function (result) {
             _changeProductList(result);
         }, 'json');
     });
@@ -102,7 +102,7 @@ $(document).ready(function () {
 
     $(document).on('click', '.callOrder', function () {
         preLoaderShow();
-        $.post('/call/order/ajax/order/call', {orderId: orderId}, function (result) {
+        $.post('/order/ajax/order/call', {orderId: orderId}, function (result) {
             preLoaderHide();
             if (checkJsonAnswer(result)) {
                 _addComment(result.response);
@@ -111,7 +111,7 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '.sendSmsOrder', function () {
-        $.post('/call/order/ajax/order/send-sms', {orderId: orderId}, function (result) {
+        $.post('/order/ajax/order/send-sms', {orderId: orderId}, function (result) {
             if (checkJsonAnswer(result)) {
                 _addComment(result.response);
             }
