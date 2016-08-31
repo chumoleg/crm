@@ -183,10 +183,7 @@ abstract class OrderStatusController extends OrderManageController
                 'status'   => $systemStage->foreign_status
             ];
 
-            $curl = Yii::$app->curl;
-            $response = $curl
-                ->setOption(CURLOPT_POSTFIELDS, http_build_query($params))
-                ->post($systemUrl->url);
+            Yii::$app->curl->get($systemUrl->url . '?' . http_build_query($params));
         }
     }
 }
