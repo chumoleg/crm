@@ -30,7 +30,7 @@ use common\models\client\Client;
         </div>
     </div>
 
-    <div class="col-md-8 col-sm-4 col-xs-12">
+    <div class="col-md-7 col-sm-4 col-xs-12">
         <div class="well borderedBlock text-center">
             <span class="label label-info">Кол-во клиентов: <?= Client::getCountClients(); ?></span>
             <span class="label label-success">Кол-во новых клиентов: <?= Client::getCountClients(true); ?></span>
@@ -41,8 +41,8 @@ use common\models\client\Client;
     <div class="col-md-2 col-sm-2 col-xs-6">
         <div class="text-center borderedBlock">
             <?php
-            echo Yii::$app->user->identity->email;
-            $workPlace = Yii::$app->user->getWorkPlace();
+            echo Yii::$app->getUser()->getIdentity()->email;
+            $workPlace = Yii::$app->getUser()->getWorkPlace();
             if (!empty($workPlace)) {
                 echo ' (' . $workPlace . ')';
             }
@@ -50,7 +50,13 @@ use common\models\client\Client;
         </div>
     </div>
 
-    <div class="col-md-1 col-sm-2 col-xs-6">
-        <a href="<?= 'http://' . Yii::$app->params['baseUrl']; ?>" class="btn btn-default mainMenuButton">Выход</a>
+    <div class="col-md-2 col-sm-2 col-xs-6">
+        <?php if (Yii::$app->getUser()->can(\common\components\Role::ADMIN)) : ?>
+            <a href="<?= 'http://' . Yii::$app->params['baseUrl']; ?>"
+               class="btn btn-default mainMenuButton">Выход из раздела</a>
+        <?php else : ?>
+            <a href="<?= \yii\helpers\Url::to(['/site/logout']); ?>"
+               class="btn btn-default mainMenuButton">Выход</a>
+        <?php endif; ?>
     </div>
 </div>

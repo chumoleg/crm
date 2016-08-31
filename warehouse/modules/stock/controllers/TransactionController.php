@@ -36,12 +36,12 @@ class TransactionController extends CrudController
         return $this->_renderForm('create');
     }
 
-    public function actionUpdate($id)
+    public function actionView($id)
     {
         $this->loadModel($id);
         $this->model->modelsProductComponent = $this->model->transactionProductComponents;
 
-        return $this->_renderForm('update');
+        return $this->_renderForm('view');
     }
 
     /**

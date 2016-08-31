@@ -2,7 +2,6 @@
 
 namespace common\models\order;
 
-use common\components\helpers\ArrayHelper;
 use common\models\process\ProcessStage;
 use common\models\stage\StageMethod;
 use Yii;
@@ -19,6 +18,7 @@ use common\components\models\OrderSetOperator;
 use common\models\product\ProductTag;
 use common\models\tag\Tag;
 use common\models\stage\Stage;
+use common\components\Role;
 
 /**
  * This is the model class for table "order".
@@ -33,6 +33,7 @@ use common\models\stage\Stage;
  * @property integer            $address_id
  * @property integer            $type_payment
  * @property integer            $type_delivery
+ * @property string             $sending_tracker
  * @property string             $price
  * @property string             $delivery_price
  * @property integer            $currency
@@ -112,7 +113,7 @@ class Order extends ActiveRecord
                 'integer'
             ],
             [['price', 'delivery_price'], 'number'],
-            [['time_postponed', 'date_create', 'date_update'], 'safe'],
+            [['sending_tracker', 'time_postponed', 'date_create', 'date_update'], 'safe'],
         ];
     }
 
@@ -132,6 +133,7 @@ class Order extends ActiveRecord
             'current_stage_id'        => 'Текущий статус',
             'type_payment'            => 'Тип оплаты',
             'type_delivery'           => 'Тип доставки',
+            'sending_tracker'         => 'Трекер отправления',
             'price'                   => 'Общая стоимость',
             'delivery_price'          => 'Стоимость доставки',
             'currency'                => 'Валюта',
@@ -299,8 +301,9 @@ class Order extends ActiveRecord
     public function checkAccessManageOrder()
     {
         $currentOrderStage = $this->currentOrderStage;
-        $checker = (Yii::$app->user->can(\common\components\Role::ADMIN)
-                || Yii::$app->user->id == $this->current_user_id)
+        $checker = !Yii::$app->getUser()->can(Role::OPERATOR)
+            || (Yii::$app->getUser()->can(Role::OPERATOR)
+                && Yii::$app->getUser()->getId() == $this->current_user_id)
             && (empty($currentOrderStage) || $currentOrderStage->time_limit != 0);
 
         return $checker;

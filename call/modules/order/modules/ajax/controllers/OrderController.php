@@ -41,6 +41,7 @@ class OrderController extends OrderManageController
 
         $geoAddress = new GeoAddress();
         $addressAttributes = $geoAddress->attributes();
+        $modelAttributes = $this->model->attributes();
         if (in_array($fieldName, $addressAttributes)) {
             $orderAddress = $this->model->address;
             if (empty($orderAddress)) {
@@ -72,6 +73,11 @@ class OrderController extends OrderManageController
             $orderFio->fio = $value;
             $orderFio->save();
 
+        } elseif (in_array($fieldName, $modelAttributes)) {
+            $oldValue = $this->model->{$fieldName};
+            $this->model->{$fieldName} = $value;
+            $this->model->save();
+
         } else {
             return JsonHelper::answerSuccess();
         }
@@ -87,7 +93,7 @@ class OrderController extends OrderManageController
         $this->_checkAccess();
 
         try {
-            $workPlace = Yii::$app->user->getWorkPlace();
+            $workPlace = Yii::$app->getUser()->getWorkPlace();
             if (empty($workPlace)) {
                 throw new Exception('Не выставлен № компьютера');
             }
@@ -107,6 +113,7 @@ class OrderController extends OrderManageController
         $this->_checkAccess();
 
         $commentList = $this->_addOrderComment('Отправлено sms-сообщение');
+
         return JsonHelper::answerSuccess($commentList);
     }
 }

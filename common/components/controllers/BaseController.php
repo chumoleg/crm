@@ -2,12 +2,28 @@
 
 namespace common\components\controllers;
 
+use Yii;
 use yii\web\Controller;
 use yii\helpers\Html;
 
 class BaseController extends Controller
 {
     public $breadCrumbs = [];
+
+    public function beforeAction($action)
+    {
+        if (!parent::beforeAction($action)) {
+            return false;
+        }
+
+        if (Yii::$app->getUser()->getIsGuest()) {
+            $this->redirect(Yii::$app->getUser()->loginUrl);
+
+            return false;
+        }
+
+        return true;
+    }
 
     /**
      * @param string            $label

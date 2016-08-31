@@ -50,7 +50,7 @@ $(document).ready(function () {
         }, 'json');
     }
 
-    $(document).on('change', '#orderForm #areaSelect', function () {
+    $(document).on('change', '#orderForm #areaSelect, #orderForm #typeDelivery', function () {
         if ($(this).val() && $(this).val() != 0) {
             _changeOrderField.call(this);
         }

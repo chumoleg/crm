@@ -12,6 +12,15 @@ return [
     'basePath'            => dirname(__DIR__),
     'bootstrap'           => ['log'],
     'controllerNamespace' => 'warehouse\controllers',
+    'as access'           => [
+        'class' => 'common\components\AccessControl',
+        'rules' => [
+            [
+                'allow' => true,
+                'roles' => [\common\components\Role::ADMIN, \common\components\Role::WAREHOUSE_MANAGER],
+            ]
+        ]
+    ],
     'layout'              => '@app/views/layouts/main',
     'modules'             => [
         'order'        => [

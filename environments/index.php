@@ -30,14 +30,13 @@
  */
 return [
     'Development' => [
-        'path' => 'dev',
-        'setWritable' => [
+        'path'                   => 'dev',
+        'setWritable'            => [
             'backend/runtime',
             'backend/web/assets',
             'frontend/runtime',
             'frontend/web/assets',
             'api/runtime',
-            'api/web/assets',
             'call/runtime',
             'call/web/assets',
             'warehouse/runtime',
@@ -45,7 +44,7 @@ return [
             'report/runtime',
             'report/web/assets',
         ],
-        'setExecutable' => [
+        'setExecutable'          => [
             'yii',
             'tests/codeception/bin/yii',
         ],
@@ -58,15 +57,14 @@ return [
             'report/config/main-local.php',
         ],
     ],
-    'Production' => [
-        'path' => 'prod',
-        'setWritable' => [
+    'Production'  => [
+        'path'                   => 'prod',
+        'setWritable'            => [
             'backend/runtime',
             'backend/web/assets',
             'frontend/runtime',
             'frontend/web/assets',
             'api/runtime',
-            'api/web/assets',
             'call/runtime',
             'call/web/assets',
             'warehouse/runtime',
@@ -74,7 +72,7 @@ return [
             'report/runtime',
             'report/web/assets',
         ],
-        'setExecutable' => [
+        'setExecutable'          => [
             'yii',
         ],
         'setCookieValidationKey' => [

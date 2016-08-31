@@ -87,20 +87,39 @@ $disabled = !$model->checkAccessManageOrder();
 
     <div class="row">
         <div class="col-md-4">
-            Дом
+            Дом, Квартира/офис
         </div>
         <div class="col-md-8">
-            <?= Html::textInput('house', ArrayHelper::getValue($address, 'house'),
-                ['class' => 'form-control', 'disabled' => $disabled]); ?>
+            <div class="row">
+                <div class="col-md-6">
+                    <?= Html::textInput('house', ArrayHelper::getValue($address, 'house'),
+                        ['class' => 'form-control', 'disabled' => $disabled]); ?>
+                </div>
+                <div class="col-md-6">
+                    <?= Html::textInput('apartment', ArrayHelper::getValue($address, 'apartment'),
+                        ['class' => 'form-control', 'disabled' => $disabled]); ?>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-4">
-            Квартира/офис
+            Тип доставки
         </div>
         <div class="col-md-8">
-            <?= Html::textInput('apartment', ArrayHelper::getValue($address, 'apartment'),
+            <?= Html::dropDownList('type_delivery', $model->type_delivery,
+                \common\components\nomenclature\TypeDelivery::$list,
+                ['class' => 'form-control', 'id' => 'typeDelivery', 'disabled' => $disabled]); ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            Трекер отправления
+        </div>
+        <div class="col-md-8">
+            <?= Html::textInput('sending_tracker', $model->sending_tracker,
                 ['class' => 'form-control', 'disabled' => $disabled]); ?>
         </div>
     </div>

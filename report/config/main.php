@@ -13,5 +13,14 @@ return [
     'bootstrap'           => ['log'],
     'controllerNamespace' => 'report\controllers',
     'layout'              => '@app/views/layouts/main',
+    'as access'           => [
+        'class' => 'common\components\AccessControl',
+        'rules' => [
+            [
+                'allow' => true,
+                'roles' => [\common\components\Role::ADMIN],
+            ]
+        ]
+    ],
     'params'              => $params,
 ];

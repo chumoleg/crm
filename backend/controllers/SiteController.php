@@ -2,9 +2,7 @@
 
 namespace backend\controllers;
 
-use yii\web\Controller;
-
-class SiteController extends Controller
+class SiteController extends \common\components\controllers\SiteController
 {
     /**
      * @inheritdoc

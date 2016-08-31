@@ -13,6 +13,15 @@ return [
     'bootstrap'           => ['log'],
     'controllerNamespace' => 'call\controllers',
     'layout'              => '@app/views/layouts/main',
+    'as access'           => [
+        'class' => 'common\components\AccessControl',
+        'rules' => [
+            [
+                'allow' => true,
+                'roles' => [\common\components\Role::ADMIN, \common\components\Role::OPERATOR],
+            ]
+        ]
+    ],
     'modules'             => [
         'api'        => [
             'basePath' => '@app/modules/api',

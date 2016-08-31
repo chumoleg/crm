@@ -1,16 +1,16 @@
 <?php
 
-$config = [
-    'defaultRoute'      => 'site/index',
-    'as AccessBehavior' => [
-        'class'         => 'common\components\AccessBehavior',
-        'allowedRoutes' => [
-            ['/'],
-            ['/site/login'],
-        ],
-        'redirectUri'   => 'http://crm-advanced.doit-team.ru/site/login'
-    ],
-    'components'        => [
+return \common\components\helpers\ArrayHelper::merge([
+    'defaultRoute' => 'site/index',
+    'bootstrap'           => ['log', 'common\components\UserParams'],
+//    'as AccessBehavior' => [
+//        'class'         => 'common\components\AccessBehavior',
+//        'allowedRoutes' => [
+//            ['/'],
+//            ['/site/login'],
+//        ],
+//    ],
+    'components'   => [
         'consoleRunner' => [
             'class' => 'vova07\console\ConsoleRunner',
             'file'  => '@yiiBase/yii'
@@ -18,7 +18,6 @@ $config = [
         'user'          => [
             'class'           => 'common\components\base\User',
             'identityClass'   => 'common\models\user\User',
-            'loginUrl'        => 'http://crm-advanced.doit-team.ru/site/login',
             'enableAutoLogin' => true,
             'identityCookie'  => [
                 'name'     => '_identity',
@@ -52,15 +51,4 @@ $config = [
             'errorAction' => 'site/error',
         ],
     ],
-];
-
-if (!YII_ENV_TEST) {
-    // configuration adjustments for 'dev' environment
-    $config['bootstrap'][] = 'debug';
-    $config['modules']['debug'] = [
-        'class'      => 'yii\debug\Module',
-        'allowedIPs' => ['*']
-    ];
-}
-
-return $config;
+], require('main-web-local.php'));

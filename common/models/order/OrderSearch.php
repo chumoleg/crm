@@ -74,8 +74,8 @@ class OrderSearch extends Order
 
         $this->_compareWithCurrentApp($query);
 
-        if (Yii::$app->user->can(\common\components\Role::OPERATOR)) {
-            $query->andWhere(['order.current_user_id' => Yii::$app->user->id]);
+        if (Yii::$app->getUser()->can(\common\components\Role::OPERATOR)) {
+            $query->andWhere(['order.current_user_id' => Yii::$app->getUser()->getId()]);
         }
 
         $query->andFilterWhere([

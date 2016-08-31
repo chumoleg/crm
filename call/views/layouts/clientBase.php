@@ -13,7 +13,7 @@ use common\components\Role;
     <div class="row">
         <div class="col-sm-12">
             <?php
-            $url = Yii::$app->request->url;
+            $url = Yii::$app->getRequest()->getUrl();
             echo \yii\bootstrap\Nav::widget([
                 'id'           => 'clientBaseTabs',
                 'encodeLabels' => false,
@@ -27,13 +27,13 @@ use common\components\Role;
                         'label'  => 'Файлы',
                         'url'    => ['/clientBase/file/index'],
                         'active' => (bool)strstr($url, 'clientBase/file/index'),
-                        'view'   => Yii::$app->user->can(Role::ADMIN)
+                        'view'   => Yii::$app->getUser()->can(Role::ADMIN)
                     ],
                     [
                         'label'  => 'Загрузить новый файл',
                         'url'    => ['/clientBase/file/create'],
                         'active' => (bool)strstr($url, 'clientBase/file/create'),
-                        'view'   => Yii::$app->user->can(Role::ADMIN)
+                        'view'   => Yii::$app->getUser()->can(Role::ADMIN)
                     ],
                 ],
                 'options'      => [
