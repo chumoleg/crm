@@ -1,6 +1,6 @@
 <?php
 
-namespace api\modules\api\controllers;
+namespace api\controllers;
 
 use common\forms\CreateOrderForm;
 use yii\rest\ActiveController;
