@@ -28,9 +28,6 @@ return [
                 '<controller:\w+>/<action:\w+>'                       => '<controller>/<action>',
             ]
         ],
-        'errorHandler'  => [
-            'errorAction' => 'site/error',
-        ],
     ],
     'params'              => $params,
 ];
