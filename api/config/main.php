@@ -12,6 +12,10 @@ return [
     'bootstrap'           => ['log'],
     'controllerNamespace' => 'api\controllers',
     'components'          => [
+        'user'          => [
+            'class'           => 'common\components\base\User',
+            'identityClass'   => 'common\models\user\User',
+        ],
         'request'      => [
             'csrfParam'           => '_csrf-param',
             'cookieValidationKey' => '65gqHETurm6vbfvEoebgMguxh9-jZZA4'
