@@ -19,7 +19,7 @@ class ProcessUserController extends BaseController
 
         if (!empty(Yii::$app->request->post())) {
             if ($model->saveForm()) {
-                return $this->redirect(['/process/index']);
+                return $this->redirect(['/process/process/index']);
             }
         }
 

@@ -47,6 +47,6 @@ $operators = User::getListByRole(\common\components\Role::OPERATOR);
     </div>
 
     <div class="clearfix"></div>
-<?= \common\components\helpers\FormButton::getButtons(['process/index/index']); ?>
+<?= \common\components\helpers\FormButton::getButtons(['/process/index/index']); ?>
 
 <?php ActiveForm::end(); ?>
