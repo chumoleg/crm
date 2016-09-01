@@ -171,13 +171,13 @@ class Asterisk
         }
 
         $command = implode("\r\n", $commandList) . "\r\n\r\n";
-        echo 'QUERY: ' . "\r\n";
-        echo $command;
+//        echo 'QUERY: ' . "\r\n";
+//        echo $command;
         fputs($this->_socket, $command);
 
         $this->_readAnswer();
-        echo 'ANSWER: ' . "\r\n";
-        echo $this->_answer;
+//        echo 'ANSWER: ' . "\r\n";
+//        echo $this->_answer;
     }
 
     private function _setConfig()
