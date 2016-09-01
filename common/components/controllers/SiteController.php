@@ -42,6 +42,11 @@ class SiteController extends BaseController
         return $this->render('index');
     }
 
+    public function actionLogin()
+    {
+        return $this->goHome();
+    }
+
     public function actionLogout()
     {
         Yii::$app->getUser()->logout();
