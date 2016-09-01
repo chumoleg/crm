@@ -2,13 +2,17 @@
 
 use \kartik\form\ActiveForm;
 use common\models\user\User;
+use common\components\helpers\DepartmentHelper;
+
+/** @var \common\models\process\Process $process */
 
 $this->title = 'Процесс "' . $process->name . '". Назначение операторов';
 
 $this->context->addBreadCrumb('Список процессов', ['/process/process/index']);
 $this->context->addBreadCrumb($this->title);
 
-$operators = User::getListByRole(\common\components\Role::OPERATOR);
+$operatorsCall = User::getListByRole(\common\components\Role::OPERATOR);
+$operatorsWarehouse = User::getListByRole(\common\components\Role::WAREHOUSE_MANAGER);
 ?>
 
 <?php $form = ActiveForm::begin(); ?>
@@ -24,7 +28,15 @@ $operators = User::getListByRole(\common\components\Role::OPERATOR);
                 </thead>
 
                 <?php foreach ($process->processStages as $processStage) : ?>
-                    <?php $fieldKey = $processStage->stage_id; ?>
+                    <?php
+                    $fieldKey = $processStage->stage_id;
+                    $operators = [];
+                    if ($processStage->stage->department == DepartmentHelper::CALL_CENTER) {
+                        $operators = $operatorsCall;
+                    } elseif ($processStage->stage->department == DepartmentHelper::WAREHOUSE) {
+                        $operators = $operatorsWarehouse;
+                    }
+                    ?>
                     <tr>
                         <td><?= $processStage->stage->name; ?></td>
                         <td>
