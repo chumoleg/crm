@@ -21,14 +21,14 @@ return \common\components\helpers\ArrayHelper::merge([
             'enableAutoLogin' => true,
             'identityCookie'  => [
                 'name'     => '_identity',
-                'domain'   => '.crm-advanced.doit-team.ru',
+                'domain'   => '.crm.thor-cpa.com',
                 'httpOnly' => true,
             ],
         ],
         'session'       => [
             'name'         => 'advanced-session-key',
             'cookieParams' => [
-                'domain'   => '.crm-advanced.doit-team.ru',
+                'domain'   => '.crm.thor-cpa.com',
                 'path'     => '/',
                 'httpOnly' => true,
                 'secure'   => false,
