@@ -9,15 +9,12 @@ $params = array_merge(
 return [
     'id'                  => 'app-api',
     'basePath'            => dirname(__DIR__),
-//    'bootstrap'           => ['log'],
+    'bootstrap'           => ['log'],
     'controllerNamespace' => 'api\controllers',
     'components'          => [
         'request'      => [
             'csrfParam'           => '_csrf-param',
             'cookieValidationKey' => '65gqHETurm6vbfvEoebgMguxh9-jZZA4'
-        ],
-        'session'      => [
-            'name' => 'advanced-api',
         ],
         'urlManager'    => [
             'enablePrettyUrl' => true,
