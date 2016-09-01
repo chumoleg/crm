@@ -17,13 +17,13 @@ $operatorsWarehouse = User::getListByRole(\common\components\Role::WAREHOUSE_MAN
 
 <?php $form = ActiveForm::begin(); ?>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th class="col-md-4">Статус</th>
+                    <th class="col-md-3">Статус</th>
                     <th class="col-md-5">Операторы</th>
-                    <th class="col-md-3">Тип выбора</th>
+                    <th class="col-md-4">Тип выбора</th>
                 </tr>
                 </thead>
 
