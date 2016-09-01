@@ -3,13 +3,13 @@
 return \common\components\helpers\ArrayHelper::merge([
     'defaultRoute' => 'site/index',
     'bootstrap'           => ['log', 'common\components\UserParams'],
-    'as AccessBehavior' => [
-        'class'         => 'common\components\AccessBehavior',
-        'allowedRoutes' => [
-            ['/'],
-            ['/site/login'],
-        ],
-    ],
+//    'as AccessBehavior' => [
+//        'class'         => 'common\components\AccessBehavior',
+//        'allowedRoutes' => [
+//            ['/'],
+//            ['/site/login'],
+//        ],
+//    ],
     'components'   => [
         'consoleRunner' => [
             'class' => 'vova07\console\ConsoleRunner',
