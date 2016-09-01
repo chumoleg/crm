@@ -83,7 +83,7 @@ class Asterisk
             return $this->_socket;
         }
 
-        $this->_socket = fsockopen($this->_config['host'], $this->_config['port'], $errno, $errstr, 1);
+        $this->_socket = @fsockopen($this->_config['host'], $this->_config['port'], $errno, $errstr, 1);
         if (empty($this->_socket)) {
             $this->_socket = null;
             throw new Exception(Yii::t('yii', "Could not connect - $errstr ($errno)"));
