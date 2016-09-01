@@ -13,10 +13,23 @@ return [
     'controllerNamespace' => 'api\controllers',
     'components'          => [
         'request'      => [
-            'csrfParam' => '_csrf-api',
+            'csrfParam'           => '_csrf-param',
+            'cookieValidationKey' => '65gqHETurm6vbfvEoebgMguxh9-jZZA4'
         ],
         'session'      => [
             'name' => 'advanced-api',
+        ],
+        'urlManager'    => [
+            'enablePrettyUrl' => true,
+            'showScriptName'  => false,
+            'rules'           => [
+                '<module:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<module>/<controller>/<action>',
+                '<controller:\w+>/<action:\w+>/<id:\d+>'              => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>'                       => '<controller>/<action>',
+            ]
+        ],
+        'errorHandler'  => [
+            'errorAction' => 'site/error',
         ],
     ],
     'params'              => $params,
