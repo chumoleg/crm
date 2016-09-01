@@ -43,7 +43,7 @@ class Asterisk
             'Async: true',
             'Priority: 1',
             'Channel: SIP/' . $workPlace,
-            'Context: outbound-allroutes',
+            'Context: default',
             'Timeout: 30000',
             'Callerid: auto-dial <' . $phoneNumber . '>',
             'Exten: ' . $phoneNumber,
@@ -171,13 +171,13 @@ class Asterisk
         }
 
         $command = implode("\r\n", $commandList) . "\r\n\r\n";
-//        echo 'QUERY: ' . "\r\n";
-//        echo $command;
+        echo 'QUERY: ' . "\r\n";
+        echo $command;
         fputs($this->_socket, $command);
 
         $this->_readAnswer();
-//        echo 'ANSWER: ' . "\r\n";
-//        echo $this->_answer;
+        echo 'ANSWER: ' . "\r\n";
+        echo $this->_answer;
     }
 
     private function _setConfig()
