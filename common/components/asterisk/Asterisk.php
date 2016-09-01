@@ -43,7 +43,7 @@ class Asterisk
             'Async: true',
             'Priority: 1',
             'Channel: SIP/' . $workPlace,
-            'Context: default',
+            'Context: outbound-allroutes',
             'Timeout: 30000',
             'Callerid: auto-dial <' . $phoneNumber . '>',
             'Exten: ' . $phoneNumber,
