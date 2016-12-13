@@ -1,8 +1,11 @@
 <?php
+
+$domain = 'crm.local';
+
 return [
-    'baseUrl'      => 'crm.local',
-    'callUrl'      => 'crm.local/call',
-    'warehouseUrl' => 'crm.local/warehouse',
-    'reportUrl'    => 'crm.local/report',
-    'backendUrl'   => 'crm.local/backend',
+    'baseUrl'      => $domain,
+    'callUrl'      => 'call.' . $domain,
+    'warehouseUrl' => 'warehouse.' . $domain,
+    'reportUrl'    => 'report.' . $domain,
+    'backendUrl'   => 'backend.' . $domain,
 ];

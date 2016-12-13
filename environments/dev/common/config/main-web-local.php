@@ -1,15 +1,17 @@
 <?php
 
+$domain = 'crm.local';
+
 $config = [
     'components' => [
         'user'    => [
             'identityCookie' => [
-                'domain' => '.crm.local',
+                'domain' => '.' . $domain,
             ],
         ],
         'session' => [
             'cookieParams' => [
-                'domain' => '.crm.local'
+                'domain' => '.' . $domain
             ],
         ],
     ],

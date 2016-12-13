@@ -1,15 +1,17 @@
 <?php
 
+$domain = 'crm.local';
+
 $config = [
     'components' => [
         'user'    => [
             'identityCookie' => [
-                'domain' => '.crm.local',
+                'domain' => '.' . $domain,
             ],
         ],
         'session' => [
             'cookieParams' => [
-                'domain' => '.crm.local'
+                'domain' => '.' . $domain,
             ],
         ],
     ],
@@ -20,7 +22,7 @@ if (!YII_ENV_TEST) {
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class'      => 'yii\debug\Module',
-        'allowedIPs' => ['*']
+        'allowedIPs' => ['*'],
     ];
 }
 

@@ -1,8 +1,11 @@
 <?php
+
+$domain = 'crm.thor-cpa.com';
+
 return [
-    'baseUrl'      => 'crm.thor-cpa.com',
-    'callUrl'      => 'call.crm.thor-cpa.com',
-    'warehouseUrl' => 'warehouse.crm.thor-cpa.com',
-    'reportUrl'    => 'report.crm.thor-cpa.com',
-    'backendUrl'   => 'backend.crm.thor-cpa.com',
+    'baseUrl'      => $domain,
+    'callUrl'      => 'call.' . $domain,
+    'warehouseUrl' => 'warehouse.' . $domain,
+    'reportUrl'    => 'report.' . $domain,
+    'backendUrl'   => 'backend.' . $domain,
 ];

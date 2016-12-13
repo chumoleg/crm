@@ -1,5 +1,7 @@
 <?php
 
+$domain = 'crm.thor-cpa.com';
+
 return \common\components\helpers\ArrayHelper::merge([
     'defaultRoute' => 'site/index',
     'bootstrap'           => ['log', 'common\components\UserParams'],
@@ -21,14 +23,14 @@ return \common\components\helpers\ArrayHelper::merge([
             'enableAutoLogin' => true,
             'identityCookie'  => [
                 'name'     => '_identity',
-                'domain'   => '.crm.thor-cpa.com',
+                'domain'   => '.' . $domain,
                 'httpOnly' => true,
             ],
         ],
         'session'       => [
             'name'         => 'advanced-session-key',
             'cookieParams' => [
-                'domain'   => '.crm.thor-cpa.com',
+                'domain'   => '.' . $domain,
                 'path'     => '/',
                 'httpOnly' => true,
                 'secure'   => false,
