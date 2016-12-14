@@ -3,8 +3,8 @@
 namespace warehouse\modules\stock\forms;
 
 use Yii;
-use warehouse\models\transaction\Transaction;
-use warehouse\models\transaction\TransactionProductComponent;
+use common\models\transaction\Transaction;
+use common\models\transaction\TransactionProductComponent;
 use common\components\base\Model;
 
 class TransactionForm extends Transaction

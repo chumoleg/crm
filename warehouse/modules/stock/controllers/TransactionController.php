@@ -3,8 +3,8 @@
 namespace warehouse\modules\stock\controllers;
 
 use common\components\controllers\CrudController;
-use warehouse\models\transaction\TransactionProductComponent;
-use warehouse\models\transaction\TransactionSearch;
+use common\models\transaction\TransactionProductComponent;
+use common\models\transaction\TransactionSearch;
 use warehouse\modules\stock\forms\TransactionForm;
 
 class TransactionController extends CrudController

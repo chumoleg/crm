@@ -89,7 +89,7 @@ abstract class OrderStatusController extends OrderManageController
 
         if ($this->_actionModel->hold == Status::STATUS_ACTIVE) {
             $this->model->time_postponed = Yii::$app->request->post('holdTime');
-            $commentList = $this->_addOrderComment('Заказ отложен до: '
+            $commentList = $this->_addOrderComment('Сделка отложена до: '
                 . Yii::$app->formatter->asDatetime($this->model->time_postponed));
         }
 

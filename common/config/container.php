@@ -36,4 +36,27 @@ Yii::$container->set('yii\widgets\Pjax', [
     'layout' => "{pager}\n{summary}\n{items}",
 ]);
 
+Yii::$container->set('yii\grid\GridView', [
+    'layout' => "{pager}\n{summary}\n{items}",
+    'pager'  => [
+        'prevPageLabel'  => '<',
+        'nextPageLabel'  => '>',
+        'firstPageLabel' => '<<',
+        'lastPageLabel'  => '>>'
+    ],
+]);
+
+Yii::$container->set('kartik\grid\GridView', [
+    'export'           => false,
+    'resizableColumns' => false,
+    'footerRowOptions' => ['class' => 'info text-bold'],
+    'layout'           => "{pager}\n{summary}\n{items}",
+    'pager'            => [
+        'prevPageLabel'  => '<',
+        'nextPageLabel'  => '>',
+        'firstPageLabel' => '<<',
+        'lastPageLabel'  => '>>'
+    ],
+]);
+
 Yii::setAlias('@yiiBase', realpath(dirname(__FILE__) . '/../'));

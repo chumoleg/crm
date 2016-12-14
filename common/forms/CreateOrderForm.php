@@ -8,63 +8,45 @@ use common\components\nomenclature\TypePayment;
 use common\models\order\OrderProduct;
 use common\models\process\Process;
 use common\models\order\Order;
-use common\models\client\Client;
 use common\components\helpers\ArrayHelper;
 use common\components\nomenclature\Currency;
 use common\models\product\Product;
 use common\models\source\Source;
 use common\components\Role;
-use common\models\geo\GeoAddress;
-use common\models\geo\GeoArea;
 
 class CreateOrderForm extends Order
 {
     const SCENARIO_BY_PARAMS = 'createByParams';
-    const SCENARIO_BY_CLIENT = 'createByClient';
     const SCENARIO_BY_API = 'createByApi';
 
-    public $clientId;
-
     public $source;
-    public $fio;
-    public $phone;
+    public $company;
 
     public $typePayment;
     public $typeDelivery;
     public $deliveryPrice = 0;
 
-    public $addressAreaId;
-    public $addressPostIndex;
-
     public $product_data_checker;
     public $product_data = [];
-
-    /**
-     * @var Client
-     */
-    private $_clientModel;
 
     /**
      * @inheritdoc
      */
     public function rules()
     {
-        return ArrayHelper::merge([
-            [['addressPostIndex', 'fio', 'phone'], 'filter', 'filter' => 'trim'],
-            [['product_data'], 'required', 'on' => self::SCENARIO_BY_API],
-            [['product_data_checker'], 'required', 'on' => [self::SCENARIO_BY_PARAMS, self::SCENARIO_BY_CLIENT]],
-            [['fio', 'phone'], 'required', 'on' => [self::SCENARIO_BY_PARAMS, self::SCENARIO_BY_API]],
-            [['clientId'], 'required', 'on' => self::SCENARIO_BY_CLIENT],
-            [['deliveryPrice', 'addressPostIndex'], 'number'],
-            [['addressAreaId', 'source'], 'integer'],
-            [['product_data', 'typePayment', 'typeDelivery'], 'safe'],
-            ['product_data', 'validateProductData', 'on' => self::SCENARIO_BY_API],
+        return ArrayHelper::merge(
             [
-                'product_data_checker',
-                'validateProductData',
-                'on' => [self::SCENARIO_BY_CLIENT, self::SCENARIO_BY_PARAMS]
+                [['company'], 'required'],
+                [['deliveryPrice'], 'number'],
+                [['source', 'company'], 'integer'],
+                [['product_data'], 'required', 'on' => self::SCENARIO_BY_API],
+                [['product_data_checker'], 'required', 'on' => self::SCENARIO_BY_PARAMS],
+                [['product_data', 'typePayment', 'typeDelivery'], 'safe'],
+                ['product_data', 'validateProductData', 'on' => self::SCENARIO_BY_API],
+                ['product_data_checker', 'validateProductData', 'on' => self::SCENARIO_BY_PARAMS],
             ],
-        ], parent::rules());
+            parent::rules()
+        );
     }
 
     /**
@@ -72,33 +54,24 @@ class CreateOrderForm extends Order
      */
     public function attributeLabels()
     {
-        return ArrayHelper::merge([
-            'source'               => 'Источник',
-            'addressAreaId'        => 'Область',
-            'addressPostIndex'     => 'Почтовый индекс',
-            'fio'                  => 'ФИО клиента',
-            'phone'                => 'Телефон клиента',
-            'typePayment'          => 'Тип оплаты',
-            'typeDelivery'         => 'Тип доставки',
-            'deliveryPrice'        => 'Стоимость доставки',
-            'product_data'         => 'Товары',
-            'product_data_checker' => 'Товары',
-        ], parent::attributeLabels());
+        return ArrayHelper::merge(
+            [
+                'source'               => 'Источник',
+                'company'              => 'Организация',
+                'typePayment'          => 'Тип оплаты',
+                'typeDelivery'         => 'Тип доставки',
+                'deliveryPrice'        => 'Стоимость доставки',
+                'product_data'         => 'Товары',
+                'product_data_checker' => 'Товары',
+            ],
+            parent::attributeLabels()
+        );
     }
 
     public function beforeValidate()
     {
-        $this->_formatPhone();
         if (!empty($this->product_data)) {
             $this->product_data_checker = true;
-        }
-
-        if (empty($this->addressAreaId)) {
-            $this->addressAreaId = GeoArea::DEFAULT_AREA;
-        }
-
-        if (empty($this->addressPostIndex)) {
-            $this->addressPostIndex = GeoAddress::DEFAULT_POST_INDEX;
         }
 
         return parent::beforeValidate();
@@ -123,39 +96,17 @@ class CreateOrderForm extends Order
         }
     }
 
-    public function afterValidate()
-    {
-        if (empty($this->clientId)) {
-            $this->_clientModel = Client::getModel($this->phone, $this->fio, $this->_getAddressData());
-
-        } else {
-            $this->_clientModel = Client::findById($this->clientId);
-        }
-
-        if (empty($this->_clientModel)) {
-            $this->addError('fio', 'Ошибка при сохранении данных клиента!');
-            return;
-        }
-
-        parent::afterValidate();
-    }
-
     public function beforeSave($insert)
     {
         $this->_setSourceId();
         $this->_setProcessId();
-        $this->_setAddressId();
         $this->_setTypePayment();
         $this->_setTypeDelivery();
-
-        $this->client_id = $this->_clientModel->id;
-        $this->client_phone_id = ArrayHelper::getValue($this->_clientModel, 'mainPhone.id');
-        $this->client_personal_data_id = ArrayHelper::getValue($this->_clientModel, 'mainPersonalData.id');
 
         $this->price = array_sum(array_column($this->product_data, 'price')) + $this->deliveryPrice;
         $this->delivery_price = $this->deliveryPrice;
         $this->currency = Currency::RUR;
-        $this->create_user_id = !empty($this->clientId) ? Yii::$app->getUser()->getId() : null;
+        $this->create_user_id = $this->scenario == self::SCENARIO_BY_PARAMS ? Yii::$app->getUser()->getId() : null;
 
         if (!empty(Yii::$app->getUser()->getId()) && Yii::$app->getUser()->can(Role::OPERATOR)) {
             $this->current_user_id = Yii::$app->getUser()->getId();
@@ -179,8 +130,7 @@ class CreateOrderForm extends Order
     {
 //        $post = [
 //            'source'       => 'Источник',
-//            'fio'          => 'ФИО клиента',
-//            'phone'        => 'Телефон клиента',
+//            'company'      => 'Организация',
 //            'product_data' => [
 //                [
 //                    'product_id' => 'ID товара',
@@ -194,50 +144,17 @@ class CreateOrderForm extends Order
         return array_combine($fields, $fields);
     }
 
-    private function _formatPhone()
-    {
-        $phoneNumber = preg_replace('/[^0-9]/u', '', $this->phone);
-        $firstSymbol = substr($phoneNumber, 0, 1);
-
-        if (strlen($phoneNumber) == 11 && $firstSymbol == 7) {
-            $phoneNumber = '8' . substr($phoneNumber, 1, strlen($phoneNumber) - 1);
-        }
-
-        if (strlen($phoneNumber) == 10 && $firstSymbol != 8) {
-            $phoneNumber = '8' . $phoneNumber;
-        }
-
-        $this->phone = $phoneNumber;
-    }
-
-    /**
-     * @return array
-     */
-    private function _getAddressData()
-    {
-        $addressData = [
-            'area_id'    => $this->addressAreaId,
-            'post_index' => $this->addressPostIndex
-        ];
-        return $addressData;
-    }
-
     private function _saveProducts()
     {
         foreach ($this->product_data as $item) {
-            OrderProduct::addByParams($this, $item['product_id'], $item['price'],
-                ArrayHelper::getValue($item, 'quantity', 1), $this->currency);
+            OrderProduct::addByParams(
+                $this,
+                $item['product_id'],
+                $item['price'],
+                ArrayHelper::getValue($item, 'quantity', 1),
+                $this->currency
+            );
         }
-    }
-
-    private function _setAddressId()
-    {
-        $addressId = ArrayHelper::getValue($this->_clientModel, 'mainAddress.address_id');
-        if (empty($addressId)) {
-            $addressId = Client::createNewAddress($this->_clientModel->id, $this->_getAddressData());
-        }
-
-        $this->address_id = $addressId;
     }
 
     private function _setProcessId()
@@ -254,10 +171,9 @@ class CreateOrderForm extends Order
             return;
         }
 
-        if (!empty($this->clientId)) {
+        $this->source_id = Source::DEFAULT_SOURCE;
+        if ($this->scenario == self::SCENARIO_BY_PARAMS) {
             $this->source_id = Source::SOURCE_OPERATOR;
-        } else {
-            $this->source_id = Source::DEFAULT_SOURCE;
         }
     }
 

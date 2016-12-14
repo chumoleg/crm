@@ -11,7 +11,6 @@ use common\models\order\Order;
  * This is the model class for table "process".
  *
  * @property integer         $id
- * @property integer         $type
  * @property string          $name
  * @property integer         $status
  * @property integer         $user_id
@@ -24,13 +23,6 @@ use common\models\order\Order;
  */
 class Process extends ActiveRecord
 {
-    const TYPE_ORDER = 1;
-
-    public static $typeList
-        = [
-            self::TYPE_ORDER => 'Для заказов'
-        ];
-
     /**
      * @inheritdoc
      */
@@ -59,9 +51,9 @@ class Process extends ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'name'], 'required'],
+            [['name'], 'required'],
             [['name'], 'unique'],
-            [['type', 'status', 'user_id'], 'integer'],
+            [['status', 'user_id'], 'integer'],
             [['date_create'], 'safe'],
             [['name'], 'string', 'max' => 100],
         ];
@@ -74,7 +66,6 @@ class Process extends ActiveRecord
     {
         return [
             'id'          => 'ID',
-            'type'        => 'Тип',
             'name'        => 'Название',
             'status'      => 'Статус',
             'user_id'     => 'Создан',

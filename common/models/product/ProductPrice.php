@@ -27,7 +27,7 @@ class ProductPrice extends ActiveRecord
 
     public static $typeList
         = [
-            self::TYPE_MAIN       => 'Для создания заказов',
+            self::TYPE_MAIN       => 'Для заключения новой сделки',
             self::TYPE_ADDITIONAL => 'Для доп.продаж'
         ];
 

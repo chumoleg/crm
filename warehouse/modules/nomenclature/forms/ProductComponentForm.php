@@ -2,7 +2,7 @@
 
 namespace warehouse\modules\nomenclature\forms;
 
-use warehouse\models\productComponent\ProductComponent;
+use common\models\productComponent\ProductComponent;
 
 class ProductComponentForm extends ProductComponent
 {

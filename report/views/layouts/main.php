@@ -1,7 +1,7 @@
 <?php
 $items = [
     [
-        'label'  => 'По времени обработки заказов',
+        'label'  => 'По времени обработки сделок',
         'url'    => ['/time/index'],
         'active' => (bool)strstr(Yii::$app->request->url, 'report/time/')
     ],

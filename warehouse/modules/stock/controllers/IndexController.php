@@ -2,13 +2,12 @@
 
 namespace warehouse\modules\stock\controllers;
 
-use warehouse\models\productComponent\ProductComponentStock;
-use warehouse\models\transaction\Transaction;
-use warehouse\models\transaction\TransactionProductComponent;
-use warehouse\models\transaction\TransactionSearch;
 use Yii;
-use warehouse\models\productComponent\ProductComponentStockSearch;
-use warehouse\models\productComponent\ProductComponent;
+use common\models\productComponent\ProductComponentStock;
+use common\models\transaction\TransactionProductComponent;
+use common\models\transaction\TransactionSearch;
+use common\models\productComponent\ProductComponentStockSearch;
+use common\models\productComponent\ProductComponent;
 use common\components\controllers\BaseController;
 use yii\web\NotFoundHttpException;
 

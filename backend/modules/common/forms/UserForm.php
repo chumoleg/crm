@@ -37,7 +37,7 @@ class UserForm extends User
     {
         return ArrayHelper::merge(parent::attributeLabels(), [
             'password' => 'Пароль',
-            'tagData'  => 'Теги (для подгрузки заказов)'
+            'tagData'  => 'Теги (для назначения сделок)'
         ]);
     }
 

@@ -2,7 +2,7 @@
 use yii\widgets\Pjax;
 use yii\grid\GridView;
 use yii\widgets\DetailView;
-use warehouse\models\transaction\Transaction;
+use common\models\transaction\Transaction;
 use common\components\helpers\DatePicker;
 
 $this->title = $model->name;

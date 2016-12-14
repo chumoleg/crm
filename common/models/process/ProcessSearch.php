@@ -16,7 +16,6 @@ class ProcessSearch extends Process
             [
                 [
                     'id',
-                    'type',
                     'name',
                     'status',
                     'date_create'
@@ -42,7 +41,6 @@ class ProcessSearch extends Process
 
         $query->andFilterWhere([
             'id'          => $this->id,
-            'type'        => $this->type,
             'name'        => $this->name,
             'status'      => $this->status,
             'date_create' => $this->date_create

@@ -6,7 +6,7 @@ use Yii;
 use common\components\base\ActiveRecord;
 use common\models\user\User;
 use common\models\order\OrderProduct;
-use warehouse\models\product\ProductTechList;
+use common\models\product\ProductTechList;
 
 /**
  * This is the model class for table "product".

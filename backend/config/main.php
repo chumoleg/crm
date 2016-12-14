@@ -24,8 +24,8 @@ return [
     ],
     'modules'             => [
         'order'   => [
-            'basePath' => '@app/modules/order',
-            'class'    => 'backend\modules\order\Module'
+            'basePath' => '@common/modules/order',
+            'class'    => 'common\modules\order\Module'
         ],
         'common'  => [
             'basePath' => '@app/modules/common',

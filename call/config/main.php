@@ -13,28 +13,21 @@ return [
     'bootstrap'           => ['log'],
     'controllerNamespace' => 'call\controllers',
     'layout'              => '@app/views/layouts/main',
+    'defaultRoute'        => '/order/order/index',
     'as access'           => [
         'class' => 'common\components\AccessControl',
         'rules' => [
             [
                 'allow' => true,
                 'roles' => [\common\components\Role::ADMIN, \common\components\Role::OPERATOR],
-            ]
-        ]
+            ],
+        ],
     ],
     'modules'             => [
-        'api'        => [
-            'basePath' => '@app/modules/api',
-            'class'    => 'call\modules\api\Module'
+        'order' => [
+            'basePath' => '@common/modules/order',
+            'class'    => 'common\modules\order\Module',
         ],
-        'clientBase' => [
-            'basePath' => '@app/modules/clientBase',
-            'class'    => 'call\modules\clientBase\Module',
-        ],
-        'order'      => [
-            'basePath' => '@app/modules/order',
-            'class'    => 'call\modules\order\Module',
-        ]
     ],
     'params'              => $params,
 ];

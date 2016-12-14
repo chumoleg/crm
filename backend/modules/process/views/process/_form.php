@@ -16,7 +16,6 @@ $this->context->addBreadCrumb($this->title);
             <div class="row">
                 <div class="col-md-11">
                     <?php
-                    echo $form->field($model, 'type')->dropDownList(\common\models\process\Process::$typeList);
                     echo $form->field($model, 'name')->textInput();
 
                     echo $form->field($model, 'sourceList')->widget(\kartik\widgets\Select2::className(), [

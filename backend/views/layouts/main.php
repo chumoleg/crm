@@ -3,13 +3,18 @@ $url = Yii::$app->request->url;
 
 $items = [
     [
-        'label'  => 'Заказы',
+        'label'  => 'Сделки',
         'url'    => ['/order/order/index'],
         'active' => (bool)strstr($url, '/order/')
     ],
     [
         'label'  => 'Управление (общее)',
         'items' => [
+            [
+                'label'  => 'Организации',
+                'url'    => ['/common/company/index'],
+                'active' => (bool)strstr($url, 'common/company')
+            ],
             [
                 'label'  => 'Пользователи',
                 'url'    => ['/common/user/index'],
@@ -19,6 +24,11 @@ $items = [
                 'label'  => 'Источники',
                 'url'    => ['/common/source/index'],
                 'active' => (bool)strstr($url, 'common/source/')
+            ],
+            [
+                'label'  => 'Товары',
+                'url'    => ['/common/product/index'],
+                'active' => (bool)strstr($url, 'common/product')
             ],
             [
                 'label'  => 'Тэги',
@@ -42,12 +52,12 @@ $items = [
                 'active' => (bool)strstr($url, 'process/reason/')
             ],
             [
-                'label'  => 'Статусы заказов',
+                'label'  => 'Статусы сделок',
                 'url'    => ['/process/stage/index'],
                 'active' => (bool)strstr($url, 'process/stage/')
             ],
             [
-                'label'  => 'Процессы обработки заказов',
+                'label'  => 'Процессы обработки сделок',
                 'url'    => ['/process/process/index'],
                 'active' => (bool)strstr($url, 'process/process')
             ],

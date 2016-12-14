@@ -22,7 +22,7 @@ class OrderManageController extends BaseController
         $orderId = (int)Yii::$app->request->post('orderId');
         $this->model = Order::findById($orderId);
         if (empty($this->model)) {
-            JsonHelper::answerError('Заказ не найден!');
+            JsonHelper::answerError('Сделка не найдена!');
         }
     }
 
@@ -47,7 +47,7 @@ class OrderManageController extends BaseController
     protected function _checkAccess()
     {
         if (!$this->model->checkAccessManageOrder()) {
-            return JsonHelper::answerError('Статус заказа уже изменен! Пожалуйста, обновите страницу.');
+            return JsonHelper::answerError('Статус сделки уже изменен! Пожалуйста, обновите страницу.');
         }
     }
 }

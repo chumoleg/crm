@@ -62,9 +62,7 @@ class OrderSearch extends Order
         $query = parent::find()
             ->joinWith('process')
             ->joinWith('currentStage')
-            ->joinWith('source')
-            ->joinWith('clientPhone')
-            ->joinWith('clientPersonalData');
+            ->joinWith('source');
 
         $dataProvider = $this->getDataProvider($query, $defaultOrder);
         $this->load($params);

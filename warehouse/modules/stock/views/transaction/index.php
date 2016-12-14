@@ -2,7 +2,7 @@
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use common\components\helpers\DatePicker;
-use warehouse\models\transaction\Transaction;
+use common\models\transaction\Transaction;
 
 $this->title = 'Список операций';
 

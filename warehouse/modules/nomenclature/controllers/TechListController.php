@@ -3,8 +3,8 @@
 namespace warehouse\modules\nomenclature\controllers;
 
 use Yii;
-use warehouse\models\techList\TechListProductComponent;
-use warehouse\models\techList\TechListSearch;
+use common\models\techList\TechListProductComponent;
+use common\models\techList\TechListSearch;
 use warehouse\modules\nomenclature\forms\TechListForm;
 use common\components\controllers\CrudController;
 

@@ -1,18 +1,13 @@
 <?php
 $items = [
     [
-        'label'  => 'Заказы',
-        'url'    => ['/order/index/index'],
-        'active' => (bool)strstr(Yii::$app->request->url, 'warehouse/order/index')
+        'label'  => 'Сделки',
+        'url'    => ['/order/order/index'],
+        'active' => (bool)strstr(Yii::$app->request->url, 'warehouse/order/')
     ],
     [
         'label' => 'Номенклатура',
         'items' => [
-            [
-                'label'  => 'Товары',
-                'url'    => ['/nomenclature/product/index'],
-                'active' => (bool)strstr(Yii::$app->request->url, 'warehouse/nomenclature/product/')
-            ],
             [
                 'label'  => 'Комплектующие',
                 'url'    => ['/nomenclature/product-component/index'],

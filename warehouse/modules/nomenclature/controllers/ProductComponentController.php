@@ -5,7 +5,7 @@ namespace warehouse\modules\nomenclature\controllers;
 use Yii;
 use warehouse\modules\nomenclature\forms\ProductComponentForm;
 use common\components\controllers\CrudController;
-use warehouse\models\productComponent\ProductComponentSearch;
+use common\models\productComponent\ProductComponentSearch;
 
 class ProductComponentController extends CrudController
 {

@@ -12,7 +12,7 @@ $this->context->addBreadCrumb($this->title);
     <div class="row">
         <div class="col-md-4">
             <?= $form->field($model, 'type')->dropDownList(
-                \warehouse\models\transaction\Transaction::$typeList,
+                \common\models\transaction\Transaction::$typeList,
                 ['disabled' => !$model->getIsNewRecord()]); ?>
             <?= $form->field($model, 'name')->textInput(['disabled' => !$model->getIsNewRecord()]); ?>
         </div>

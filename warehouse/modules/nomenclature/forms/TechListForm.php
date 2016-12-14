@@ -3,8 +3,8 @@
 namespace warehouse\modules\nomenclature\forms;
 
 use Yii;
-use warehouse\models\techList\TechListProductComponent;
-use warehouse\models\techList\TechList;
+use common\models\techList\TechListProductComponent;
+use common\models\techList\TechList;
 use common\components\helpers\ArrayHelper;
 use common\components\base\Model;
 

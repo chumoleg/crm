@@ -4,9 +4,7 @@ namespace common\models\geo;
 
 use Yii;
 use \common\components\base\ActiveRecord;
-use common\models\client\ClientAddress;
 use common\models\order\Order;
-use common\components\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "geo_address".
@@ -21,7 +19,6 @@ use common\components\helpers\ArrayHelper;
  * @property string          $address_hash
  * @property string          $date_create
  *
- * @property ClientAddress[] $clientAddresses
  * @property GeoArea         $area
  * @property Order[]         $orders
  */
@@ -96,14 +93,6 @@ class GeoAddress extends ActiveRecord
             'apartment'    => 'Квартира/офис',
             'address_hash' => 'Address Hash',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getClientAddresses()
-    {
-        return $this->hasMany(ClientAddress::className(), ['address_id' => 'id']);
     }
 
     /**

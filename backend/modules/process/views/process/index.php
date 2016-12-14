@@ -15,13 +15,6 @@ echo GridView::widget([
     'filterModel'  => $searchModel,
     'columns'      => [
         'id',
-        [
-            'attribute' => 'type',
-            'filter'    => Process::$typeList,
-            'value'     => function ($data) {
-                return \yii\helpers\ArrayHelper::getValue(Process::$typeList, $data->type);
-            }
-        ],
         'name',
         [
             'attribute' => 'date_create',

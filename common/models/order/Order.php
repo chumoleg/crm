@@ -2,18 +2,18 @@
 
 namespace common\models\order;
 
+use Yii;
+use common\models\company\Company;
+use common\models\order\OrderTransaction;
+use common\models\transaction\Transaction;
 use common\models\process\ProcessStage;
 use common\models\stage\StageMethod;
-use Yii;
 use common\components\Status;
 use common\components\base\ActiveRecord;
 use common\models\user\User;
-use common\models\client\Client;
 use common\models\geo\GeoAddress;
 use common\models\process\Process;
 use common\models\source\Source;
-use common\models\client\ClientPersonalData;
-use common\models\client\ClientPhone;
 use common\components\models\OrderSetOperator;
 use common\models\product\ProductTag;
 use common\models\tag\Tag;
@@ -25,11 +25,9 @@ use common\components\Role;
  *
  * @property integer            $id
  * @property integer            $source_id
+ * @property integer            $company_id
  * @property integer            $process_id
  * @property integer            $current_stage_id
- * @property integer            $client_id
- * @property integer            $client_phone_id
- * @property integer            $client_personal_data_id
  * @property integer            $address_id
  * @property integer            $type_payment
  * @property integer            $type_delivery
@@ -44,9 +42,6 @@ use common\components\Role;
  * @property string             $date_update
  *
  * @property GeoAddress         $address
- * @property Client             $client
- * @property ClientPersonalData $clientPersonalData
- * @property ClientPhone        $clientPhone
  * @property Source             $source
  * @property User               $createUser
  * @property User               $currentUser
@@ -76,11 +71,13 @@ class Order extends ActiveRecord
     public static function getOrderWithoutProcess($check = false)
     {
         $query = self::find()
-            ->andWhere([
-                'OR',
-                'process_id IS NULL',
-                'id NOT IN (SELECT order_id FROM order_stage)'
-            ]);
+            ->andWhere(
+                [
+                    'OR',
+                    'process_id IS NULL',
+                    'id NOT IN (SELECT order_id FROM order_stage)',
+                ]
+            );
 
         if ($check) {
             return $query->exists();
@@ -97,9 +94,7 @@ class Order extends ActiveRecord
         return [
             [
                 [
-                    'client_id',
-                    'client_phone_id',
-                    'client_personal_data_id',
+                    'company_id',
                     'source_id',
                     'address_id',
                     'process_id',
@@ -108,9 +103,9 @@ class Order extends ActiveRecord
                     'type_delivery',
                     'currency',
                     'current_user_id',
-                    'create_user_id'
+                    'create_user_id',
                 ],
-                'integer'
+                'integer',
             ],
             [['price', 'delivery_price'], 'number'],
             [['sending_tracker', 'time_postponed', 'date_create', 'date_update'], 'safe'],
@@ -125,9 +120,7 @@ class Order extends ActiveRecord
         return [
             'id'                      => 'ID',
             'source_id'               => 'Источник',
-            'client_id'               => 'Клиент',
-            'client_phone_id'         => 'Телефон',
-            'client_personal_data_id' => 'ФИО',
+            'company_id'              => 'Организация',
             'address_id'              => 'Адрес',
             'process_id'              => 'Процесс',
             'current_stage_id'        => 'Текущий статус',
@@ -159,30 +152,6 @@ class Order extends ActiveRecord
     public function getSource()
     {
         return $this->hasOne(Source::className(), ['id' => 'source_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getClient()
-    {
-        return $this->hasOne(Client::className(), ['id' => 'client_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getClientPersonalData()
-    {
-        return $this->hasOne(ClientPersonalData::className(), ['id' => 'client_personal_data_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getClientPhone()
-    {
-        return $this->hasOne(ClientPhone::className(), ['id' => 'client_phone_id']);
     }
 
     /**
@@ -239,6 +208,14 @@ class Order extends ActiveRecord
     public function getOrderStages()
     {
         return $this->hasMany(OrderStage::className(), ['order_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCompany()
+    {
+        return $this->hasOne(Company::className(), ['id' => 'company_id']);
     }
 
     /**
@@ -355,5 +332,61 @@ class Order extends ActiveRecord
         }
 
         return $this->currentStage->existStageMethod(StageMethod::METHOD_CALL);
+    }
+
+    public function accessWarehouseTransactionWritten()
+    {
+        if (empty($this->currentStage)) {
+            return false;
+        }
+
+        return $this->currentStage->existStageMethod(StageMethod::METHOD_WRITE_PRODUCT_COMPONENTS);
+    }
+
+    public function accessWarehouseTransactionReturn()
+    {
+        if (empty($this->currentStage)) {
+            return false;
+        }
+
+        return $this->currentStage->existStageMethod(StageMethod::METHOD_RETURN_PRODUCT_COMPONENTS);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrderTransactions()
+    {
+        return $this->hasMany(OrderTransaction::className(), ['order_id' => 'id']);
+    }
+
+    /**
+     * @return array|null|OrderTransaction
+     */
+    public function getWrittenOrderTransaction()
+    {
+        return $this
+            ->getOrderTransactions()
+            ->joinWith([
+                'transaction' => function ($q) {
+                    $q->andWhere(['type' => Transaction::TYPE_WRITTEN]);
+                }
+            ])
+            ->one();
+    }
+
+    /**
+     * @return array|null|OrderTransaction
+     */
+    public function getReturnOrderTransaction()
+    {
+        return $this
+            ->getOrderTransactions()
+            ->joinWith([
+                'transaction' => function ($q) {
+                    $q->andWhere(['type' => Transaction::TYPE_INCOME]);
+                }
+            ])
+            ->one();
     }
 }

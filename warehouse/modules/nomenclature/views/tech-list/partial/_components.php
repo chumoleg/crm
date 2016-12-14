@@ -3,7 +3,7 @@ use wbraganca\dynamicform\DynamicFormWidget;
 use yii\helpers\Html;
 
 $modelsProductComponent = $this->context->model->modelsProductComponent;
-$productComponentsList = \warehouse\models\productComponent\ProductComponent::getList();
+$productComponentsList = \common\models\productComponent\ProductComponent::getList();
 
 DynamicFormWidget::begin([
     'widgetContainer' => 'dynamicFormTechList',
