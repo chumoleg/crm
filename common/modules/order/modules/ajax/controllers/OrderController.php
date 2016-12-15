@@ -56,12 +56,12 @@ class OrderController extends OrderManageController
         $this->_checkAccess();
 
         try {
-            $workPlace = Yii::$app->getUser()->getWorkPlace();
+            $workPlace = Yii::$app->user->getWorkPlace();
             if (empty($workPlace)) {
                 throw new Exception('Не выставлен № компьютера');
             }
 
-            Asterisk::getModel()->call($workPlace, $this->model->client->getPhone(), $this->model->id);
+            Asterisk::getModel()->call($workPlace, $this->model->company->getPhone(), $this->model->id);
             $commentList = $this->_addOrderComment('Совершен звонок');
 
             return JsonHelper::answerSuccess($commentList);

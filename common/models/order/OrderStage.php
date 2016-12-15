@@ -146,7 +146,7 @@ class OrderStage extends ActiveRecord
     public function setDisabled()
     {
         $this->setTimeSpent();
-        $this->user_id = Yii::$app->getUser()->getId();
+        $this->user_id = Yii::$app->user->id;
 
         return $this->setStatus(Status::STATUS_ARCHIVE);
     }

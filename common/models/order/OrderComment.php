@@ -3,11 +3,9 @@
 namespace common\models\order;
 
 use common\components\helpers\ArrayHelper;
-use common\components\nomenclature\TypeDelivery;
 use common\components\nomenclature\TypePayment;
 use common\models\geo\GeoAddress;
 use common\models\geo\GeoArea;
-use Yii;
 use \common\components\base\ActiveRecord;
 use common\models\user\User;
 use common\models\Comment;
@@ -76,11 +74,7 @@ class OrderComment extends ActiveRecord
                 'current_user_id' => 'Текущий оператор'
             ]);
 
-        if ($fieldName == 'type_delivery') {
-            $oldValue = TypeDelivery::getValue($oldValue);
-            $newValue = TypeDelivery::getValue($newValue);
-
-        } elseif ($fieldName == 'type_payment') {
+        if ($fieldName == 'type_payment') {
             $oldValue = TypePayment::getValue($oldValue);
             $newValue = TypePayment::getValue($newValue);
 

@@ -28,7 +28,7 @@ class OrderCreateController extends BaseController
     {
         $post = Yii::$app->request->post();
         if ($this->model->load($post) && $this->model->save()) {
-            return $this->redirect(['/order/order/index']);
+            return $this->redirect(['my-order/index']);
 
         } else {
             return $this->render($view);

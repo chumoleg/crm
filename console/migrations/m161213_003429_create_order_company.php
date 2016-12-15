@@ -27,6 +27,7 @@ class m161213_003429_create_order_company extends Migration
             [
                 'id'         => self::PRIMARY_KEY,
                 'company_id' => self::INT_FIELD_NOT_NULL,
+                'person'     => 'VARCHAR(200) NOT NULL',
                 'type'       => 'TINYINT(1) UNSIGNED NOT NULL',
                 'value'      => 'VARCHAR(200) NOT NULL',
                 'user_id'    => self::INT_FIELD,
@@ -57,12 +58,17 @@ class m161213_003429_create_order_company extends Migration
         $this->dropForeignKey('fk_order_client_id', 'order');
         $this->dropForeignKey('fk_order_client_personal_data_id', 'order');
         $this->dropForeignKey('fk_order_client_phone_id', 'order');
+        $this->dropForeignKey('fk_order_address_id', 'order');
         $this->dropColumn('order', 'client_phone_id');
         $this->dropColumn('order', 'client_id');
         $this->dropColumn('order', 'client_personal_data_id');
+        $this->dropColumn('order', 'delivery_price');
+        $this->dropColumn('order', 'type_delivery');
+        $this->dropColumn('order', 'sending_tracker');
+        $this->dropColumn('order', 'address_id');
 
-        $this->addColumn('order', 'company_id', self::INT_FIELD . ' AFTER id');
-        $this->addForeignKey('fk_order_company_id', 'order', 'company_id', 'company', 'id', 'SET NULL', 'CASCADE');
+        $this->addColumn('order', 'company_id', self::INT_FIELD_NOT_NULL. ' AFTER id');
+        $this->addForeignKey('fk_order_company_id', 'order', 'company_id', 'company', 'id', 'CASCADE', 'CASCADE');
 
         $this->dropColumn('process', 'type');
 

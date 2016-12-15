@@ -16,8 +16,8 @@ class BaseController extends Controller
             return false;
         }
 
-        if (Yii::$app->getUser()->getIsGuest()) {
-            $this->redirect(Yii::$app->getUser()->loginUrl);
+        if (Yii::$app->user->isGuest) {
+            $this->redirect(Yii::$app->user->loginUrl);
 
             return false;
         }

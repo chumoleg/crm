@@ -102,12 +102,4 @@ class GeoAddress extends ActiveRecord
     {
         return $this->hasOne(GeoArea::className(), ['id' => 'area_id']);
     }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOrders()
-    {
-        return $this->hasMany(Order::className(), ['address_id' => 'id']);
-    }
 }

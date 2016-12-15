@@ -4,14 +4,12 @@ namespace common\models\order;
 
 use Yii;
 use common\models\company\Company;
-use common\models\order\OrderTransaction;
 use common\models\transaction\Transaction;
 use common\models\process\ProcessStage;
 use common\models\stage\StageMethod;
 use common\components\Status;
 use common\components\base\ActiveRecord;
 use common\models\user\User;
-use common\models\geo\GeoAddress;
 use common\models\process\Process;
 use common\models\source\Source;
 use common\components\models\OrderSetOperator;
@@ -28,12 +26,8 @@ use common\components\Role;
  * @property integer            $company_id
  * @property integer            $process_id
  * @property integer            $current_stage_id
- * @property integer            $address_id
  * @property integer            $type_payment
- * @property integer            $type_delivery
- * @property string             $sending_tracker
  * @property string             $price
- * @property string             $delivery_price
  * @property integer            $currency
  * @property integer            $current_user_id
  * @property string             $time_postponed
@@ -41,8 +35,8 @@ use common\components\Role;
  * @property string             $date_create
  * @property string             $date_update
  *
- * @property GeoAddress         $address
  * @property Source             $source
+ * @property Company            $company
  * @property User               $createUser
  * @property User               $currentUser
  * @property Process            $process
@@ -96,19 +90,17 @@ class Order extends ActiveRecord
                 [
                     'company_id',
                     'source_id',
-                    'address_id',
                     'process_id',
                     'current_stage_id',
                     'type_payment',
-                    'type_delivery',
                     'currency',
                     'current_user_id',
                     'create_user_id',
                 ],
                 'integer',
             ],
-            [['price', 'delivery_price'], 'number'],
-            [['sending_tracker', 'time_postponed', 'date_create', 'date_update'], 'safe'],
+            [['price'], 'number'],
+            [['time_postponed', 'date_create', 'date_update'], 'safe'],
         ];
     }
 
@@ -118,32 +110,20 @@ class Order extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id'                      => 'ID',
-            'source_id'               => 'Источник',
-            'company_id'              => 'Организация',
-            'address_id'              => 'Адрес',
-            'process_id'              => 'Процесс',
-            'current_stage_id'        => 'Текущий статус',
-            'type_payment'            => 'Тип оплаты',
-            'type_delivery'           => 'Тип доставки',
-            'sending_tracker'         => 'Трекер отправления',
-            'price'                   => 'Общая стоимость',
-            'delivery_price'          => 'Стоимость доставки',
-            'currency'                => 'Валюта',
-            'current_user_id'         => 'Оператор',
-            'time_postponed'          => 'Отложен до',
-            'create_user_id'          => 'Создан оператором',
-            'date_create'             => 'Дата создания',
-            'date_update'             => 'Дата изменения',
+            'id'               => 'ID',
+            'source_id'        => 'Источник',
+            'company_id'       => 'Организация',
+            'process_id'       => 'Процесс',
+            'current_stage_id' => 'Текущий статус',
+            'type_payment'     => 'Тип оплаты',
+            'price'            => 'Общая стоимость',
+            'currency'         => 'Валюта',
+            'current_user_id'  => 'Оператор',
+            'time_postponed'   => 'Отложен до',
+            'create_user_id'   => 'Создан оператором',
+            'date_create'      => 'Дата создания',
+            'date_update'      => 'Дата изменения',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAddress()
-    {
-        return $this->hasOne(GeoAddress::className(), ['id' => 'address_id']);
     }
 
     /**
@@ -245,7 +225,7 @@ class Order extends ActiveRecord
      */
     public function recalculatePrice()
     {
-        $sum = $this->delivery_price;
+        $sum = 0;
         foreach ($this->orderProducts as $orderProduct) {
             $sum += $orderProduct->price * $orderProduct->quantity;
         }
@@ -278,9 +258,8 @@ class Order extends ActiveRecord
     public function checkAccessManageOrder()
     {
         $currentOrderStage = $this->currentOrderStage;
-        $checker = !Yii::$app->getUser()->can(Role::OPERATOR)
-            || (Yii::$app->getUser()->can(Role::OPERATOR)
-                && Yii::$app->getUser()->getId() == $this->current_user_id)
+        $checker = !Yii::$app->user->can(Role::OPERATOR)
+            || (Yii::$app->user->can(Role::OPERATOR) && Yii::$app->user->id == $this->current_user_id)
             && (empty($currentOrderStage) || $currentOrderStage->time_limit != 0);
 
         return $checker;
@@ -367,11 +346,13 @@ class Order extends ActiveRecord
     {
         return $this
             ->getOrderTransactions()
-            ->joinWith([
-                'transaction' => function ($q) {
-                    $q->andWhere(['type' => Transaction::TYPE_WRITTEN]);
-                }
-            ])
+            ->joinWith(
+                [
+                    'transaction' => function ($q) {
+                        $q->andWhere(['type' => Transaction::TYPE_WRITTEN]);
+                    },
+                ]
+            )
             ->one();
     }
 
@@ -382,11 +363,13 @@ class Order extends ActiveRecord
     {
         return $this
             ->getOrderTransactions()
-            ->joinWith([
-                'transaction' => function ($q) {
-                    $q->andWhere(['type' => Transaction::TYPE_INCOME]);
-                }
-            ])
+            ->joinWith(
+                [
+                    'transaction' => function ($q) {
+                        $q->andWhere(['type' => Transaction::TYPE_INCOME]);
+                    },
+                ]
+            )
             ->one();
     }
 }

@@ -10,7 +10,7 @@ use yii\helpers\Html;
 
 $this->title = 'Сделка #' . $this->context->model->id;
 
-$this->context->addBreadCrumb('Список сделок', ['/order/order/index']);
+$this->context->addBreadCrumb('Список сделок', ['index']);
 $this->context->addBreadCrumb($this->title);
 ?>
 

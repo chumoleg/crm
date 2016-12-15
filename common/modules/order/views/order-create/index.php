@@ -19,9 +19,9 @@ $form = ActiveForm::begin(['id' => 'createOrderForm']);
 ?>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <?= $form->field($model, 'source')->widget(\kartik\widgets\Select2::className(), [
                     'data' => \common\models\source\Source::getList(),
                 ]); ?>
@@ -29,7 +29,7 @@ $form = ActiveForm::begin(['id' => 'createOrderForm']);
         </div>
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <?= $form->field($model, 'company')->widget(\kartik\widgets\Select2::className(), [
                     'data' => \common\models\company\Company::getList(),
                 ]); ?>
@@ -37,24 +37,14 @@ $form = ActiveForm::begin(['id' => 'createOrderForm']);
         </div>
 
         <div class="row">
-            <div class="col-md-6">
-                <?= $form->field($model, 'typeDelivery')->dropDownList(
-                    \common\components\nomenclature\TypeDelivery::$list); ?>
-            </div>
-            <div class="col-md-6">
-                <?= $form->field($model, 'deliveryPrice')->textInput(); ?>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <?= $form->field($model, 'typePayment')->dropDownList(
                     \common\components\nomenclature\TypePayment::$list); ?>
             </div>
         </div>
     </div>
 
-    <div class="col-md-5 col-md-offset-1">
+    <div class="col-md-5">
         <?= $form->field($model, 'product_data_checker')->hiddenInput(['class' => 'productDataCheckerInput']); ?>
 
         <table class="table">

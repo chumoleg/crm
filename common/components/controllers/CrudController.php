@@ -9,6 +9,7 @@ abstract class CrudController extends BaseController
 {
     public $model;
     public $useScenarios = false;
+    public $redirect = ['index'];
 
     public function actionIndex()
     {
@@ -52,7 +53,7 @@ abstract class CrudController extends BaseController
         $post = $this->_getPostParams();
 
         if ($this->model->load($post) && $this->model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect($this->redirect);
         } else {
             return $this->render('update');
         }
@@ -84,7 +85,7 @@ abstract class CrudController extends BaseController
 
         $post = $this->_getPostParams();
         if ($this->model->load($post) && $this->model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect($this->redirect);
         } else {
             return $this->render('create');
         }
@@ -95,7 +96,7 @@ abstract class CrudController extends BaseController
         $this->loadModel($id);
         $this->model->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect($this->redirect);
     }
 
     abstract protected function _getSearchClassName();

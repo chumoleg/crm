@@ -3,7 +3,6 @@
 namespace common\forms;
 
 use Yii;
-use common\components\nomenclature\TypeDelivery;
 use common\components\nomenclature\TypePayment;
 use common\models\order\OrderProduct;
 use common\models\process\Process;
@@ -21,10 +20,7 @@ class CreateOrderForm extends Order
 
     public $source;
     public $company;
-
     public $typePayment;
-    public $typeDelivery;
-    public $deliveryPrice = 0;
 
     public $product_data_checker;
     public $product_data = [];
@@ -37,11 +33,10 @@ class CreateOrderForm extends Order
         return ArrayHelper::merge(
             [
                 [['company'], 'required'],
-                [['deliveryPrice'], 'number'],
                 [['source', 'company'], 'integer'],
                 [['product_data'], 'required', 'on' => self::SCENARIO_BY_API],
                 [['product_data_checker'], 'required', 'on' => self::SCENARIO_BY_PARAMS],
-                [['product_data', 'typePayment', 'typeDelivery'], 'safe'],
+                [['product_data', 'typePayment'], 'safe'],
                 ['product_data', 'validateProductData', 'on' => self::SCENARIO_BY_API],
                 ['product_data_checker', 'validateProductData', 'on' => self::SCENARIO_BY_PARAMS],
             ],
@@ -59,8 +54,6 @@ class CreateOrderForm extends Order
                 'source'               => 'Источник',
                 'company'              => 'Организация',
                 'typePayment'          => 'Тип оплаты',
-                'typeDelivery'         => 'Тип доставки',
-                'deliveryPrice'        => 'Стоимость доставки',
                 'product_data'         => 'Товары',
                 'product_data_checker' => 'Товары',
             ],
@@ -98,18 +91,18 @@ class CreateOrderForm extends Order
 
     public function beforeSave($insert)
     {
+        $this->company_id = $this->company;
+
         $this->_setSourceId();
         $this->_setProcessId();
         $this->_setTypePayment();
-        $this->_setTypeDelivery();
 
-        $this->price = array_sum(array_column($this->product_data, 'price')) + $this->deliveryPrice;
-        $this->delivery_price = $this->deliveryPrice;
+        $this->price = array_sum(array_column($this->product_data, 'price'));
         $this->currency = Currency::RUR;
-        $this->create_user_id = $this->scenario == self::SCENARIO_BY_PARAMS ? Yii::$app->getUser()->getId() : null;
+        $this->create_user_id = $this->scenario == self::SCENARIO_BY_PARAMS ? Yii::$app->user->id : null;
 
-        if (!empty(Yii::$app->getUser()->getId()) && Yii::$app->getUser()->can(Role::OPERATOR)) {
-            $this->current_user_id = Yii::$app->getUser()->getId();
+        if (!empty(Yii::$app->user->id) && Yii::$app->user->can(Role::OPERATOR)) {
+            $this->current_user_id = Yii::$app->user->id;
         }
 
         return parent::beforeSave($insert);
@@ -166,6 +159,7 @@ class CreateOrderForm extends Order
     private function _setSourceId()
     {
         $this->source_id = $this->source;
+
         $checkSource = Source::findById($this->source);
         if (!empty($checkSource)) {
             return;
@@ -174,14 +168,6 @@ class CreateOrderForm extends Order
         $this->source_id = Source::DEFAULT_SOURCE;
         if ($this->scenario == self::SCENARIO_BY_PARAMS) {
             $this->source_id = Source::SOURCE_OPERATOR;
-        }
-    }
-
-    private function _setTypeDelivery()
-    {
-        $this->type_delivery = $this->typeDelivery;
-        if (empty($this->type_delivery)) {
-            $this->type_delivery = TypeDelivery::POST;
         }
     }
 

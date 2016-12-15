@@ -5,7 +5,7 @@ $model = $this->context->model;
 
 <div class="borderedBlock orderInnerBlock">
     <div class="row" id="orderCommentBlock">
-        <?= $this->render('@app/modules/order/modules/ajax/views/order-manage/commentList',
+        <?= $this->render('@common/modules/order/modules/ajax/views/order-manage/commentList',
             ['commentsList' => $model->orderComments]); ?>
     </div>
 

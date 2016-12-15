@@ -49,8 +49,8 @@ class SiteController extends BaseController
 
     public function actionLogout()
     {
-        Yii::$app->getUser()->logout();
+        Yii::$app->user->logout();
 
-        return Yii::$app->getResponse()->redirect('http://' . Yii::$app->params['baseUrl']);
+        return Yii::$app->response->redirect('http://' . Yii::$app->params['baseUrl']);
     }
 }

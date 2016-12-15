@@ -79,4 +79,9 @@ class Company extends ActiveRecord
     {
         return $this->hasMany(Order::className(), ['company_id' => 'id']);
     }
+
+    public function getName()
+    {
+        return $this->name;
+    }
 }

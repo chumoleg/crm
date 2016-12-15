@@ -11,6 +11,8 @@ use common\forms\CreateOrderForm;
 
 class OrderController extends CrudController
 {
+    public $indexTitle = 'Список сделок в работе';
+
     protected function _getSearchClassName()
     {
         return OrderSearch::className();
@@ -32,7 +34,7 @@ class OrderController extends CrudController
         $orders = Order::getOrderWithoutProcess();
 
         foreach ($orders as $order) {
-            if (empty($order->source)){
+            if (empty($order->source)) {
                 continue;
             }
 

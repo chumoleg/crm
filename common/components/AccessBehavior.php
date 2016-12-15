@@ -82,14 +82,14 @@ class AccessBehavior extends Behavior
     public function init()
     {
         if (empty($this->redirectUri)) {
-            $this->redirectUri = Yii::$app->getUser()->loginUrl;
+            $this->redirectUri = Yii::$app->user->loginUrl;
         }
 
-        if (Yii::$app->getUser()->getIsGuest()
-            && Yii::$app->getRequest()->getUrl() !== Url::to($this->redirectUri)
-            && !in_array(Yii::$app->getRequest()->getUrl(), $this->allowedUrls)
+        if (Yii::$app->user->isGuest
+            && Yii::$app->request->url !== Url::to($this->redirectUri)
+            && !in_array(Yii::$app->request->url, $this->allowedUrls)
         ) {
-            Yii::$app->getResponse()->redirect($this->redirectUri)->send();
+            Yii::$app->response->redirect($this->redirectUri)->send();
             Yii::$app->end();
         }
     }

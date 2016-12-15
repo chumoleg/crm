@@ -7,12 +7,19 @@ use yii\helpers\Html;
 use common\components\helpers\DatePicker;
 use common\components\Role;
 
-$this->title = 'Список сделок';
+$this->title = $this->context->indexTitle;
 
 if ($this->context->module->accessCreateOrder) {
-    echo $this->context->getCreateButton('Заключить новую сделку', ['/order/order-create/index'], false);
+    if ($this->context->id == 'my-order') {
+        echo $this->context->getCreateButton('Заключить новую сделку', ['/order/order-create/index'], false);
+        echo Html::a('Список сделок в работе', ['/order/order/index'], ['class' => 'btn btn-default']);
+    } else {
+        echo Html::a('Список моих сделок', ['/order/my-order/index'], ['class' => 'btn btn-default']);
+    }
+
     echo Html::tag('div', '&nbsp;');
 }
+
 
 \common\assets\order\OrderListAsset::register($this);
 
@@ -29,7 +36,7 @@ echo GridView::widget(
                 'attribute' => 'current_user_id',
                 'filter'    => $searchModel->getCurrentUserList(),
                 'format'    => 'raw',
-                'visible'   => Yii::$app->getUser()->can(Role::ADMIN),
+                'visible'   => Yii::$app->user->can(Role::ADMIN),
                 'value'     => function ($data) use ($operatorList) {
                     return $this->render('_operatorList', ['model' => $data, 'operatorList' => $operatorList]);
                 },
@@ -38,6 +45,11 @@ echo GridView::widget(
                 'attribute' => 'source_id',
                 'filter'    => \common\models\source\Source::getList(),
                 'value'     => 'source.name',
+            ],
+            [
+                'attribute' => 'company_id',
+                'filter'    => \common\models\company\Company::getList(),
+                'value'     => 'company.name',
             ],
             [
                 'attribute' => 'tag_id',

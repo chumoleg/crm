@@ -54,13 +54,13 @@ class SiteController extends Controller
 
     public function actionLogin()
     {
-        if (!Yii::$app->getUser()->getIsGuest()) {
+        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->getRequest()->post()) && $model->login()) {
-            return Yii::$app->getResponse()->redirect(UserParams::getHomeUrl());
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return Yii::$app->response->redirect(UserParams::getHomeUrl());
         }
 
         return $this->render('login', [
@@ -70,8 +70,8 @@ class SiteController extends Controller
 
     public function actionLogout()
     {
-        Yii::$app->getUser()->logout();
+        Yii::$app->user->logout();
 
-        return Yii::$app->getResponse()->redirect('http://' . Yii::$app->params['baseUrl']);
+        return Yii::$app->response->redirect('http://' . Yii::$app->params['baseUrl']);
     }
 }

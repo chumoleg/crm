@@ -1,6 +1,6 @@
 <legend>HOME PAGE</legend>
 
-<?php if (Yii::$app->getUser()->can(\common\components\Role::ADMIN)) : ?>
+<?php if (Yii::$app->user->can(\common\components\Role::ADMIN)) : ?>
     <?php
     $modules = [
         [

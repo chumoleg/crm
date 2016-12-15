@@ -32,14 +32,6 @@ $model = $this->context->model;
         </tr>
     <?php endforeach; ?>
 
-    <tr>
-        <td></td>
-        <td>Доставка</td>
-        <td></td>
-        <td><?= Yii::$app->formatter->asDecimal($model->delivery_price, 2); ?></td>
-        <td></td>
-    </tr>
-
     <tfoot>
     <tr>
         <th colspan="3" class="text-right">Итого:</th>

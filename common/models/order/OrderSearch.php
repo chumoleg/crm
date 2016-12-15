@@ -23,6 +23,7 @@ class OrderSearch extends Order
             [
                 [
                     'id',
+                    'company_id',
                     'process_id',
                     'current_stage_id',
                     'department',
@@ -31,9 +32,9 @@ class OrderSearch extends Order
                     'date_create',
                     'fio',
                     'phone',
-                    'tag_id'
+                    'tag_id',
                 ],
-                'safe'
+                'safe',
             ],
         ];
     }
@@ -43,26 +44,31 @@ class OrderSearch extends Order
      */
     public function attributeLabels()
     {
-        return ArrayHelper::merge([
-            'fio'        => 'ФИО клиента',
-            'phone'      => 'Телефон',
-            'tag_id'     => 'Теги',
-            'department' => 'Отдел',
-        ], parent::attributeLabels());
+        return ArrayHelper::merge(
+            [
+                'fio'        => 'ФИО клиента',
+                'phone'      => 'Телефон',
+                'tag_id'     => 'Теги',
+                'department' => 'Отдел',
+            ],
+            parent::attributeLabels()
+        );
     }
 
     /**
      * @param array $params
      * @param array $defaultOrder
+     * @param bool  $onlyMyOrders
      *
      * @return ActiveDataProvider
      */
-    public function search($params, $defaultOrder = [])
+    public function search($params, $defaultOrder = [], $onlyMyOrders = false)
     {
         $query = parent::find()
             ->joinWith('process')
             ->joinWith('currentStage')
-            ->joinWith('source');
+            ->joinWith('source')
+            ->joinWith('company');
 
         $dataProvider = $this->getDataProvider($query, $defaultOrder);
         $this->load($params);
@@ -70,31 +76,41 @@ class OrderSearch extends Order
             return $dataProvider;
         }
 
-        $this->_compareWithCurrentApp($query);
+        if ($onlyMyOrders) {
+            $query->andWhere(['order.create_user_id' => Yii::$app->user->id]);
 
-        if (Yii::$app->getUser()->can(\common\components\Role::OPERATOR)) {
-            $query->andWhere(['order.current_user_id' => Yii::$app->getUser()->getId()]);
+        } else {
+            $this->_compareWithCurrentApp($query);
+
+            if (Yii::$app->user->can(\common\components\Role::OPERATOR)) {
+                $query->andWhere(['order.current_user_id' => Yii::$app->user->id]);
+            }
         }
 
-        $query->andFilterWhere([
-            'order.id'               => $this->id,
-            'order.date_create'      => $this->date_create,
-            'order.process_id'       => $this->process_id,
-            'order.current_stage_id' => $this->current_stage_id,
-            'order.source_id'        => $this->source_id,
-            'order.current_user_id'  => $this->current_user_id,
-            'stage.department'       => $this->department,
-        ]);
+        $query->andFilterWhere(
+            [
+                'order.id'               => $this->id,
+                'order.date_create'      => $this->date_create,
+                'order.company_id'       => $this->company_id,
+                'order.process_id'       => $this->process_id,
+                'order.current_stage_id' => $this->current_stage_id,
+                'order.source_id'        => $this->source_id,
+                'order.current_user_id'  => $this->current_user_id,
+                'stage.department'       => $this->department,
+            ]
+        );
 
         if (!empty($this->tag_id)) {
             $tagId = $this->tag_id;
             $innerQuery = OrderProduct::find()
                 ->select(['order_id'])
-                ->joinWith([
-                    'product.productTags' => function ($q) use ($tagId) {
-                        $q->andWhere(['tag_id' => $tagId]);
-                    }
-                ]);
+                ->joinWith(
+                    [
+                        'product.productTags' => function ($q) use ($tagId) {
+                            $q->andWhere(['tag_id' => $tagId]);
+                        },
+                    ]
+                );
 
             $query->andWhere(['IN', 'order.id', $innerQuery]);
         }

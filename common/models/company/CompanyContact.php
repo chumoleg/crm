@@ -10,6 +10,7 @@ use common\models\user\User;
  *
  * @property integer $id
  * @property integer $company_id
+ * @property string  $person
  * @property integer $type
  * @property string  $value
  * @property integer $user_id
@@ -19,6 +20,17 @@ use common\models\user\User;
  */
 class CompanyContact extends ActiveRecord
 {
+    const TYPE_PHONE = 1;
+    const TYPE_EMAIL = 2;
+    const TYPE_ADDRESS = 3;
+
+    public static $typeList
+        = [
+            self::TYPE_PHONE   => 'Телефон',
+            self::TYPE_EMAIL   => 'E-mail',
+            self::TYPE_ADDRESS => 'Адрес',
+        ];
+
     /**
      * @inheritdoc
      */
@@ -33,9 +45,9 @@ class CompanyContact extends ActiveRecord
     public function rules()
     {
         return [
-            [['company_id', 'type', 'value'], 'required'],
+            [['person', 'company_id', 'type', 'value'], 'required'],
             [['company_id', 'type', 'user_id'], 'integer'],
-            [['value'], 'string', 'max' => 200],
+            [['person', 'value'], 'string', 'max' => 200],
         ];
     }
 
@@ -47,8 +59,9 @@ class CompanyContact extends ActiveRecord
         return [
             'id'         => 'ID',
             'company_id' => 'Company ID',
-            'type'       => 'Type',
-            'value'      => 'Value',
+            'person'     => 'Контактное лицо',
+            'type'       => 'Тип контакта',
+            'value'      => 'Значение',
             'user_id'    => 'User ID',
         ];
     }

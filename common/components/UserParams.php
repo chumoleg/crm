@@ -13,7 +13,7 @@ class UserParams implements BootstrapInterface
      */
     public function bootstrap($app)
     {
-        if (Yii::$app->getUser()->getIsGuest() || Yii::$app->getUser()->can(Role::ADMIN)) {
+        if (Yii::$app->user->isGuest || Yii::$app->user->can(Role::ADMIN)) {
             return;
         }
 
@@ -26,12 +26,12 @@ class UserParams implements BootstrapInterface
     public static function getHomeUrl()
     {
         $homeUrls = [
-            Role::ADMIN    => Yii::$app->params['baseUrl'],
-            Role::OPERATOR => Yii::$app->params['callUrl'],
+            Role::ADMIN             => Yii::$app->params['baseUrl'],
+            Role::OPERATOR          => Yii::$app->params['callUrl'],
             Role::WAREHOUSE_MANAGER => Yii::$app->params['warehouseUrl'],
         ];
 
-        $baseUrl = ArrayHelper::getValue($homeUrls, Yii::$app->getUser()->getIdentity()->role);
+        $baseUrl = ArrayHelper::getValue($homeUrls, Yii::$app->user->identity->role);
         if (empty($baseUrl)) {
             return 'http://' . Yii::$app->params['baseUrl'];
         }

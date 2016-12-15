@@ -48,7 +48,7 @@ class Asterisk
             'Callerid: auto-dial <' . $phoneNumber . '>',
             'Exten: ' . $phoneNumber,
 //            'Variable: CALLERID(name)=' . $workPlace,
-//            'Variable: CDR(operator)=' . Yii::$app->getUser()->getId()
+//            'Variable: CDR(operator)=' . Yii::$app->user->id
         ];
 
 //        if (!empty($orderId)) {

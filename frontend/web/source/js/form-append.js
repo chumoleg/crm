@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $(document).on("submit", 'form#modalInnerForm', function (e) {
+    $(document).on('submit', 'form#modalInnerForm', function (e) {
         e.preventDefault();
         var form = $(this);
         var modal = form.closest('div.modal');
