@@ -77,8 +77,6 @@ abstract class OrderStatusController extends OrderManageController
      */
     protected function _changeStatus($processStageAction)
     {
-        $this->model->client->setIsNotNew();
-
         $reasonModel = Reason::findById(Yii::$app->request->post('reason'));
         $actionComment = 'Действие: ' . $this->_actionModel->name;
         if (!empty($reasonModel)) {

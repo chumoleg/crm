@@ -11,13 +11,6 @@ $currentStage = $model->currentStage;
 ?>
 
 <div class="borderedBlock orderInnerBlock">
-    <?php if ($model->accessCalling()) : ?>
-        <button class="btn btn-block btn-primary callOrder">Позвонить</button>
-        <!--    <button class="btn btn-block btn-default sendSmsOrder">Отправить смс</button>-->
-
-        <div class="clearfix">&nbsp;</div>
-    <?php endif; ?>
-
     <?php
     if (!empty($currentStage)) {
         $processStage = $model->getProcessStage();

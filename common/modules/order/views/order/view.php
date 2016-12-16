@@ -21,7 +21,7 @@ $this->context->addBreadCrumb($this->title);
         <div class="borderedBlock orderInnerBlock">
             <div class="row">
                 <div class="col-md-4">
-                    <?= $this->render('partial/orderForm'); ?>
+                    <?= $this->render('partial/company'); ?>
                 </div>
 
                 <div class="col-md-6">

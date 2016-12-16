@@ -64,6 +64,7 @@ class m161213_003429_create_order_company extends Migration
         $this->dropColumn('order', 'client_personal_data_id');
         $this->dropColumn('order', 'delivery_price');
         $this->dropColumn('order', 'type_delivery');
+        $this->dropColumn('order', 'type_payment');
         $this->dropColumn('order', 'sending_tracker');
         $this->dropColumn('order', 'address_id');
 

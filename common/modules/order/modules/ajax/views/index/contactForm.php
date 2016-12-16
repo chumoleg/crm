@@ -4,7 +4,9 @@ use kartik\form\ActiveForm;
 
 ?>
 
-<?php $form = ActiveForm::begin(['id' => 'modalInnerForm']); ?>
+<?php $form = ActiveForm::begin(['id' => 'companyContactForm']); ?>
+    <?= $form->field($model, 'company_id', ['skipFormLayout' => true])->label(false)->hiddenInput(); ?>
+
     <div class="row">
         <div class="col-md-8">
             <?= $form->field($model, 'person', ['skipFormLayout' => true])->textInput(); ?>

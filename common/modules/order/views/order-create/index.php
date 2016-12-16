@@ -35,13 +35,6 @@ $form = ActiveForm::begin(['id' => 'createOrderForm']);
                 ]); ?>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-8">
-                <?= $form->field($model, 'typePayment')->dropDownList(
-                    \common\components\nomenclature\TypePayment::$list); ?>
-            </div>
-        </div>
     </div>
 
     <div class="col-md-5">

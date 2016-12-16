@@ -3,23 +3,13 @@
 namespace common\modules\order\modules\ajax\controllers;
 
 use Yii;
+use common\models\company\CompanyContact;
+use common\models\order\Order;
 use common\components\controllers\BaseController;
-use common\components\helpers\JsonHelper;
-use common\models\geo\GeoArea;
 use common\models\product\ProductPrice;
 
 class IndexController extends BaseController
 {
-    public function actionAreaList()
-    {
-        $regionId = (int)Yii::$app->request->post('region');
-        $areas = GeoArea::getListByRegion($regionId);
-        $areas[0] = '...';
-        ksort($areas);
-
-        return JsonHelper::answerSuccess($areas);
-    }
-
     public function actionProductList($type)
     {
         $productPricesList = ProductPrice::findByType($type);
@@ -28,5 +18,27 @@ class IndexController extends BaseController
         }
 
         return $this->renderAjax('/order-manage/productList', ['productPricesList' => $productPricesList]);
+    }
+
+    public function actionContactForm($id)
+    {
+        $order = Order::findById($id);
+
+        $model = new CompanyContact();
+        $model->company_id = $order->company_id;
+
+        return $this->renderAjax('contactForm', ['model' => $model]);
+    }
+
+    public function actionAddCompanyContact()
+    {
+        $formData = Yii::$app->request->post('formData');
+        parse_str($formData, $params);
+
+        $model = new CompanyContact();
+        $model->load($params);
+        $model->save();
+
+        return true;
     }
 }

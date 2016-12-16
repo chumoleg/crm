@@ -32,6 +32,26 @@ class OrderCreateController extends BaseController
         return JsonHelper::answerSuccess($html);
     }
 
+    public function actionAddContact()
+    {
+        $productPriceId = (int)Yii::$app->request->post('productPriceId');
+
+        $model = ProductPrice::findById($productPriceId);
+        if (empty($model)) {
+            return 'Ошибка при добавлении товара!';
+        }
+
+        $formClass = $this->_getFormClassName();
+        $form = new $formClass;
+
+        $html = $this->renderPartial('productRow', [
+            'form'    => $form->getReflectionClassName(),
+            'model'   => $model,
+        ]);
+
+        return JsonHelper::answerSuccess($html);
+    }
+
     private function _getFormClassName()
     {
         return CreateOrderForm::className();

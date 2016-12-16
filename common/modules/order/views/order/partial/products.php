@@ -25,5 +25,6 @@ $model = $this->context->model;
                 ]); ?>
             </div>
         </div>
+        <div class="clearfix"></div>
     <?php endif; ?>
 </div>

@@ -3,9 +3,6 @@
 namespace common\models\order;
 
 use common\components\helpers\ArrayHelper;
-use common\components\nomenclature\TypePayment;
-use common\models\geo\GeoAddress;
-use common\models\geo\GeoArea;
 use \common\components\base\ActiveRecord;
 use common\models\user\User;
 use common\models\Comment;
@@ -64,25 +61,9 @@ class OrderComment extends ActiveRecord
     public static function getTextCommentByField($fieldName, $oldValue, $newValue)
     {
         $order = new Order();
-        $geoAddress = new GeoAddress();
-        $fields = ArrayHelper::merge(
-            $geoAddress->attributeLabels(),
-            $order->attributeLabels(),
-            [
-                'fio'             => 'ФИО',
-                'phone'           => 'Телефон',
-                'current_user_id' => 'Текущий оператор'
-            ]);
+        $fields = $order->attributeLabels();
 
-        if ($fieldName == 'type_payment') {
-            $oldValue = TypePayment::getValue($oldValue);
-            $newValue = TypePayment::getValue($newValue);
-
-        } elseif ($fieldName == 'area_id') {
-            $oldValue = GeoArea::getName(GeoArea::findById($oldValue));
-            $newValue = GeoArea::getName(GeoArea::findById($newValue));
-
-        } elseif ($fieldName == 'current_user_id') {
+        if ($fieldName == 'current_user_id') {
             $oldValue = ArrayHelper::getValue(User::findById($oldValue), 'fio');
             $newValue = ArrayHelper::getValue(User::findById($newValue), 'fio');
         }

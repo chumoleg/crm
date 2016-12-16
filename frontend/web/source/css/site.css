@@ -210,10 +210,6 @@ a.mainMenuButton {
     vertical-align: top;
 }
 
-#orderForm .row {
-    margin-bottom: 10px;
-}
-
 textarea.fixed {
     resize: none;
     height: 58px;

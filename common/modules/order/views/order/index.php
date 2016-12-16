@@ -10,6 +10,17 @@ use common\components\Role;
 $this->title = $this->context->indexTitle;
 
 if ($this->context->module->accessCreateOrder) {
+    if (Yii::$app->user->can(Role::ADMIN)) {
+        $checkOrders = \common\models\order\Order::getOrderWithoutProcess(true);
+        if ($checkOrders) {
+            echo Html::a(
+                'Запуск заказов без процессов',
+                ['/order/order/update-process'],
+                ['class' => 'btn btn-primary']
+            ) . '&nbsp;';
+        }
+    }
+
     if ($this->context->id == 'my-order') {
         echo $this->context->getCreateButton('Заключить новую сделку', ['/order/order-create/index'], false);
         echo Html::a('Список сделок в работе', ['/order/order/index'], ['class' => 'btn btn-default']);
@@ -19,7 +30,6 @@ if ($this->context->module->accessCreateOrder) {
 
     echo Html::tag('div', '&nbsp;');
 }
-
 
 \common\assets\order\OrderListAsset::register($this);
 
@@ -75,7 +85,7 @@ echo GridView::widget(
                 'filter'    => DatePicker::getInput($searchModel),
             ],
             [
-                'class'    => 'common\components\grid\ActionColumn',
+                'class' => 'common\components\grid\ActionColumn',
                 'template' => '{view}',
             ],
         ],

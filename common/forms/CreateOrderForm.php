@@ -3,7 +3,6 @@
 namespace common\forms;
 
 use Yii;
-use common\components\nomenclature\TypePayment;
 use common\models\order\OrderProduct;
 use common\models\process\Process;
 use common\models\order\Order;
@@ -20,7 +19,6 @@ class CreateOrderForm extends Order
 
     public $source;
     public $company;
-    public $typePayment;
 
     public $product_data_checker;
     public $product_data = [];
@@ -36,7 +34,7 @@ class CreateOrderForm extends Order
                 [['source', 'company'], 'integer'],
                 [['product_data'], 'required', 'on' => self::SCENARIO_BY_API],
                 [['product_data_checker'], 'required', 'on' => self::SCENARIO_BY_PARAMS],
-                [['product_data', 'typePayment'], 'safe'],
+                [['product_data'], 'safe'],
                 ['product_data', 'validateProductData', 'on' => self::SCENARIO_BY_API],
                 ['product_data_checker', 'validateProductData', 'on' => self::SCENARIO_BY_PARAMS],
             ],
@@ -53,7 +51,6 @@ class CreateOrderForm extends Order
             [
                 'source'               => 'Источник',
                 'company'              => 'Организация',
-                'typePayment'          => 'Тип оплаты',
                 'product_data'         => 'Товары',
                 'product_data_checker' => 'Товары',
             ],
@@ -95,7 +92,6 @@ class CreateOrderForm extends Order
 
         $this->_setSourceId();
         $this->_setProcessId();
-        $this->_setTypePayment();
 
         $this->price = array_sum(array_column($this->product_data, 'price'));
         $this->currency = Currency::RUR;
@@ -168,14 +164,6 @@ class CreateOrderForm extends Order
         $this->source_id = Source::DEFAULT_SOURCE;
         if ($this->scenario == self::SCENARIO_BY_PARAMS) {
             $this->source_id = Source::SOURCE_OPERATOR;
-        }
-    }
-
-    private function _setTypePayment()
-    {
-        $this->type_payment = $this->typePayment;
-        if (empty($this->type_payment)) {
-            $this->type_payment = TypePayment::POST_PAYMENT;
         }
     }
 }

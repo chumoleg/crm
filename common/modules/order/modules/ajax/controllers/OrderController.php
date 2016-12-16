@@ -2,6 +2,7 @@
 
 namespace common\modules\order\modules\ajax\controllers;
 
+use common\models\company\CompanyContact;
 use Yii;
 use common\components\asterisk\Asterisk;
 use common\models\order\OrderComment;
@@ -54,6 +55,12 @@ class OrderController extends OrderManageController
     public function actionCall()
     {
         $this->_checkAccess();
+        $contactId = (int)Yii::$app->request->post('contactId');
+        if (empty($contactId)) {
+            return JsonHelper::answerError('Выбран некорректный контакт');
+        }
+
+        $companyContact = CompanyContact::findById($contactId);
 
         try {
             $workPlace = Yii::$app->user->getWorkPlace();
@@ -61,7 +68,7 @@ class OrderController extends OrderManageController
                 throw new Exception('Не выставлен № компьютера');
             }
 
-            Asterisk::getModel()->call($workPlace, $this->model->company->getPhone(), $this->model->id);
+            Asterisk::getModel()->call($workPlace, $companyContact->value, $this->model->id);
             $commentList = $this->_addOrderComment('Совершен звонок');
 
             return JsonHelper::answerSuccess($commentList);

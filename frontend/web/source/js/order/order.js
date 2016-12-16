@@ -3,19 +3,6 @@ $(document).ready(function () {
     scrollDownComments();
     scrollDownHistory();
 
-    $(document).on('change', '#regionSelect', function () {
-        $.post('/order/ajax/index/area-list', {region: $(this).val()}, function (result) {
-            if (!checkJsonAnswer(result)) {
-                return;
-            }
-
-            $('#areaSelect').find('option').remove();
-            $.each(result.response, function (key, value) {
-                $('#areaSelect').append($('<option></option>').attr('value', key).text(value));
-            });
-        }, 'json');
-    });
-
     $(document).on('change', '#fieldTextComment', function () {
         var obj = $(this);
         $.post('/order/ajax/order/add-comment', {orderId: orderId, text: obj.val()}, function (result) {
@@ -32,32 +19,22 @@ $(document).ready(function () {
         scrollDownComments();
     }
 
-    function _changeOrderField() {
+    $(document).on('submit', '#companyContactForm', function () {
+        console.log(';sdsdsdsd');
+
+        var modal = $(this).closest('div.modal');
         var params = {
-            orderId: orderId,
-            fieldName: $(this).attr('name'),
-            value: $(this).val()
+            formData: $(this).serialize()
         };
 
         preLoaderShow();
-        $.post('/order/ajax/order/update', params, function (result) {
+        $.post('/order/ajax/index/add-company-contact', params, function () {
+            $.pjax.reload('#companyContactBlock');
             preLoaderHide();
-            if (!checkJsonAnswer(result)) {
-                return;
-            }
-
-            _addComment(result.response);
+            modal.modal('hide');
         }, 'json');
-    }
 
-    $(document).on('change', '#orderForm #areaSelect, #orderForm #typePayment', function () {
-        if ($(this).val() && $(this).val() != 0) {
-            _changeOrderField.call(this);
-        }
-    });
-
-    $(document).on('change', '#orderForm input', function () {
-        _changeOrderField.call(this);
+        return false;
     });
 
     $(document).on('click', '.addProductToOrder', function () {
@@ -102,7 +79,7 @@ $(document).ready(function () {
 
     $(document).on('click', '.callOrder', function () {
         preLoaderShow();
-        $.post('/order/ajax/order/call', {orderId: orderId}, function (result) {
+        $.post('/order/ajax/order/call', {orderId: orderId, contactId: $(this).data('contact')}, function (result) {
             preLoaderHide();
             if (checkJsonAnswer(result)) {
                 _addComment(result.response);

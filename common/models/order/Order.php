@@ -26,7 +26,6 @@ use common\components\Role;
  * @property integer            $company_id
  * @property integer            $process_id
  * @property integer            $current_stage_id
- * @property integer            $type_payment
  * @property string             $price
  * @property integer            $currency
  * @property integer            $current_user_id
@@ -92,7 +91,6 @@ class Order extends ActiveRecord
                     'source_id',
                     'process_id',
                     'current_stage_id',
-                    'type_payment',
                     'currency',
                     'current_user_id',
                     'create_user_id',
@@ -115,10 +113,9 @@ class Order extends ActiveRecord
             'company_id'       => 'Организация',
             'process_id'       => 'Процесс',
             'current_stage_id' => 'Текущий статус',
-            'type_payment'     => 'Тип оплаты',
             'price'            => 'Общая стоимость',
             'currency'         => 'Валюта',
-            'current_user_id'  => 'Оператор',
+            'current_user_id'  => 'Текущий оператор',
             'time_postponed'   => 'Отложен до',
             'create_user_id'   => 'Создан оператором',
             'date_create'      => 'Дата создания',
