@@ -67,7 +67,7 @@ class OrderProductController extends OrderManageController
     {
         return JsonHelper::answerSuccess([
             'commentList' => $this->_addOrderComment($commentText),
-            'productList' => $this->renderPartial('@app/modules/order/views/order/partial/_productsTable')
+            'productList' => $this->renderPartial('@common/modules/order/views/order/partial/_productsTable')
         ]);
     }
 }
