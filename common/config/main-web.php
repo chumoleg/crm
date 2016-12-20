@@ -1,6 +1,6 @@
 <?php
 
-$domain = 'crm.thor-cpa.com';
+$domain = 'crm2.sttk.tv';
 
 return \common\components\helpers\ArrayHelper::merge([
     'defaultRoute' => 'site/index',

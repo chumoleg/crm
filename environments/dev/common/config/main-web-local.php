@@ -1,6 +1,6 @@
 <?php
 
-$domain = 'crm.local';
+$domain = 'crm2.sttk.tv';
 
 $config = [
     'components' => [
