@@ -44,6 +44,7 @@ echo GridView::widget(
         'filterModel'  => $searchModel,
         'columns'      => [
             'id',
+            'name',
             [
                 'attribute' => 'current_user_id',
                 'filter'    => $searchModel->getCurrentUserList(),

@@ -22,6 +22,7 @@ use common\components\Role;
  * This is the model class for table "order".
  *
  * @property integer            $id
+ * @property string             $name
  * @property integer            $source_id
  * @property integer            $company_customer
  * @property integer            $company_executor
@@ -87,7 +88,7 @@ class Order extends ActiveRecord
     public function rules()
     {
         return [
-            [['company_customer', 'source_id'], 'required'],
+            [['name', 'company_customer', 'source_id'], 'required'],
             [
                 [
                     'company_customer',
@@ -113,6 +114,7 @@ class Order extends ActiveRecord
     {
         return [
             'id'               => 'ID',
+            'name'             => 'Название',
             'source_id'        => 'Источник',
             'company_customer' => 'Организация (клиент)',
             'company_executor' => 'Организация (обработчик)',

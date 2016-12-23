@@ -9,6 +9,9 @@ class m161223_002543_change_company extends Migration
     public function up()
     {
         $this->addColumn('company', 'type', 'TINYINT(1) UNSIGNED DEFAULT 1 AFTER id');
+
+        $this->addColumn('order', 'name', 'VARCHAR(200) NOT NULL AFTER id');
+
         $this->addColumn('order', 'company_executor', self::INT_FIELD_NOT_NULL . ' AFTER id');
         $this->addForeignKey(
             'fk_order_company_executor',
@@ -48,6 +51,7 @@ class m161223_002543_change_company extends Migration
     public function down()
     {
         $this->dropColumn('company', 'type');
+        $this->dropColumn('order', 'name');
 
         $this->dropForeignKey('fk_order_company_executor', 'order');
         $this->dropColumn('order', 'company_executor');

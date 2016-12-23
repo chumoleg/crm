@@ -112,7 +112,8 @@ class CreateOrderForm extends Order
     {
 //        $post = [
 //            'source_id'        => 'Источник',
-//            'company_customer' => 'Организация',
+//            'name'             => 'Название',
+//            'company_customer' => 'Организация (клиент)',
 //            'product_data'     => [
 //                [
 //                    'product_id' => 'ID товара',

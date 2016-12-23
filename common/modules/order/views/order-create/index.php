@@ -23,25 +23,40 @@ $form = ActiveForm::begin(['id' => 'createOrderForm']);
     <div class="col-md-3">
         <div class="row">
             <div class="col-md-8">
-                <?= $form->field($model, 'source_id')->widget(\kartik\widgets\Select2::className(), [
-                    'data' => \common\models\source\Source::getList(),
-                ]); ?>
+                <?= $form->field($model, 'name')->textInput(); ?>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-8">
-                <?= $form->field($model, 'company_customer')->widget(\kartik\widgets\Select2::className(), [
-                    'data' => Company::getListCustomers(),
-                ]); ?>
+                <?= $form->field($model, 'source_id')->widget(
+                    \kartik\widgets\Select2::className(),
+                    [
+                        'data' => \common\models\source\Source::getList(),
+                    ]
+                ); ?>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-8">
-                <?= $form->field($model, 'company_executor')->widget(\kartik\widgets\Select2::className(), [
-                    'data' => Company::getListExecutors(),
-                ]); ?>
+                <?= $form->field($model, 'company_customer')->widget(
+                    \kartik\widgets\Select2::className(),
+                    [
+                        'data' => Company::getListCustomers(),
+                    ]
+                ); ?>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <?= $form->field($model, 'company_executor')->widget(
+                    \kartik\widgets\Select2::className(),
+                    [
+                        'data' => Company::getListExecutors(),
+                    ]
+                ); ?>
             </div>
         </div>
     </div>
@@ -54,14 +69,19 @@ $form = ActiveForm::begin(['id' => 'createOrderForm']);
         </table>
 
         <div class="clearfix"></div>
-        <?= Html::button('Добавить товар', [
-            'data-url'   => Url::to([
-                '/order/ajax/index/product-list',
-                'type' => \common\models\product\ProductPrice::TYPE_MAIN
-            ]),
-            'data-title' => 'Добавление товара',
-            'class'      => 'showModalButton btn btn-default'
-        ]); ?>
+        <?= Html::button(
+            'Добавить товар',
+            [
+                'data-url'   => Url::to(
+                    [
+                        '/order/ajax/index/product-list',
+                        'type' => \common\models\product\ProductPrice::TYPE_MAIN,
+                    ]
+                ),
+                'data-title' => 'Добавление товара',
+                'class'      => 'showModalButton btn btn-default',
+            ]
+        ); ?>
     </div>
 </div>
 

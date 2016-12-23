@@ -23,6 +23,7 @@ class OrderSearch extends Order
             [
                 [
                     'id',
+                    'name',
                     'company_customer',
                     'company_executor',
                     'process_id',
@@ -114,6 +115,8 @@ class OrderSearch extends Order
                 'stage.department'       => $this->department,
             ]
         );
+
+        $query->andFilterWhere(['LIKE', 'order.name', $this->name]);
 
         if (!empty($this->tag_id)) {
             $tagId = $this->tag_id;
