@@ -25,7 +25,7 @@ class IndexController extends BaseController
         $order = Order::findById($id);
 
         $model = new CompanyContact();
-        $model->company_id = $order->company_id;
+        $model->company_id = $order->company_customer;
 
         return $this->renderAjax('contactForm', ['model' => $model]);
     }

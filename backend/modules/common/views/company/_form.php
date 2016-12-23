@@ -16,7 +16,10 @@ $this->context->addBreadCrumb($this->title);
 
     <div class="row">
         <div class="col-md-3">
+            <?= $form->field($model, 'type')->dropDownList(\common\models\company\Company::$typeList); ?>
+
             <?= $form->field($model, 'name')->textInput(); ?>
+
             <?= $form->field($model, 'brand')->textInput(); ?>
         </div>
 
@@ -28,11 +31,14 @@ $this->context->addBreadCrumb($this->title);
                 <?php
                 if (!empty($model->companyContacts)) {
                     foreach ($model->companyContacts as $k => $obj) {
-                        echo $this->render('partial/_contactRow', [
-                            'counter' => $k,
-                            'model'   => $obj,
-                            'form'    => $model->getReflectionClassName()
-                        ]);
+                        echo $this->render(
+                            'partial/_contactRow',
+                            [
+                                'counter' => $k,
+                                'model'   => $obj,
+                                'form'    => $model->getReflectionClassName(),
+                            ]
+                        );
                     }
                 }
                 ?>
@@ -40,11 +46,14 @@ $this->context->addBreadCrumb($this->title);
             </table>
 
             <div class="clearfix"></div>
-            <?= Html::button('Добавить контакт', [
-                'data-url'   => Url::toRoute(['/common/company/add-contact']),
-                'data-title' => 'Добавление контакта',
-                'class'      => 'showModalButton btn btn-default'
-            ]); ?>
+            <?= Html::button(
+                'Добавить контакт',
+                [
+                    'data-url'   => Url::toRoute(['/common/company/add-contact']),
+                    'data-title' => 'Добавление контакта',
+                    'class'      => 'showModalButton btn btn-default',
+                ]
+            ); ?>
         </div>
     </div>
 

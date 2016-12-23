@@ -8,12 +8,12 @@ use yii\widgets\Pjax;
 $model = $this->context->model;
 
 $disabled = !$model->checkAccessManageOrder();
-$company = $model->company;
+$companyCustomer = $model->companyCustomer;
 ?>
 
 
 <div class="borderedBlock topBlock">
-    <legend><?= $company->getName(); ?></legend>
+    <legend><?= $companyCustomer->getName(); ?></legend>
 
     <?php Pjax::begin(['id' => 'companyContactBlock']); ?>
     <table class="table tabel-condensed">
@@ -25,7 +25,7 @@ $company = $model->company;
         </tr>
         </thead>
 
-        <?php foreach ($company->companyContacts as $companyContact) : ?>
+        <?php foreach ($companyCustomer->companyContacts as $companyContact) : ?>
             <tr>
                 <td><?= $companyContact->person; ?></td>
                 <td><?= ArrayHelper::getValue(CompanyContact::$typeList, $companyContact->type); ?></td>

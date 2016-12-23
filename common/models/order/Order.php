@@ -23,19 +23,21 @@ use common\components\Role;
  *
  * @property integer            $id
  * @property integer            $source_id
- * @property integer            $company_id
+ * @property integer            $company_customer
+ * @property integer            $company_executor
  * @property integer            $process_id
  * @property integer            $current_stage_id
  * @property string             $price
  * @property integer            $currency
  * @property integer            $current_user_id
  * @property string             $time_postponed
- * @property integer            $create_user_id
+ * @property integer            $created_user_id
  * @property string             $date_create
  * @property string             $date_update
  *
  * @property Source             $source
- * @property Company            $company
+ * @property Company            $companyCustomer
+ * @property Company            $companyExecutor
  * @property User               $createUser
  * @property User               $currentUser
  * @property Process            $process
@@ -85,15 +87,17 @@ class Order extends ActiveRecord
     public function rules()
     {
         return [
+            [['company_customer', 'source_id'], 'required'],
             [
                 [
-                    'company_id',
+                    'company_customer',
+                    'company_executor',
                     'source_id',
                     'process_id',
                     'current_stage_id',
                     'currency',
                     'current_user_id',
-                    'create_user_id',
+                    'created_user_id',
                 ],
                 'integer',
             ],
@@ -110,14 +114,15 @@ class Order extends ActiveRecord
         return [
             'id'               => 'ID',
             'source_id'        => 'Источник',
-            'company_id'       => 'Организация',
+            'company_customer' => 'Организация (клиент)',
+            'company_executor' => 'Организация (обработчик)',
             'process_id'       => 'Процесс',
             'current_stage_id' => 'Текущий статус',
             'price'            => 'Общая стоимость',
             'currency'         => 'Валюта',
             'current_user_id'  => 'Текущий оператор',
             'time_postponed'   => 'Отложен до',
-            'create_user_id'   => 'Создан оператором',
+            'created_user_id'  => 'Создан оператором',
             'date_create'      => 'Дата создания',
             'date_update'      => 'Дата изменения',
         ];
@@ -136,7 +141,7 @@ class Order extends ActiveRecord
      */
     public function getCreateUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'create_user_id']);
+        return $this->hasOne(User::className(), ['id' => 'created_user_id']);
     }
 
     /**
@@ -190,9 +195,17 @@ class Order extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCompany()
+    public function getCompanyCustomer()
     {
-        return $this->hasOne(Company::className(), ['id' => 'company_id']);
+        return $this->hasOne(Company::className(), ['id' => 'company_customer']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCompanyExecutor()
+    {
+        return $this->hasOne(Company::className(), ['id' => 'company_executor']);
     }
 
     /**

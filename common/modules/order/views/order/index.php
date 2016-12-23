@@ -6,6 +6,7 @@ use yii\widgets\Pjax;
 use yii\helpers\Html;
 use common\components\helpers\DatePicker;
 use common\components\Role;
+use common\models\company\Company;
 
 $this->title = $this->context->indexTitle;
 
@@ -24,6 +25,7 @@ if ($this->context->module->accessCreateOrder) {
     if ($this->context->id == 'my-order') {
         echo $this->context->getCreateButton('Заключить новую сделку', ['/order/order-create/index'], false);
         echo Html::a('Список сделок в работе', ['/order/order/index'], ['class' => 'btn btn-default']);
+
     } else {
         echo Html::a('Список моих сделок', ['/order/my-order/index'], ['class' => 'btn btn-default']);
     }
@@ -57,9 +59,14 @@ echo GridView::widget(
                 'value'     => 'source.name',
             ],
             [
-                'attribute' => 'company_id',
-                'filter'    => \common\models\company\Company::getList(),
-                'value'     => 'company.name',
+                'attribute' => 'company_executor',
+                'filter'    => Company::getListExecutors(),
+                'value'     => 'companyExecutor.name',
+            ],
+            [
+                'attribute' => 'company_customer',
+                'filter'    => Company::getListCustomers(),
+                'value'     => 'companyCustomer.name',
             ],
             [
                 'attribute' => 'tag_id',

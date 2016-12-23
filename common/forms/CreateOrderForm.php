@@ -3,6 +3,7 @@
 namespace common\forms;
 
 use Yii;
+use common\models\company\Company;
 use common\models\order\OrderProduct;
 use common\models\process\Process;
 use common\models\order\Order;
@@ -17,9 +18,6 @@ class CreateOrderForm extends Order
     const SCENARIO_BY_PARAMS = 'createByParams';
     const SCENARIO_BY_API = 'createByApi';
 
-    public $source;
-    public $company;
-
     public $product_data_checker;
     public $product_data = [];
 
@@ -30,13 +28,11 @@ class CreateOrderForm extends Order
     {
         return ArrayHelper::merge(
             [
-                [['company'], 'required'],
-                [['source', 'company'], 'integer'],
                 [['product_data'], 'required', 'on' => self::SCENARIO_BY_API],
-                [['product_data_checker'], 'required', 'on' => self::SCENARIO_BY_PARAMS],
-                [['product_data'], 'safe'],
+                [['product_data_checker', 'company_executor'], 'required', 'on' => self::SCENARIO_BY_PARAMS],
                 ['product_data', 'validateProductData', 'on' => self::SCENARIO_BY_API],
                 ['product_data_checker', 'validateProductData', 'on' => self::SCENARIO_BY_PARAMS],
+                [['product_data'], 'safe'],
             ],
             parent::rules()
         );
@@ -49,8 +45,6 @@ class CreateOrderForm extends Order
     {
         return ArrayHelper::merge(
             [
-                'source'               => 'Источник',
-                'company'              => 'Организация',
                 'product_data'         => 'Товары',
                 'product_data_checker' => 'Товары',
             ],
@@ -88,14 +82,13 @@ class CreateOrderForm extends Order
 
     public function beforeSave($insert)
     {
-        $this->company_id = $this->company;
-
         $this->_setSourceId();
+        $this->_setCompanyExecutor();
         $this->_setProcessId();
 
         $this->price = array_sum(array_column($this->product_data, 'price'));
         $this->currency = Currency::RUR;
-        $this->create_user_id = $this->scenario == self::SCENARIO_BY_PARAMS ? Yii::$app->user->id : null;
+        $this->created_user_id = $this->scenario == self::SCENARIO_BY_PARAMS ? Yii::$app->user->id : null;
 
         if (!empty(Yii::$app->user->id) && Yii::$app->user->can(Role::OPERATOR)) {
             $this->current_user_id = Yii::$app->user->id;
@@ -118,9 +111,9 @@ class CreateOrderForm extends Order
     public function fields()
     {
 //        $post = [
-//            'source'       => 'Источник',
-//            'company'      => 'Организация',
-//            'product_data' => [
+//            'source_id'        => 'Источник',
+//            'company_customer' => 'Организация',
+//            'product_data'     => [
 //                [
 //                    'product_id' => 'ID товара',
 //                    'price'      => 'Цена товара',
@@ -152,11 +145,20 @@ class CreateOrderForm extends Order
         $this->process_id = ArrayHelper::getValue($process, 'id');
     }
 
+    private function _setCompanyExecutor()
+    {
+        if (!empty($this->company_executor)) {
+            return;
+        }
+
+        $executorList = Company::getListExecutors();
+
+        $this->company_executor = key($executorList);
+    }
+
     private function _setSourceId()
     {
-        $this->source_id = $this->source;
-
-        $checkSource = Source::findById($this->source);
+        $checkSource = Source::findById($this->source_id);
         if (!empty($checkSource)) {
             return;
         }

@@ -410,7 +410,7 @@ CREATE TABLE `order` (
   `price` decimal(14,2) DEFAULT '0.00',
   `currency` tinyint(3) UNSIGNED DEFAULT '1',
   `current_user_id` int(10) UNSIGNED DEFAULT NULL,
-  `create_user_id` int(10) UNSIGNED DEFAULT NULL,
+  `created_user_id` int(10) UNSIGNED DEFAULT NULL,
   `date_create` timestamp NULL DEFAULT NULL,
   `date_update` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -1152,7 +1152,7 @@ ALTER TABLE `order`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_order_process_id` (`process_id`),
   ADD KEY `fk_order_current_user_id` (`current_user_id`),
-  ADD KEY `fk_order_create_user_id` (`create_user_id`),
+  ADD KEY `fk_order_created_user_id` (`created_user_id`),
   ADD KEY `fk_order_source_id` (`source_id`),
   ADD KEY `fk_order_current_stage_id` (`current_stage_id`);
 
@@ -1697,7 +1697,7 @@ ALTER TABLE `geo_area`
 -- Constraints for table `order`
 --
 ALTER TABLE `order`
-  ADD CONSTRAINT `fk_order_create_user_id` FOREIGN KEY (`create_user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_order_created_user_id` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_order_current_stage_id` FOREIGN KEY (`current_stage_id`) REFERENCES `stage` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_order_current_user_id` FOREIGN KEY (`current_user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_order_process_id` FOREIGN KEY (`process_id`) REFERENCES `process` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,

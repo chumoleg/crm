@@ -2,6 +2,7 @@
 use kartik\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use common\models\company\Company;
 
 \common\assets\order\OrderCreateAsset::register($this);
 
@@ -22,7 +23,7 @@ $form = ActiveForm::begin(['id' => 'createOrderForm']);
     <div class="col-md-3">
         <div class="row">
             <div class="col-md-8">
-                <?= $form->field($model, 'source')->widget(\kartik\widgets\Select2::className(), [
+                <?= $form->field($model, 'source_id')->widget(\kartik\widgets\Select2::className(), [
                     'data' => \common\models\source\Source::getList(),
                 ]); ?>
             </div>
@@ -30,8 +31,16 @@ $form = ActiveForm::begin(['id' => 'createOrderForm']);
 
         <div class="row">
             <div class="col-md-8">
-                <?= $form->field($model, 'company')->widget(\kartik\widgets\Select2::className(), [
-                    'data' => \common\models\company\Company::getList(),
+                <?= $form->field($model, 'company_customer')->widget(\kartik\widgets\Select2::className(), [
+                    'data' => Company::getListCustomers(),
+                ]); ?>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <?= $form->field($model, 'company_executor')->widget(\kartik\widgets\Select2::className(), [
+                    'data' => Company::getListExecutors(),
                 ]); ?>
             </div>
         </div>

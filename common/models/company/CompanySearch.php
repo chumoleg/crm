@@ -18,6 +18,7 @@ class CompanySearch extends Company
                     'id',
                     'name',
                     'brand',
+                    'type',
                 ],
                 'safe',
             ],
@@ -40,7 +41,13 @@ class CompanySearch extends Company
             return $dataProvider;
         }
 
-        $query->andFilterWhere(['id' => $this->id]);
+        $query->andFilterWhere(
+            [
+                'id'   => $this->id,
+                'type' => $this->type,
+            ]
+        );
+
         $query->andFilterWhere(['LIKE', 'name', $this->name]);
         $query->andFilterWhere(['LIKE', 'brand', $this->brand]);
 

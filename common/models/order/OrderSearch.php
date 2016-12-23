@@ -23,7 +23,8 @@ class OrderSearch extends Order
             [
                 [
                     'id',
-                    'company_id',
+                    'company_customer',
+                    'company_executor',
                     'process_id',
                     'current_stage_id',
                     'department',
@@ -68,7 +69,20 @@ class OrderSearch extends Order
             ->joinWith('process')
             ->joinWith('currentStage')
             ->joinWith('source')
-            ->joinWith('company');
+            ->joinWith(
+                [
+                    'companyCustomer' => function ($q) {
+                        $q->alias('customer');
+                    },
+                ]
+            )
+            ->joinWith(
+                [
+                    'companyExecutor' => function ($q) {
+                        $q->alias('executor');
+                    },
+                ]
+            );
 
         $dataProvider = $this->getDataProvider($query, $defaultOrder);
         $this->load($params);
@@ -77,7 +91,7 @@ class OrderSearch extends Order
         }
 
         if ($onlyMyOrders) {
-            $query->andWhere(['order.create_user_id' => Yii::$app->user->id]);
+            $query->andWhere(['order.created_user_id' => Yii::$app->user->id]);
 
         } else {
             $this->_compareWithCurrentApp($query);
@@ -91,7 +105,8 @@ class OrderSearch extends Order
             [
                 'order.id'               => $this->id,
                 'order.date_create'      => $this->date_create,
-                'order.company_id'       => $this->company_id,
+                'order.company_executor' => $this->company_executor,
+                'order.company_customer' => $this->company_customer,
                 'order.process_id'       => $this->process_id,
                 'order.current_stage_id' => $this->current_stage_id,
                 'order.source_id'        => $this->source_id,
