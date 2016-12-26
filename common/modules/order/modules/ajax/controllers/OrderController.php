@@ -2,26 +2,17 @@
 
 namespace common\modules\order\modules\ajax\controllers;
 
-use common\models\company\CompanyContact;
 use Yii;
+use yii\base\Exception;
+use common\models\company\CompanyContact;
+use common\models\order\Order;
 use common\components\asterisk\Asterisk;
 use common\models\order\OrderComment;
 use common\components\helpers\JsonHelper;
-use yii\base\Exception;
 use common\components\controllers\order\OrderManageController;
 
 class OrderController extends OrderManageController
 {
-    public function actionSetCurrentOperator()
-    {
-        $operator = Yii::$app->request->post('operator');
-        if (!$this->model->updateCurrentOperator($operator)) {
-            return JsonHelper::answerError('Ошибка при смене оператора!');
-        }
-
-        return JsonHelper::answerSuccess(true);
-    }
-
     public function actionAddComment()
     {
         $text = Yii::$app->request->post('text');
@@ -85,5 +76,36 @@ class OrderController extends OrderManageController
         $commentList = $this->_addOrderComment('Отправлено sms-сообщение');
 
         return JsonHelper::answerSuccess($commentList);
+    }
+
+    public function actionContactForm($id)
+    {
+        $order = Order::findById($id);
+
+        $model = new CompanyContact();
+        $model->company_id = $order->company_customer;
+
+        return $this->renderAjax('contactForm', ['model' => $model]);
+    }
+
+    public function actionAddCompanyContact()
+    {
+        $formData = Yii::$app->request->post('formData');
+        parse_str($formData, $params);
+
+        $model = new CompanyContact();
+        $model->load($params);
+        $model->save();
+
+        $attributes = [
+            'Контактное лицо: ' . $model->person,
+            CompanyContact::$typeList[$model->type] . ': ' . $model->value
+        ];
+
+        $commentText = 'Добавлен контакт: ' . implode('; ', $attributes);
+
+        return JsonHelper::answerSuccess([
+            'commentList' => $this->_addOrderComment($commentText)
+        ]);
     }
 }

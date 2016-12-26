@@ -38,7 +38,6 @@ class DbController extends Controller
         $db->createCommand()->truncateTable('process')->execute();
         $db->createCommand()->truncateTable('process_stage')->execute();
         $db->createCommand()->truncateTable('process_stage_action')->execute();
-        $db->createCommand()->truncateTable('process_stage_operator')->execute();
         $db->createCommand()->truncateTable('process_stage_action_reason')->execute();
         $db->createCommand()->truncateTable('process_source')->execute();
 

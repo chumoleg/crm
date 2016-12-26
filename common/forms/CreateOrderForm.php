@@ -28,6 +28,8 @@ class CreateOrderForm extends Order
     {
         return ArrayHelper::merge(
             [
+                [['company_customer'], 'required'],
+                [['company_customer'], 'validateCompanyCustomer', 'on' => self::SCENARIO_BY_PARAMS],
                 [['product_data'], 'required', 'on' => self::SCENARIO_BY_API],
                 [['product_data_checker', 'company_executor'], 'required', 'on' => self::SCENARIO_BY_PARAMS],
                 ['product_data', 'validateProductData', 'on' => self::SCENARIO_BY_API],
@@ -80,6 +82,14 @@ class CreateOrderForm extends Order
         }
     }
 
+    public function validateCompanyCustomer($attribute)
+    {
+        $companyList = Company::getListCustomers();
+        if (!isset($companyList[$this->company_customer])) {
+            $this->addError($attribute, 'Невозможно выбрать данную организацию');
+        }
+    }
+
     public function beforeSave($insert)
     {
         $this->_setSourceId();
@@ -88,11 +98,8 @@ class CreateOrderForm extends Order
 
         $this->price = array_sum(array_column($this->product_data, 'price'));
         $this->currency = Currency::RUR;
-        $this->created_user_id = $this->scenario == self::SCENARIO_BY_PARAMS ? Yii::$app->user->id : null;
-
-        if (!empty(Yii::$app->user->id) && Yii::$app->user->can(Role::OPERATOR)) {
-            $this->current_user_id = Yii::$app->user->id;
-        }
+        $this->created_user_id = ($this->scenario == self::SCENARIO_BY_PARAMS)
+            ? Yii::$app->user->id : null;
 
         return parent::beforeSave($insert);
     }
@@ -101,9 +108,6 @@ class CreateOrderForm extends Order
     {
         $this->_saveProducts();
         $this->saveFirstOrderStage();
-        if (empty($this->current_user_id)) {
-            $this->setOrderOperator();
-        }
 
         parent::afterSave($insert, $changedAttributes);
     }

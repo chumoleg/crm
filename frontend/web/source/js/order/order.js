@@ -20,16 +20,16 @@ $(document).ready(function () {
     }
 
     $(document).on('submit', '#companyContactForm', function () {
-        console.log(';sdsdsdsd');
-
         var modal = $(this).closest('div.modal');
         var params = {
+            orderId: orderId,
             formData: $(this).serialize()
         };
 
         preLoaderShow();
-        $.post('/order/ajax/index/add-company-contact', params, function () {
+        $.post('/order/ajax/order/add-company-contact', params, function (answer) {
             $.pjax.reload('#companyContactBlock');
+            _addComment(answer.response.commentList);
             preLoaderHide();
             modal.modal('hide');
         }, 'json');

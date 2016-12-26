@@ -8,7 +8,7 @@ use yii\helpers\Html;
 
 \common\assets\order\OrderAsset::register($this);
 
-$this->title = 'Сделка #' . $this->context->model->id;
+$this->title = $this->context->model->name;
 
 $this->context->addBreadCrumb('Список сделок', ['index']);
 $this->context->addBreadCrumb($this->title);

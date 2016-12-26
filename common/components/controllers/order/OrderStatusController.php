@@ -112,7 +112,7 @@ abstract class OrderStatusController extends OrderManageController
 
                 $commentList = $this->_addOrderComment('Статус изменен на: ' . $followToStage->name);
 
-                $this->model->setOrderOperator();
+//                $this->model->setOrderOperator();
 
                 $this->_sendRequestToForeignSystem($followToStage);
             }

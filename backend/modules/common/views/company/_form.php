@@ -21,6 +21,9 @@ $this->context->addBreadCrumb($this->title);
             <?= $form->field($model, 'name')->textInput(); ?>
 
             <?= $form->field($model, 'brand')->textInput(); ?>
+
+            <?= $form->field($model, 'current_operator')->dropDownList(
+                $model->getOperatorList(), ['prompt' => '...']); ?>
         </div>
 
         <div class="col-md-5 col-md-offset-1">

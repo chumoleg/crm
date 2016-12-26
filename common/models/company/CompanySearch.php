@@ -19,6 +19,7 @@ class CompanySearch extends Company
                     'name',
                     'brand',
                     'type',
+                    'current_operator',
                 ],
                 'safe',
             ],
@@ -45,6 +46,7 @@ class CompanySearch extends Company
             [
                 'id'   => $this->id,
                 'type' => $this->type,
+                'current_operator' => $this->current_operator,
             ]
         );
 

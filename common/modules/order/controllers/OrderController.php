@@ -43,7 +43,7 @@ class OrderController extends CrudController
             $order->save();
 
             $order->saveFirstOrderStage();
-            $order->setOrderOperator();
+//            $order->setOrderOperator();
         }
 
         return $this->redirect('index');

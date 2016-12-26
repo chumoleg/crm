@@ -29,16 +29,4 @@ class IndexController extends BaseController
 
         return $this->renderAjax('contactForm', ['model' => $model]);
     }
-
-    public function actionAddCompanyContact()
-    {
-        $formData = Yii::$app->request->post('formData');
-        parse_str($formData, $params);
-
-        $model = new CompanyContact();
-        $model->load($params);
-        $model->save();
-
-        return true;
-    }
 }

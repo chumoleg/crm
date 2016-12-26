@@ -6,7 +6,7 @@ use Yii;
 
 class MyOrderController extends OrderController
 {
-    public $indexTitle = 'Список моих сделок';
+    public $indexTitle = 'Сделки, заключенные мной';
 
     public function getViewPath()
     {

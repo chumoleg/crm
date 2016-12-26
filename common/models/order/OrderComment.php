@@ -63,11 +63,6 @@ class OrderComment extends ActiveRecord
         $order = new Order();
         $fields = $order->attributeLabels();
 
-        if ($fieldName == 'current_user_id') {
-            $oldValue = ArrayHelper::getValue(User::findById($oldValue), 'fio');
-            $newValue = ArrayHelper::getValue(User::findById($newValue), 'fio');
-        }
-
         if (empty($oldValue)) {
             $oldValue = '""';
         }

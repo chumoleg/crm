@@ -53,6 +53,8 @@ class m161223_002543_change_company extends Migration
         $this->dropColumn('company', 'type');
         $this->dropColumn('order', 'name');
 
+        $this->dropForeignKey('fk_order_created_user_id', 'order');
+        $this->dropForeignKey('fk_order_company_customer', 'order');
         $this->dropForeignKey('fk_order_company_executor', 'order');
         $this->dropColumn('order', 'company_executor');
     }

@@ -2,6 +2,7 @@
 
 namespace common\models\order;
 
+use common\components\helpers\DepartmentHelper;
 use Yii;
 use common\models\company\Company;
 use common\models\transaction\Transaction;
@@ -12,7 +13,6 @@ use common\components\base\ActiveRecord;
 use common\models\user\User;
 use common\models\process\Process;
 use common\models\source\Source;
-use common\components\models\OrderSetOperator;
 use common\models\product\ProductTag;
 use common\models\tag\Tag;
 use common\models\stage\Stage;
@@ -30,7 +30,6 @@ use common\components\Role;
  * @property integer            $current_stage_id
  * @property string             $price
  * @property integer            $currency
- * @property integer            $current_user_id
  * @property string             $time_postponed
  * @property integer            $created_user_id
  * @property string             $date_create
@@ -40,7 +39,6 @@ use common\components\Role;
  * @property Company            $companyCustomer
  * @property Company            $companyExecutor
  * @property User               $createUser
- * @property User               $currentUser
  * @property Process            $process
  * @property OrderCallHistory[] $orderCallHistories
  * @property OrderComment[]     $orderComments
@@ -97,7 +95,6 @@ class Order extends ActiveRecord
                     'process_id',
                     'current_stage_id',
                     'currency',
-                    'current_user_id',
                     'created_user_id',
                 ],
                 'integer',
@@ -122,7 +119,6 @@ class Order extends ActiveRecord
             'current_stage_id' => 'Текущий статус',
             'price'            => 'Общая стоимость',
             'currency'         => 'Валюта',
-            'current_user_id'  => 'Текущий оператор',
             'time_postponed'   => 'Отложен до',
             'created_user_id'  => 'Создан оператором',
             'date_create'      => 'Дата создания',
@@ -144,14 +140,6 @@ class Order extends ActiveRecord
     public function getCreateUser()
     {
         return $this->hasOne(User::className(), ['id' => 'created_user_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCurrentUser()
-    {
-        return $this->hasOne(User::className(), ['id' => 'current_user_id']);
     }
 
     /**
@@ -247,34 +235,26 @@ class Order extends ActiveRecord
         return $this->save();
     }
 
-    public function setOrderOperator()
-    {
-        return (new OrderSetOperator())->update($this);
-    }
-
-    public function updateCurrentOperator($operator)
-    {
-        if (empty($operator)) {
-            $operator = null;
-        }
-
-        $oldOperator = $this->current_user_id;
-        $this->current_user_id = $operator;
-
-        $textComment = OrderComment::getTextCommentByField('current_user_id', $oldOperator, $operator);
-        OrderComment::addCommentToOrder($this->id, $textComment);
-
-        return self::updateAll(['current_user_id' => $operator], 'id = ' . $this->id);
-    }
-
     public function checkAccessManageOrder()
     {
-        $currentOrderStage = $this->currentOrderStage;
-        $checker = !Yii::$app->user->can(Role::OPERATOR)
-            || (Yii::$app->user->can(Role::OPERATOR) && Yii::$app->user->id == $this->current_user_id)
-            && (empty($currentOrderStage) || $currentOrderStage->time_limit != 0);
+        if (Yii::$app->user->can(Role::OPERATOR)
+            && Yii::$app->user->id != $this->companyCustomer->current_operator
+        ) {
+            return false;
+        }
 
-        return $checker;
+        $currentStage = $this->currentStage;
+        $department = DepartmentHelper::getDepartmentByApplication();
+        if (!empty($department) && !empty($currentStage) && $currentStage->department != $department) {
+            return false;
+        }
+
+        $currentOrderStage = $this->currentOrderStage;
+        if (!empty($currentOrderStage) && $currentOrderStage->time_limit == 0) {
+            return false;
+        }
+
+        return true;
     }
 
     public function saveFirstOrderStage()

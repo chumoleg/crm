@@ -22,20 +22,21 @@ if ($this->context->module->accessCreateOrder) {
         }
     }
 
-    if ($this->context->id == 'my-order') {
+//    if ($this->context->id == 'my-order') {
+    $companyList = Company::getListCustomers();
+    if (!empty($companyList)){
         echo $this->context->getCreateButton('Заключить новую сделку', ['/order/order-create/index'], false);
-        echo Html::a('Список сделок в работе', ['/order/order/index'], ['class' => 'btn btn-default']);
-
-    } else {
-        echo Html::a('Список моих сделок', ['/order/my-order/index'], ['class' => 'btn btn-default']);
     }
+//        echo Html::a('Список сделок в работе', ['/order/order/index'], ['class' => 'btn btn-default']);
+
+//    } else {
+//        echo Html::a('Сделки, заключенные мной', ['/order/my-order/index'], ['class' => 'btn btn-default']);
+//    }
 
     echo Html::tag('div', '&nbsp;');
 }
 
 \common\assets\order\OrderListAsset::register($this);
-
-$operatorList = \common\models\user\User::getListByRole(Role::OPERATOR);
 
 Pjax::begin(['id' => 'orderGrid']);
 echo GridView::widget(
@@ -45,15 +46,6 @@ echo GridView::widget(
         'columns'      => [
             'id',
             'name',
-            [
-                'attribute' => 'current_user_id',
-                'filter'    => $searchModel->getCurrentUserList(),
-                'format'    => 'raw',
-                'visible'   => Yii::$app->user->can(Role::ADMIN),
-                'value'     => function ($data) use ($operatorList) {
-                    return $this->render('_operatorList', ['model' => $data, 'operatorList' => $operatorList]);
-                },
-            ],
             [
                 'attribute' => 'source_id',
                 'filter'    => \common\models\source\Source::getList(),

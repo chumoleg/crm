@@ -16,6 +16,11 @@ echo GridView::widget(
         'columns'      => [
             'id',
             [
+                'attribute' => 'current_operator',
+                'filter'    => $searchModel->getOperatorList(),
+                'value'     => 'currentOperator.fio',
+            ],
+            [
                 'attribute' => 'type',
                 'filter'    => Company::$typeList,
                 'value'     => function ($data) {

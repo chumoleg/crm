@@ -22,7 +22,6 @@ use common\models\stage\Stage;
  * @property Process                $process
  * @property Stage                  $stage
  * @property ProcessStageAction[]   $actions
- * @property ProcessStageOperator[] $processStageOperators
  */
 class ProcessStage extends ActiveRecord
 {
@@ -116,14 +115,5 @@ class ProcessStage extends ActiveRecord
     public function getActions()
     {
         return $this->hasMany(ProcessStageAction::className(), ['process_stage_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProcessStageOperators()
-    {
-        return $this->hasMany(ProcessStageOperator::className(),
-            ['stage_id' => 'stage_id', 'process_id' => 'process_id']);
     }
 }

@@ -30,7 +30,6 @@ class OrderSearch extends Order
                     'current_stage_id',
                     'department',
                     'source_id',
-                    'current_user_id',
                     'date_create',
                     'fio',
                     'phone',
@@ -98,7 +97,7 @@ class OrderSearch extends Order
             $this->_compareWithCurrentApp($query);
 
             if (Yii::$app->user->can(\common\components\Role::OPERATOR)) {
-                $query->andWhere(['order.current_user_id' => Yii::$app->user->id]);
+                $query->andWhere(['customer.current_operator' => Yii::$app->user->id]);
             }
         }
 
@@ -111,7 +110,6 @@ class OrderSearch extends Order
                 'order.process_id'       => $this->process_id,
                 'order.current_stage_id' => $this->current_stage_id,
                 'order.source_id'        => $this->source_id,
-                'order.current_user_id'  => $this->current_user_id,
                 'stage.department'       => $this->department,
             ]
         );
@@ -139,24 +137,10 @@ class OrderSearch extends Order
     private function _compareWithCurrentApp($query)
     {
         $department = DepartmentHelper::getDepartmentByApplication();
-        if (empty($department)) {
+        if (empty($department) || $department == DepartmentHelper::CALL_CENTER) {
             return;
         }
 
         $query->andWhere(['stage.department' => $department]);
-    }
-
-    /**
-     * @return array
-     */
-    public function getCurrentUserList()
-    {
-        $data = self::find()
-            ->joinWith('currentUser')
-            ->distinct('current_user_id')
-            ->andWhere('current_user_id IS NOT NULL')
-            ->all();
-
-        return ArrayHelper::map($data, 'currentUser.id', 'currentUser.email');
     }
 }

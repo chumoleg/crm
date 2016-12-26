@@ -43,7 +43,7 @@ echo GridView::widget([
         ],
         [
             'class'    => 'common\components\grid\ActionColumn',
-            'template' => '{update} {manage-user} {disable} {activate}',
+            'template' => '{update} {disable} {activate}',
             'buttons'  => [
                 'disable'   => function ($url, $model) {
                     if ($model->isActive()) {
@@ -54,10 +54,6 @@ echo GridView::widget([
                     if ($model->isDisabled()) {
                         return ManageButton::activate($url);
                     }
-                },
-                'manage-user' => function ($url, $model) {
-                    $url = ['process-user/index', 'id' => $model->id];
-                    return ManageButton::manage($url);
                 },
             ]
         ],

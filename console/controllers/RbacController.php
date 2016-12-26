@@ -1,6 +1,6 @@
 <?php
 
-namespace common\commands;
+namespace console\controllers;
 
 use yii\console\Controller;
 

@@ -2,10 +2,11 @@
 
 namespace common\models\company;
 
+use Yii;
 use common\components\base\ActiveRecord;
 use common\components\helpers\ArrayHelper;
+use common\components\Role;
 use common\models\user\User;
-use common\models\order\Order;
 
 /**
  * This is the model class for table "company".
@@ -16,8 +17,10 @@ use common\models\order\Order;
  * @property string           $brand
  * @property string           $date_create
  * @property integer          $user_id
+ * @property integer          $current_operator
  *
  * @property User             $user
+ * @property User             $currentOperator
  * @property CompanyContact[] $companyContacts
  */
 class Company extends ActiveRecord
@@ -53,7 +56,17 @@ class Company extends ActiveRecord
 
     public static function getListCustomers()
     {
-        return self::getListByType(self::TYPE_CUSTOMER);
+        if (Yii::$app->user->can(Role::OPERATOR)){
+            $data = self::find()
+                ->andWhere(['type' => self::TYPE_CUSTOMER])
+                ->andWhere(['current_operator' => Yii::$app->user->id])
+                ->all();
+
+            return ArrayHelper::map($data, 'id', 'name');
+
+        } else {
+            return self::getListByType(self::TYPE_CUSTOMER);
+        }
     }
 
     public static function getListExecutors()
@@ -68,7 +81,7 @@ class Company extends ActiveRecord
     {
         return [
             [['name', 'type'], 'required'],
-            [['user_id', 'type'], 'integer'],
+            [['user_id', 'type', 'current_operator'], 'integer'],
             [['name', 'brand'], 'string', 'max' => 300],
             [['date_create'], 'safe'],
         ];
@@ -80,12 +93,13 @@ class Company extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id'          => 'ID',
-            'type'        => 'Тип',
-            'name'        => 'Название',
-            'brand'       => 'Брэнд',
-            'date_create' => 'Дата создания',
-            'user_id'     => 'Пользователь',
+            'id'               => 'ID',
+            'type'             => 'Тип',
+            'name'             => 'Название',
+            'brand'            => 'Брэнд',
+            'date_create'      => 'Дата создания',
+            'user_id'          => 'Пользователь',
+            'current_operator' => 'Текущий оператор',
         ];
     }
 
@@ -100,6 +114,14 @@ class Company extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getCurrentOperator()
+    {
+        return $this->hasOne(User::className(), ['id' => 'current_operator']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getCompanyContacts()
     {
         return $this->hasMany(CompanyContact::className(), ['company_id' => 'id']);
@@ -108,5 +130,10 @@ class Company extends ActiveRecord
     public function getName()
     {
         return $this->name;
+    }
+
+    public function getOperatorList()
+    {
+        return User::getListByRole(Role::OPERATOR);
     }
 }
