@@ -1,6 +1,7 @@
 <?php
 namespace backend\modules\common\forms;
 
+use common\components\Status;
 use common\models\user\User;
 use common\components\Role;
 use common\components\helpers\ArrayHelper;
@@ -58,6 +59,10 @@ class UserForm extends User
     {
         if (!empty($this->password)) {
             $this->setPassword($this->password);
+        }
+
+        if ($this->isNewRecord){
+            $this->status = Status::STATUS_ACTIVE;
         }
 
         $this->generateAuthKey();

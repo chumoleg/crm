@@ -3,6 +3,7 @@
 namespace common\models\user;
 
 use common\components\Role;
+use common\components\Status;
 use Yii;
 use \common\components\base\ActiveRecord;
 use yii\base\NotSupportedException;
@@ -68,7 +69,7 @@ class User extends ActiveRecord implements IdentityInterface
             'password_hash'        => 'Password Hash',
             'password_reset_token' => 'Password Reset Token',
             'auth_key'             => 'Auth Key',
-            'status'               => 'Status',
+            'status'               => 'Статус',
             'date_create'          => 'Дата создания',
         ];
     }
@@ -98,7 +99,10 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByEmail($email)
     {
-        return self::find()->andWhere(['email' => $email])->one();
+        return self::find()
+            ->andWhere(['email' => $email])
+            ->andWhere(['status' => Status::STATUS_ACTIVE])
+            ->one();
     }
 
     /**

@@ -24,4 +24,18 @@ class UserController extends CrudController
     {
         return new UserForm();
     }
+
+    public function actionDisable($id)
+    {
+        $model = $this->_getModelById($id);
+        $model->setDisabled();
+        $model->save();
+    }
+
+    public function actionActivate($id)
+    {
+        $model = $this->_getModelById($id);
+        $model->setActive();
+        $model->save();
+    }
 }

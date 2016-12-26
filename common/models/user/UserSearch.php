@@ -33,7 +33,7 @@ class UserSearch extends User
     public function attributeLabels()
     {
         return ArrayHelper::merge(parent::attributeLabels(), [
-            'tag' => 'Теги, с которыми работает'
+            'tag' => 'Теги'
         ]);
     }
 

@@ -6,6 +6,7 @@ use yii\widgets\Pjax;
 use common\components\helpers\ArrayHelper;
 use common\components\helpers\DatePicker;
 use common\components\Role;
+use common\components\helpers\ManageButton;
 
 $this->title = 'Список пользователей';
 
@@ -40,8 +41,28 @@ echo GridView::widget([
             'filter'    => DatePicker::getInput($searchModel)
         ],
         [
-            'class'    => 'common\components\grid\ActionColumn',
-            'template' => '{update}',
+            'attribute' => 'status',
+            'filter'    => \common\components\Status::getStatusList(),
+            'value'     => function ($data) {
+                return $data->getStatusLabel();
+            }
+        ],
+        [
+            'class'         => 'common\components\grid\ActionColumn',
+            'headerOptions' => ['width' => '90'],
+            'template'      => '{update} {disable} {activate}',
+            'buttons'       => [
+                'disable'  => function ($url, $model) {
+                    if ($model->isActive()) {
+                        return ManageButton::disable($url);
+                    }
+                },
+                'activate' => function ($url, $model) {
+                    if ($model->isDisabled()) {
+                        return ManageButton::activate($url);
+                    }
+                },
+            ]
         ],
     ],
 ]);
