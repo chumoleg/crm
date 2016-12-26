@@ -24,9 +24,14 @@ return [
         ],
     ],
     'modules'             => [
-        'order' => [
+        'order'   => [
             'basePath' => '@common/modules/order',
             'class'    => 'common\modules\order\Module',
+        ],
+        'company' => [
+            'basePath'         => '@common/modules/company',
+            'class'            => 'common\modules\company\Module',
+            'manageByOperator' => true
         ],
     ],
     'params'              => $params,

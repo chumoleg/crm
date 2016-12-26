@@ -2,6 +2,7 @@
 
 namespace common\models\company;
 
+use common\components\Role;
 use Yii;
 use yii\data\ActiveDataProvider;
 
@@ -44,14 +45,18 @@ class CompanySearch extends Company
 
         $query->andFilterWhere(
             [
-                'id'   => $this->id,
-                'type' => $this->type,
+                'id'               => $this->id,
+                'type'             => $this->type,
                 'current_operator' => $this->current_operator,
             ]
         );
 
         $query->andFilterWhere(['LIKE', 'name', $this->name]);
         $query->andFilterWhere(['LIKE', 'brand', $this->brand]);
+
+        if (Yii::$app->user->can(Role::OPERATOR)) {
+            $query->andWhere(['current_operator' => Yii::$app->user->id]);
+        }
 
         return $dataProvider;
     }

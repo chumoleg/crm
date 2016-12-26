@@ -15,19 +15,20 @@ if ($this->context->module->accessCreateOrder) {
         $checkOrders = \common\models\order\Order::getOrderWithoutProcess(true);
         if ($checkOrders) {
             echo Html::a(
-                'Запуск заказов без процессов',
-                ['/order/order/update-process'],
-                ['class' => 'btn btn-primary']
-            ) . '&nbsp;';
+                    'Запуск заказов без процессов',
+                    ['/order/order/update-process'],
+                    ['class' => 'btn btn-primary']
+                ) . '&nbsp;';
         }
     }
 
 //    if ($this->context->id == 'my-order') {
     $companyList = Company::getListCustomers();
-    if (!empty($companyList)){
+    if (!empty($companyList)) {
         echo $this->context->getCreateButton('Заключить новую сделку', ['/order/order-create/index'], false);
     }
-//        echo Html::a('Список сделок в работе', ['/order/order/index'], ['class' => 'btn btn-default']);
+
+    echo Html::a('Список организаций', ['/company/index/index'], ['class' => 'btn btn-default']);
 
 //    } else {
 //        echo Html::a('Сделки, заключенные мной', ['/order/my-order/index'], ['class' => 'btn btn-default']);
@@ -85,7 +86,7 @@ echo GridView::widget(
                 'filter'    => DatePicker::getInput($searchModel),
             ],
             [
-                'class' => 'common\components\grid\ActionColumn',
+                'class'    => 'common\components\grid\ActionColumn',
                 'template' => '{view}',
             ],
         ],
