@@ -205,6 +205,7 @@ class ProcessForm extends Process
                 }
 
                 $transaction->commit();
+
                 return true;
 
             } else {
@@ -221,6 +222,10 @@ class ProcessForm extends Process
     private function _saveSources()
     {
         ProcessSource::deleteAll(['process_id' => $this->id]);
+        if (empty($this->sourceList)) {
+            return;
+        }
+
         foreach ($this->sourceList as $item) {
             ProcessSource::addNewRow($this, $item);
         }

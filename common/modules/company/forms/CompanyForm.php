@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\common\forms;
+namespace common\modules\company\forms;
 
 use common\models\company\Company;
 use common\models\company\CompanyContact;

@@ -27,6 +27,10 @@ return [
             'basePath' => '@common/modules/order',
             'class'    => 'common\modules\order\Module'
         ],
+        'company' => [
+            'basePath' => '@common/modules/company',
+            'class'    => 'common\modules\company\Module',
+        ],
         'common'  => [
             'basePath' => '@app/modules/common',
             'class'    => 'backend\modules\common\Module'

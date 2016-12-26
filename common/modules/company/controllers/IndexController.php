@@ -1,15 +1,17 @@
 <?php
 
-namespace backend\modules\common\controllers;
+namespace common\modules\company\controllers;
 
+use common\components\Role;
+use Yii;
 use common\components\helpers\JsonHelper;
 use common\models\company\CompanyContact;
-use Yii;
-use backend\modules\common\forms\CompanyForm;
+use common\modules\company\forms\CompanyForm;
 use common\components\controllers\CrudController;
 use common\models\company\CompanySearch;
+use yii\web\ForbiddenHttpException;
 
-class CompanyController extends CrudController
+class IndexController extends CrudController
 {
     protected function _getSearchClassName()
     {
@@ -18,7 +20,15 @@ class CompanyController extends CrudController
 
     protected function _getModelById($id)
     {
-        return CompanyForm::findById($id);
+        $model = CompanyForm::findById($id);
+
+        if (Yii::$app->user->can(Role::OPERATOR)) {
+            if ($model->current_operator != Yii::$app->user->id) {
+                throw new ForbiddenHttpException('Доступ запрещен');
+            }
+        }
+
+        return $model;
     }
 
     protected function _getFormClassName()

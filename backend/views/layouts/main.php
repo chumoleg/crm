@@ -12,8 +12,8 @@ $items = [
         'items' => [
             [
                 'label'  => 'Организации',
-                'url'    => ['/common/company/index'],
-                'active' => (bool)strstr($url, 'common/company')
+                'url'    => ['/company/index/index'],
+                'active' => (bool)strstr($url, 'company/')
             ],
             [
                 'label'  => 'Пользователи',
@@ -64,11 +64,11 @@ $items = [
         ],
         'active' => (bool)strstr(Yii::$app->request->url, '/process/')
     ],
-//    [
-//        'label'  => 'Управление внешними системами',
-//        'url'    => ['/system/system/index'],
-//        'active' => (bool)strstr(Yii::$app->request->url, '/system/')
-//    ],
+    [
+        'label'  => 'Управление внешними системами',
+        'url'    => ['/system/system/index'],
+        'active' => (bool)strstr(Yii::$app->request->url, '/system/')
+    ],
 ];
 
 echo $this->render('@common/views/layouts/main', ['menuItems' => $items, 'content' => $content]);

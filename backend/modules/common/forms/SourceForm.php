@@ -37,6 +37,10 @@ class SourceForm extends Source
     private function _saveSystemData()
     {
         SourceSystem::deleteAll(['source_id' => $this->id]);
+        if (empty($this->systemData)) {
+            return;
+        }
+
         foreach ($this->systemData as $system) {
             $model = new SourceSystem();
             $model->source_id = $this->id;

@@ -2,11 +2,12 @@
 use kartik\form\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use common\modules\company\forms\CompanyForm;
 
-/** @var \backend\modules\common\forms\CompanyForm $model */
+/** @var CompanyForm $model */
 $model = $this->context->model;
 
-$this->context->addBreadCrumb('Список организаций', ['/common/company/index']);
+$this->context->addBreadCrumb('Список организаций', ['/company/index/index']);
 $this->context->addBreadCrumb($this->title);
 
 \common\assets\FormAppendAsset::register($this);
@@ -16,18 +17,31 @@ $this->context->addBreadCrumb($this->title);
 
     <div class="row">
         <div class="col-md-3">
-            <?= $form->field($model, 'type')->dropDownList(\common\models\company\Company::$typeList); ?>
+            <?php
+            if ($this->context->module->manageByOperator) {
+                echo Html::hiddenInput('CompanyForm[type]', CompanyForm::TYPE_CUSTOMER);
+            } else {
+                echo $form->field($model, 'type')->dropDownList(CompanyForm::$typeList);
+            }
+            ?>
 
             <?= $form->field($model, 'name')->textInput(); ?>
 
             <?= $form->field($model, 'brand')->textInput(); ?>
 
-            <?= $form->field($model, 'current_operator')->dropDownList(
-                $model->getOperatorList(), ['prompt' => '...']); ?>
+            <?php
+            if ($this->context->module->manageByOperator) {
+                echo Html::hiddenInput('CompanyForm[current_operator]', Yii::$app->user->id);
+            } else {
+                echo $form->field($model, 'current_operator')->dropDownList(
+                    $model->getOperatorList(), ['prompt' => '...']);
+            }
+            ?>
         </div>
 
         <div class="col-md-5 col-md-offset-1">
             <strong>Контакты:</strong>
+
             <div class="clearfix"></div>
             <table class="table">
                 <tbody id="modalFormAppendResult">
@@ -52,7 +66,7 @@ $this->context->addBreadCrumb($this->title);
             <?= Html::button(
                 'Добавить контакт',
                 [
-                    'data-url'   => Url::toRoute(['/common/company/add-contact']),
+                    'data-url'   => Url::toRoute(['/company/index/add-contact']),
                     'data-title' => 'Добавление контакта',
                     'class'      => 'showModalButton btn btn-default',
                 ]
