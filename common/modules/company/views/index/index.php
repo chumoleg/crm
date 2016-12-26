@@ -4,6 +4,7 @@ use yii\widgets\Pjax;
 use common\components\helpers\DatePicker;
 use common\models\company\Company;
 use yii\helpers\Html;
+use common\models\user\User;
 
 $this->title = 'Список организаций';
 
@@ -22,7 +23,7 @@ echo GridView::widget(
                 'attribute' => 'current_operator',
                 'filter'    => $searchModel->getOperatorList(),
                 'value'     => 'currentOperator.fio',
-                'visible'   => !$this->context->module->manageByOperator
+                'visible'   => !User::isOperator()
             ],
             [
                 'attribute' => 'type',
@@ -30,7 +31,7 @@ echo GridView::widget(
                 'value'     => function ($data) {
                     return Company::$typeList[$data->type];
                 },
-                'visible'   => !$this->context->module->manageByOperator
+                'visible'   => !User::isOperator()
             ],
             'name',
             'brand',

@@ -237,7 +237,7 @@ class Order extends ActiveRecord
 
     public function checkAccessManageOrder()
     {
-        if (Yii::$app->user->can(Role::OPERATOR)
+        if (User::isOperator()
             && Yii::$app->user->id != $this->companyCustomer->current_operator
         ) {
             return false;

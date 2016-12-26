@@ -2,6 +2,7 @@
 
 namespace common\models\user;
 
+use common\components\Role;
 use Yii;
 use \common\components\base\ActiveRecord;
 use yii\base\NotSupportedException;
@@ -201,5 +202,10 @@ class User extends ActiveRecord implements IdentityInterface
         $data = self::find()->andWhere(['id' => $userIds])->all();
 
         return ArrayHelper::map($data, 'id', 'fio');
+    }
+
+    public static function isOperator()
+    {
+        return Yii::$app->user->can(Role::OPERATOR);
     }
 }

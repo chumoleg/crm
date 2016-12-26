@@ -29,9 +29,8 @@ return [
             'class'    => 'common\modules\order\Module',
         ],
         'company' => [
-            'basePath'         => '@common/modules/company',
-            'class'            => 'common\modules\company\Module',
-            'manageByOperator' => true
+            'basePath' => '@common/modules/company',
+            'class'    => 'common\modules\company\Module',
         ],
     ],
     'params'              => $params,

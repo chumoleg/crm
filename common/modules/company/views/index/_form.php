@@ -3,6 +3,7 @@ use kartik\form\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use common\modules\company\forms\CompanyForm;
+use common\models\user\User;
 
 /** @var CompanyForm $model */
 $model = $this->context->model;
@@ -18,7 +19,7 @@ $this->context->addBreadCrumb($this->title);
     <div class="row">
         <div class="col-md-3">
             <?php
-            if ($this->context->module->manageByOperator) {
+            if (User::isOperator()) {
                 echo Html::hiddenInput('CompanyForm[type]', CompanyForm::TYPE_CUSTOMER);
             } else {
                 echo $form->field($model, 'type')->dropDownList(CompanyForm::$typeList);
@@ -30,7 +31,7 @@ $this->context->addBreadCrumb($this->title);
             <?= $form->field($model, 'brand')->textInput(); ?>
 
             <?php
-            if ($this->context->module->manageByOperator) {
+            if (User::isOperator()) {
                 echo Html::hiddenInput('CompanyForm[current_operator]', Yii::$app->user->id);
             } else {
                 echo $form->field($model, 'current_operator')->dropDownList(

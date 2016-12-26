@@ -56,7 +56,7 @@ class Company extends ActiveRecord
 
     public static function getListCustomers()
     {
-        if (Yii::$app->user->can(Role::OPERATOR)){
+        if (User::isOperator()){
             $data = self::find()
                 ->andWhere(['type' => self::TYPE_CUSTOMER])
                 ->andWhere(['current_operator' => Yii::$app->user->id])

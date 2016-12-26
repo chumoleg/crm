@@ -2,6 +2,7 @@
 
 namespace common\models\order;
 
+use common\models\user\User;
 use Yii;
 use common\components\helpers\DepartmentHelper;
 use yii\data\ActiveDataProvider;
@@ -96,7 +97,7 @@ class OrderSearch extends Order
         } else {
             $this->_compareWithCurrentApp($query);
 
-            if (Yii::$app->user->can(\common\components\Role::OPERATOR)) {
+            if (User::isOperator()) {
                 $query->andWhere(['customer.current_operator' => Yii::$app->user->id]);
             }
         }

@@ -3,6 +3,7 @@
 namespace common\modules\company\controllers;
 
 use common\components\Role;
+use common\models\user\User;
 use Yii;
 use common\components\helpers\JsonHelper;
 use common\models\company\CompanyContact;
@@ -22,7 +23,7 @@ class IndexController extends CrudController
     {
         $model = CompanyForm::findById($id);
 
-        if (Yii::$app->user->can(Role::OPERATOR)) {
+        if (User::isOperator()) {
             if ($model->current_operator != Yii::$app->user->id) {
                 throw new ForbiddenHttpException('Доступ запрещен');
             }
