@@ -19,13 +19,17 @@ class OrderProductController extends OrderManageController
     public function actionAdd()
     {
         $productPriceId = (int)Yii::$app->request->post('productPriceId');
+        $quantity = (int)Yii::$app->request->post('quantity', 1);
+        if (empty($quantity) || $quantity < 0) {
+            return JsonHelper::answerError('Кол-во указано неверно');
+        }
 
         $productPriceModel = ProductPrice::findById($productPriceId);
         if (empty($productPriceModel)) {
             return JsonHelper::answerError('Выбранный товар или цена не найдены!');
         }
 
-        $orderProduct = OrderProduct::createByProductPrice($this->model, $productPriceModel);
+        $orderProduct = OrderProduct::createByProductPrice($this->model, $productPriceModel, $quantity);
         if (!$orderProduct) {
             return JsonHelper::answerError('Ошибка при добавлении товара!');
         }
@@ -34,6 +38,7 @@ class OrderProductController extends OrderManageController
 
         $commentText = 'Добавлен товар "' . $productPriceModel->product->name
             . '" (ID товара: ' . $productPriceModel->product_id
+            . '; Кол-во: ' . $quantity
             . '; Цена: ' . $productPriceModel->price . ')';
 
         return $this->_returnAnswer($commentText);
@@ -53,6 +58,7 @@ class OrderProductController extends OrderManageController
 
         $commentText = 'Удален товар "' . $orderProduct->product->name
             . '" (ID товара: ' . $orderProduct->product_id
+            . '; Кол-во: ' . $orderProduct->quantity
             . '; Цена: ' . $orderProduct->price . ')';
 
         return $this->_returnAnswer($commentText);

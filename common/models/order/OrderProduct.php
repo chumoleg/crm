@@ -41,14 +41,14 @@ class OrderProduct extends ActiveRecord
      *
      * @return bool
      */
-    public static function createByProductPrice(Order $order, ProductPrice $productPrice)
+    public static function createByProductPrice(Order $order, ProductPrice $productPrice, $quantity = 1)
     {
         $model = new self();
         $model->order_id = $order->id;
         $model->product_id = $productPrice->product_id;
         $model->price = $productPrice->price;
         $model->currency = $productPrice->currency;
-        $model->quantity = 1;
+        $model->quantity = $quantity;
         $model->type = ProductPrice::TYPE_ADDITIONAL;
 
         return $model->save();

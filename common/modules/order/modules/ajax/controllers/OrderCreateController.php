@@ -13,7 +13,11 @@ class OrderCreateController extends BaseController
     public function actionAddProduct()
     {
         $counter = (int)Yii::$app->request->post('counter');
+        $quantity = (int)Yii::$app->request->post('quantity', 1);
         $productPriceId = (int)Yii::$app->request->post('productPriceId');
+        if (empty($quantity) || $quantity < 0) {
+            return JsonHelper::answerError('Кол-во указано неверно');
+        }
 
         $model = ProductPrice::findById($productPriceId);
         if (empty($model)) {
@@ -24,9 +28,10 @@ class OrderCreateController extends BaseController
         $form = new $formClass;
 
         $html = $this->renderPartial('productRow', [
-            'form'    => $form->getReflectionClassName(),
-            'model'   => $model,
-            'counter' => $counter
+            'form'     => $form->getReflectionClassName(),
+            'model'    => $model,
+            'counter'  => $counter,
+            'quantity' => $quantity
         ]);
 
         return JsonHelper::answerSuccess($html);
@@ -45,8 +50,8 @@ class OrderCreateController extends BaseController
         $form = new $formClass;
 
         $html = $this->renderPartial('productRow', [
-            'form'    => $form->getReflectionClassName(),
-            'model'   => $model,
+            'form'  => $form->getReflectionClassName(),
+            'model' => $model,
         ]);
 
         return JsonHelper::answerSuccess($html);

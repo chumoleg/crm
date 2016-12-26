@@ -65,7 +65,16 @@ $form = ActiveForm::begin(['id' => 'createOrderForm']);
         <?= $form->field($model, 'product_data_checker')->hiddenInput(['class' => 'productDataCheckerInput']); ?>
 
         <table class="table">
-            <tbody id="orderProducts"></tbody>
+            <thead>
+            <tr>
+                <th>Название</th>
+                <th>Кол-во</th>
+                <th>Цена</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody id="orderProducts">
+            </tbody>
         </table>
 
         <div class="clearfix"></div>

@@ -4,6 +4,7 @@ $(document).ready(function () {
         var modal = link.closest('div.modal');
         var params = {
             productPriceId: link.data('id'),
+            quantity: link.closest('tr').find('input[name="quantity"]').val(),
             counter: parseInt($('.rowCounter:last').val()) + 1
         };
 

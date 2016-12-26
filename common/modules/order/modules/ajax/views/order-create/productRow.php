@@ -10,6 +10,11 @@ use common\components\nomenclature\Currency;
         <?= Html::hiddenInput($form . '[product_data][' . $counter . '][product_id]', $model->product_id); ?>
         <?= Html::hiddenInput('rowCounter', $counter, ['class' => 'rowCounter']); ?>
     </td>
+
+    <td>
+        <?= $quantity; ?>
+        <?= Html::hiddenInput($form . '[product_data][' . $counter . '][quantity]', $quantity); ?>
+    </td>
     <td>
         <?= $model->price . ' ' . ArrayHelper::getValue(Currency::$currencyList, $model->currency); ?>
         <?= Html::hiddenInput($form . '[product_data][' . $counter . '][price]', $model->price); ?>
