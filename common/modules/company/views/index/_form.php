@@ -14,7 +14,10 @@ $this->context->addBreadCrumb($this->title);
 \common\assets\FormAppendAsset::register($this);
 ?>
 
-<?php $form = ActiveForm::begin(); ?>
+<?php $form = ActiveForm::begin([
+    'enableClientValidation' => false,
+    'enableAjaxValidation'   => true,
+]); ?>
 
     <div class="row">
         <div class="col-md-3">
@@ -40,7 +43,7 @@ $this->context->addBreadCrumb($this->title);
             ?>
         </div>
 
-        <div class="col-md-5 col-md-offset-1">
+        <div class="col-md-8 col-md-offset-1">
             <strong>Контакты:</strong>
 
             <div class="clearfix"></div>

@@ -96,7 +96,13 @@ class CreateOrderForm extends Order
         $this->_setCompanyExecutor();
         $this->_setProcessId();
 
-        $this->price = array_sum(array_column($this->product_data, 'price'));
+        $price = 0;
+        foreach ($this->product_data as $productItem) {
+            $quantity = ArrayHelper::getValue($productItem, 'quantity', 1);
+            $price += $productItem['price'] * $quantity;
+        }
+
+        $this->price = $price;
         $this->currency = Currency::RUR;
         $this->created_user_id = ($this->scenario == self::SCENARIO_BY_PARAMS)
             ? Yii::$app->user->id : null;

@@ -18,6 +18,8 @@ class CompanyForm extends Company
         return ArrayHelper::merge(
             [
                 [['contactData'], 'safe'],
+                [['name'], 'filter', 'filter' => 'trim'],
+                [['name'], 'unique'],
             ],
             parent::rules()
         );

@@ -2,8 +2,10 @@
 
 namespace common\components\controllers;
 
+use kartik\form\ActiveForm;
 use Yii;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 abstract class CrudController extends BaseController
 {
@@ -51,6 +53,11 @@ abstract class CrudController extends BaseController
         }
 
         $post = $this->_getPostParams();
+        if (Yii::$app->request->isAjax && $this->model->load($post)) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            return ActiveForm::validate($this->model);
+        }
 
         if ($this->model->load($post) && $this->model->save()) {
             return $this->redirect($this->redirect);
