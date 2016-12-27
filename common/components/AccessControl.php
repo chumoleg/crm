@@ -4,6 +4,7 @@ namespace common\components;
 
 use Yii;
 use yii\base\BootstrapInterface;
+use yii\helpers\Url;
 use yii\web\ForbiddenHttpException;
 
 class AccessControl implements BootstrapInterface
@@ -17,15 +18,17 @@ class AccessControl implements BootstrapInterface
      */
     public function bootstrap($app)
     {
-        $redirect = Yii::$app->getUser()->loginUrl;
         if (Yii::$app->user->isGuest) {
-            Yii::$app->getResponse()->redirect($redirect)->send();
+            $url = UserParams::getHomeUrl();
+            Yii::$app->getResponse()->redirect($url)->send();
             Yii::$app->end();
 
         } else {
             $userRole = Yii::$app->user->identity->role;
             if ($userRole != Role::ADMIN && !in_array($userRole, $this->roles)) {
-                Yii::$app->getResponse()->redirect(Yii::$app->getHomeUrl())->send();
+                $url = Yii::$app->getHomeUrl();
+
+                Yii::$app->getResponse()->redirect($url)->send();
                 Yii::$app->end();
             }
         }
