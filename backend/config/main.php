@@ -11,17 +11,8 @@ return [
     'name'                => 'Администрирование',
     'basePath'            => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
-    'bootstrap'           => ['log'],
+    'bootstrap'           => ['log', 'common\components\AccessControl'],
     'layout'              => '@app/views/layouts/main',
-    'as access'           => [
-        'class' => 'common\components\AccessControl',
-        'rules' => [
-            [
-                'allow' => true,
-                'roles' => [\common\components\Role::ADMIN],
-            ]
-        ]
-    ],
     'modules'             => [
         'order'   => [
             'basePath' => '@common/modules/order',

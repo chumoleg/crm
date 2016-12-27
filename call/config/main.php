@@ -10,19 +10,16 @@ return [
     'id'                  => 'app-call-center',
     'name'                => 'Call-центр',
     'basePath'            => dirname(__DIR__),
-    'bootstrap'           => ['log'],
+    'bootstrap'           => [
+        'log',
+        [
+            'class' => 'common\components\AccessControl',
+            'roles' => [\common\components\Role::OPERATOR]
+        ]
+    ],
     'controllerNamespace' => 'call\controllers',
     'layout'              => '@app/views/layouts/main',
     'defaultRoute'        => '/order/order/index',
-    'as access'           => [
-        'class' => 'common\components\AccessControl',
-        'rules' => [
-            [
-                'allow' => true,
-                'roles' => [\common\components\Role::ADMIN, \common\components\Role::OPERATOR],
-            ],
-        ],
-    ],
     'modules'             => [
         'order'   => [
             'basePath' => '@common/modules/order',

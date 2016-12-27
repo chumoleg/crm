@@ -3,16 +3,31 @@
 namespace common\components;
 
 use Yii;
+use yii\base\BootstrapInterface;
+use yii\web\ForbiddenHttpException;
 
-class AccessControl extends \yii\filters\AccessControl
+class AccessControl implements BootstrapInterface
 {
-    protected function denyAccess($user)
+    public $roles = [];
+
+    /**
+     * @param \yii\base\Application $app
+     *
+     * @throws ForbiddenHttpException
+     */
+    public function bootstrap($app)
     {
-        if ($user->getIsGuest()) {
-            $user->loginRequired();
-        } else {
-            Yii::$app->getResponse()->redirect(Yii::$app->getHomeUrl())->send();
+        $redirect = Yii::$app->getUser()->loginUrl;
+        if (Yii::$app->user->isGuest) {
+            Yii::$app->getResponse()->redirect($redirect)->send();
             Yii::$app->end();
+
+        } else {
+            $userRole = Yii::$app->user->identity->role;
+            if ($userRole != Role::ADMIN && !in_array($userRole, $this->roles)) {
+                Yii::$app->getResponse()->redirect(Yii::$app->getHomeUrl())->send();
+                Yii::$app->end();
+            }
         }
     }
 }

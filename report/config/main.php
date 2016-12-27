@@ -10,17 +10,8 @@ return [
     'id'                  => 'app-report',
     'name'                => 'Отчеты и статистика',
     'basePath'            => dirname(__DIR__),
-    'bootstrap'           => ['log'],
+    'bootstrap'           => ['log', 'common\components\AccessControl'],
     'controllerNamespace' => 'report\controllers',
     'layout'              => '@app/views/layouts/main',
-    'as access'           => [
-        'class' => 'common\components\AccessControl',
-        'rules' => [
-            [
-                'allow' => true,
-                'roles' => [\common\components\Role::ADMIN],
-            ]
-        ]
-    ],
     'params'              => $params,
 ];
