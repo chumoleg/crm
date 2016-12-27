@@ -1,7 +1,6 @@
 <?php
 use kartik\form\ActiveForm;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use common\modules\company\forms\CompanyForm;
 use common\models\user\User;
 
@@ -14,10 +13,7 @@ $this->context->addBreadCrumb($this->title);
 \common\assets\FormAppendAsset::register($this);
 ?>
 
-<?php $form = ActiveForm::begin([
-    'enableClientValidation' => false,
-    'enableAjaxValidation'   => true,
-]); ?>
+<?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
 
     <div class="row">
         <div class="col-md-3">
@@ -44,37 +40,7 @@ $this->context->addBreadCrumb($this->title);
         </div>
 
         <div class="col-md-8 col-md-offset-1">
-            <strong>Контакты:</strong>
-
-            <div class="clearfix"></div>
-            <table class="table">
-                <tbody id="modalFormAppendResult">
-                <?php
-                if (!empty($model->companyContacts)) {
-                    foreach ($model->companyContacts as $k => $obj) {
-                        echo $this->render(
-                            'partial/_contactRow',
-                            [
-                                'counter' => $k,
-                                'model'   => $obj,
-                                'form'    => $model->getReflectionClassName(),
-                            ]
-                        );
-                    }
-                }
-                ?>
-                </tbody>
-            </table>
-
-            <div class="clearfix"></div>
-            <?= Html::button(
-                'Добавить контакт',
-                [
-                    'data-url'   => Url::toRoute(['/company/index/add-contact']),
-                    'data-title' => 'Добавление контакта',
-                    'class'      => 'showModalButton btn btn-default',
-                ]
-            ); ?>
+            <?= $this->render('_form-contacts', ['form' => $form]); ?>
         </div>
     </div>
 

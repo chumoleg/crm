@@ -2,9 +2,11 @@
 
 namespace common\modules\company\forms;
 
+use Yii;
 use common\models\company\Company;
 use common\models\company\CompanyContact;
 use yii\helpers\ArrayHelper;
+use common\components\base\Model;
 
 class CompanyForm extends Company
 {
@@ -17,7 +19,6 @@ class CompanyForm extends Company
     {
         return ArrayHelper::merge(
             [
-                [['contactData'], 'safe'],
                 [['name'], 'filter', 'filter' => 'trim'],
                 [['name'], 'unique'],
             ],
@@ -35,25 +36,77 @@ class CompanyForm extends Company
         );
     }
 
-    public function afterSave($insert, $changedAttributes)
+    public function saveForm($update = false)
     {
-        $this->_saveContactData();
+        if (!$this->load(Yii::$app->request->post())) {
+            return false;
+        }
 
-        parent::afterSave($insert, $changedAttributes);
+        $oldContactIds = [];
+        if ($update) {
+            $oldContactIds = ArrayHelper::map($this->contactData, 'id', 'id');
+        }
+
+        $this->contactData = Model::createMultiple(CompanyContact::className(), $this->contactData);
+        Model::loadMultiple($this->contactData, Yii::$app->request->post());
+
+        $valid = $this->validate();
+        $valid = Model::validateMultiple($this->contactData) && $valid;
+
+        if (!$valid) {
+            return false;
+        }
+
+        $deletedContactIds = [];
+        if ($update) {
+            $deletedContactIds = array_diff($oldContactIds,
+                array_filter(ArrayHelper::map($this->contactData, 'id', 'id')));
+        }
+
+
+
+        return $this->_saveModels($deletedContactIds);
     }
 
-    private function _saveContactData()
+    /**
+     * @param $deletedContactIds
+     *
+     * @return bool
+     */
+    private function _saveModels($deletedContactIds = [])
     {
-        CompanyContact::deleteAll(['company_id' => $this->id]);
-        if (empty($this->contactData)) {
-            return;
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            if ($flag = $this->save()) {
+                if (!empty($deletedContactIds)) {
+                    CompanyContact::deleteAll(['id' => $deletedContactIds]);
+                }
+
+                foreach ($this->contactData as $index => $model) {
+                    if ($flag === false) {
+                        break;
+                    }
+
+                    $model->company_id = $this->id;
+                    if (!($flag = $model->save())) {
+                        break;
+                    }
+                }
+            }
+
+            if ($flag) {
+                $transaction->commit();
+
+                return true;
+
+            } else {
+                $transaction->rollBack();
+            }
+
+        } catch (\Exception $e) {
+            $transaction->rollBack();
         }
 
-        foreach ($this->contactData as $item) {
-            $model = new CompanyContact();
-            $model->attributes = $item;
-            $model->company_id = $this->id;
-            $model->save();
-        }
+        return false;
     }
 }
