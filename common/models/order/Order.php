@@ -250,7 +250,7 @@ class Order extends ActiveRecord
         }
 
         $currentOrderStage = $this->currentOrderStage;
-        if (!empty($currentOrderStage) && $currentOrderStage->time_limit == 0) {
+        if (empty($currentOrderStage)) {
             return false;
         }
 

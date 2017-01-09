@@ -2,6 +2,7 @@
 
 namespace common\components\controllers\order;
 
+use common\components\helpers\DepartmentHelper;
 use Yii;
 use common\models\system\SystemUrl;
 use common\components\Status;
@@ -11,6 +12,7 @@ use common\models\process\ProcessStage;
 use common\components\helpers\JsonHelper;
 use common\models\order\OrderStage;
 use common\models\process\ProcessStageAction;
+use yii\helpers\ArrayHelper;
 
 abstract class OrderStatusController extends OrderManageController
 {
@@ -39,25 +41,29 @@ abstract class OrderStatusController extends OrderManageController
         if ($this->_actionModel->hold == Status::STATUS_ACTIVE) {
             $html = $this->renderAjax('holdForm', ['action' => $this->_actionModel, 'actionReasons' => $actionReasons]);
 
-            return JsonHelper::answerSuccess([
-                'reload' => false,
-                'modal'  => [
-                    'body'  => $html,
-                    'title' => 'Перенос звонка'
+            return JsonHelper::answerSuccess(
+                [
+                    'reload' => false,
+                    'modal'  => [
+                        'body'  => $html,
+                        'title' => 'Перенос звонка',
+                    ],
                 ]
-            ]);
+            );
         }
 
         if (!empty($actionReasons)) {
             $html = $this->renderAjax('reasons', ['action' => $this->_actionModel, 'actionReasons' => $actionReasons]);
 
-            return JsonHelper::answerSuccess([
-                'reload' => false,
-                'modal'  => [
-                    'body'  => $html,
-                    'title' => 'Выберите причину'
+            return JsonHelper::answerSuccess(
+                [
+                    'reload' => false,
+                    'modal'  => [
+                        'body'  => $html,
+                        'title' => 'Выберите причину',
+                    ],
                 ]
-            ]);
+            );
         }
 
         return $this->_changeStatus($processStageAction);
@@ -87,8 +93,10 @@ abstract class OrderStatusController extends OrderManageController
 
         if ($this->_actionModel->hold == Status::STATUS_ACTIVE) {
             $this->model->time_postponed = Yii::$app->request->post('holdTime');
-            $commentList = $this->_addOrderComment('Сделка отложена до: '
-                . Yii::$app->formatter->asDatetime($this->model->time_postponed));
+            $commentList = $this->_addOrderComment(
+                'Сделка отложена до: '
+                . Yii::$app->formatter->asDatetime($this->model->time_postponed)
+            );
         }
 
         $this->model->save();
@@ -110,7 +118,14 @@ abstract class OrderStatusController extends OrderManageController
 
                 OrderStage::addStageRow($this->model, $processStage);
 
-                $commentList = $this->_addOrderComment('Статус изменен на: ' . $followToStage->name);
+                $this->_addOrderComment('Статус изменен на: ' . $followToStage->name);
+
+                if ($currentOrderStage->stage->department != $followToStage->department) {
+                    $departmentList = DepartmentHelper::$departmentList;
+                    $commentList = $this->_addOrderComment(
+                        'Заказ передан в ' . ArrayHelper::getValue($departmentList, $followToStage->department)
+                    );
+                }
 
 //                $this->model->setOrderOperator();
 
@@ -136,7 +151,9 @@ abstract class OrderStatusController extends OrderManageController
         }
 
         $processStageAction = ProcessStageAction::findByProcessStageAndAction(
-            $this->model->getProcessStage(), $this->_actionModel);
+            $this->model->getProcessStage(),
+            $this->_actionModel
+        );
 
         if (empty($processStageAction)) {
             JsonHelper::answerSuccess(['reload' => true]);
@@ -147,11 +164,13 @@ abstract class OrderStatusController extends OrderManageController
 
     private function _returnAnswer($commentList = null, $modalHtml = null, $reload = true)
     {
-        return JsonHelper::answerSuccess([
-            'reload'      => $reload,
-            'commentList' => $commentList,
-            'modalHtml'   => $modalHtml
-        ]);
+        return JsonHelper::answerSuccess(
+            [
+                'reload'      => $reload,
+                'commentList' => $commentList,
+                'modalHtml'   => $modalHtml,
+            ]
+        );
     }
 
     /**
@@ -178,7 +197,7 @@ abstract class OrderStatusController extends OrderManageController
 
             $params = [
                 'order_id' => $this->model->id,
-                'status'   => $systemStage->foreign_status
+                'status'   => $systemStage->foreign_status,
             ];
 
             Yii::$app->curl->get($systemUrl->url . '?' . http_build_query($params));
