@@ -31,7 +31,7 @@ class UserParams implements BootstrapInterface
             Role::WAREHOUSE_MANAGER => Yii::$app->params['warehouseUrl'],
         ];
 
-        $userRole = ArrayHelper::getValue( Yii::$app->user, 'identity.role');
+        $userRole = ArrayHelper::getValue(Yii::$app->user, 'identity.role');
         $baseUrl = ArrayHelper::getValue($homeUrls, $userRole);
         if (empty($baseUrl)) {
             return 'http://' . Yii::$app->params['baseUrl'];

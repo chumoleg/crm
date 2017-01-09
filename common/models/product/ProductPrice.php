@@ -94,9 +94,7 @@ class ProductPrice extends ActiveRecord
             $data = self::find()->andWhere(['type' => $type])->all();
 
         } else {
-            $userModel = Yii::$app->user->getModel();
-
-            $userTags = ArrayHelper::getColumn($userModel->userTags, 'tag_id');
+            $userTags = ArrayHelper::getColumn(Yii::$app->user->identity->userTags, 'tag_id');
             $innerQuery = ProductTag::find()
                 ->select(['product_id'])
                 ->andWhere(['IN', 'tag_id', $userTags]);

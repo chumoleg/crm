@@ -16,9 +16,4 @@ class User extends \yii\web\User
     {
         return Yii::$app->session->get('workPlace');
     }
-
-    public function getModel()
-    {
-        return \common\models\user\User::find()->andWhere(['id' => $this->id])->one();
-    }
 }
