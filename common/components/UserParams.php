@@ -13,7 +13,7 @@ class UserParams implements BootstrapInterface
      */
     public function bootstrap($app)
     {
-        if (Yii::$app->user->isGuest || Yii::$app->user->can(Role::ADMIN)) {
+        if (Yii::$app->user->isGuest || \common\models\user\User::isAdmin()) {
             return;
         }
 

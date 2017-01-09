@@ -10,7 +10,7 @@
     </div>
 
     <div>
-        <?php if (Yii::$app->user->can(\common\components\Role::ADMIN)) : ?>
+        <?php if (\common\models\user\User::isAdmin()) : ?>
             <a href="<?= 'http://' . Yii::$app->params['baseUrl']; ?>"
                class="btn btn-default mainMenuButton">Выход из раздела</a>
         <?php else : ?>

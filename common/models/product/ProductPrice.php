@@ -2,7 +2,9 @@
 
 namespace common\models\product;
 
-use \common\components\base\ActiveRecord;
+use common\components\helpers\ArrayHelper;
+use Yii;
+use common\components\base\ActiveRecord;
 use common\models\user\User;
 
 /**
@@ -28,7 +30,7 @@ class ProductPrice extends ActiveRecord
     public static $typeList
         = [
             self::TYPE_MAIN       => 'Для заключения новой сделки',
-            self::TYPE_ADDITIONAL => 'Для доп.продаж'
+            self::TYPE_ADDITIONAL => 'Для доп.продаж',
         ];
 
     /**
@@ -88,6 +90,24 @@ class ProductPrice extends ActiveRecord
 
     public static function findByType($type)
     {
-        return self::find()->andWhere(['type' => $type])->all();
+        if (User::isAdmin()) {
+            $data = self::find()->andWhere(['type' => $type])->all();
+
+        } else {
+            $userModel = Yii::$app->user->getModel();
+
+            $userTags = ArrayHelper::getColumn($userModel->userTags, 'tag_id');
+            $innerQuery = ProductTag::find()
+                ->select(['product_id'])
+                ->andWhere(['IN', 'tag_id', $userTags]);
+
+            $data = self::find()
+                ->joinWith(['product'])
+                ->andWhere(['product_price.type' => $type])
+                ->andWhere(['IN', 'product.id', $innerQuery])
+                ->all();
+        }
+
+        return $data;
     }
 }

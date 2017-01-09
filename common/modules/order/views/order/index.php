@@ -5,13 +5,12 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\Html;
 use common\components\helpers\DatePicker;
-use common\components\Role;
 use common\models\company\Company;
 
 $this->title = $this->context->indexTitle;
 
 if ($this->context->module->accessCreateOrder) {
-    if (Yii::$app->user->can(Role::ADMIN)) {
+    if (\common\models\user\User::isAdmin()) {
         $checkOrders = \common\models\order\Order::getOrderWithoutProcess(true);
         if ($checkOrders) {
             echo Html::a(

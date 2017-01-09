@@ -11,7 +11,7 @@ NavBar::begin([
 ]);
 
 if (Yii::$app->id != 'app-frontend') {
-    if (Yii::$app->user->can(\common\components\Role::ADMIN)) {
+    if (\common\models\user\User::isAdmin()) {
         $menuItems[] = [
             'label' => 'Выход из раздела',
             'url'   => 'http://' . Yii::$app->params['baseUrl']

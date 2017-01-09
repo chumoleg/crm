@@ -25,21 +25,24 @@ class UserForm extends User
             [
                 'email',
                 'unique',
-                'message' => 'Указанный email уже занят'
+                'message' => 'Указанный email уже занят',
             ],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             ['password', 'string', 'min' => 6],
-            [['tagData'], 'safe', 'on' => ['create', 'update']]
+            [['tagData'], 'safe', 'on' => ['create', 'update']],
         ];
     }
 
     public function attributeLabels()
     {
-        return ArrayHelper::merge(parent::attributeLabels(), [
-            'password' => 'Пароль',
-            'tagData'  => 'Теги (для назначения сделок)'
-        ]);
+        return ArrayHelper::merge(
+            parent::attributeLabels(),
+            [
+                'password' => 'Пароль',
+                'tagData'  => 'Теги',
+            ]
+        );
     }
 
     public function getPassword()
@@ -61,7 +64,7 @@ class UserForm extends User
             $this->setPassword($this->password);
         }
 
-        if ($this->isNewRecord){
+        if ($this->isNewRecord) {
             $this->status = Status::STATUS_ACTIVE;
         }
 

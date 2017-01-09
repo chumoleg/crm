@@ -212,4 +212,10 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return Yii::$app->user->can(Role::OPERATOR);
     }
+
+    public static function isAdmin()
+    {
+        return Yii::$app->user->can(Role::ADMIN);
+    }
+
 }
