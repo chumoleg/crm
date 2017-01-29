@@ -19,12 +19,14 @@ class StageMethod extends ActiveRecord
     const METHOD_CALL = 1;
     const METHOD_WRITE_PRODUCT_COMPONENTS = 2;
     const METHOD_RETURN_PRODUCT_COMPONENTS = 3;
+    const METHOD_MANAGE_PRODUCTS = 4;
 
     public static $methodList
         = [
             self::METHOD_CALL                      => 'Возможность звонить',
             self::METHOD_WRITE_PRODUCT_COMPONENTS  => 'Проведение операции списания комплектующих',
             self::METHOD_RETURN_PRODUCT_COMPONENTS => 'Проведение операции возврата комплектующих',
+            self::METHOD_MANAGE_PRODUCTS           => 'Возможность добавлять/удалять товары',
         ];
 
     /**
@@ -44,19 +46,6 @@ class StageMethod extends ActiveRecord
             [['stage_id', 'method'], 'required'],
             [['stage_id', 'method'], 'integer'],
             [['date_create'], 'safe'],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id'          => 'ID',
-            'stage_id'    => 'Stage ID',
-            'method'      => 'Method',
-            'date_create' => 'Date Create',
         ];
     }
 

@@ -305,6 +305,15 @@ class Order extends ActiveRecord
         return $this->currentStage->existStageMethod(StageMethod::METHOD_CALL);
     }
 
+    public function accessManageProducts()
+    {
+        if (!$this->checkAccessManageOrder() || empty($this->currentStage)) {
+            return false;
+        }
+
+        return $this->currentStage->existStageMethod(StageMethod::METHOD_MANAGE_PRODUCTS);
+    }
+
     public function accessWarehouseTransactionWritten()
     {
         if (empty($this->currentStage)) {

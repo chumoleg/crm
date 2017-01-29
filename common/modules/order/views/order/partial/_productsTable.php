@@ -23,7 +23,7 @@ $model = $this->context->model;
             <td><?= $rel->quantity; ?></td>
             <td><?= Yii::$app->formatter->asDecimal($rel->price, 2); ?></td>
             <td>
-                <?php if ($model->checkAccessManageOrder()) : ?>
+                <?php if ($model->accessManageProducts()) : ?>
                     <a href="javascript:;" class="btn btn-xs btn-danger">
                         <i class="glyphicon glyphicon-remove removeOrderProduct"></i>
                     </a>

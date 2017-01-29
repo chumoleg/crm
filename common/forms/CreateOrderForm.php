@@ -30,7 +30,7 @@ class CreateOrderForm extends Order
                 [['company_customer'], 'required'],
                 [['company_customer'], 'validateCompanyCustomer', 'on' => self::SCENARIO_BY_PARAMS],
                 [['product_data'], 'required', 'on' => self::SCENARIO_BY_API],
-                [['product_data_checker', 'company_executor'], 'required', 'on' => self::SCENARIO_BY_PARAMS],
+                [['company_executor'], 'required', 'on' => self::SCENARIO_BY_PARAMS],
                 ['product_data', 'validateProductData', 'on' => self::SCENARIO_BY_API],
                 ['product_data_checker', 'validateProductData', 'on' => self::SCENARIO_BY_PARAMS],
                 [['product_data'], 'safe'],

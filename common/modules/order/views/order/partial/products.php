@@ -11,7 +11,7 @@ $model = $this->context->model;
         <?= $this->render('_productsTable'); ?>
     </div>
 
-    <?php if ($model->checkAccessManageOrder()) : ?>
+    <?php if ($model->accessManageProducts()) : ?>
         <div class="clearfix"></div>
         <div class="row">
             <div class="col-md-12 text-right">
