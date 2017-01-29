@@ -2,9 +2,9 @@
 
 namespace common\models\user;
 
+use Yii;
 use common\components\Role;
 use common\components\Status;
-use Yii;
 use \common\components\base\ActiveRecord;
 use yii\base\NotSupportedException;
 use yii\web\IdentityInterface;
@@ -25,6 +25,7 @@ use common\components\helpers\ArrayHelper;
  *
  * @property UserHistory[] $userHistories
  * @property UserTag[]     $userTags
+ * @property UserSource[]  $userSources
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -88,6 +89,14 @@ class User extends ActiveRecord implements IdentityInterface
     public function getUserTags()
     {
         return $this->hasMany(UserTag::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserSources()
+    {
+        return $this->hasMany(UserSource::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -217,5 +226,4 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return Yii::$app->user->can(Role::ADMIN);
     }
-
 }

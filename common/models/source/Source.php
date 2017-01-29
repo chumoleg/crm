@@ -2,6 +2,11 @@
 
 namespace common\models\source;
 
+use common\components\helpers\ArrayHelper;
+use common\components\Status;
+use common\models\user\User;
+use common\models\user\UserSource;
+use Yii;
 use common\components\base\ActiveRecord;
 use common\models\order\Order;
 use common\models\process\ProcessSource;
@@ -11,6 +16,7 @@ use common\models\process\ProcessSource;
  *
  * @property integer         $id
  * @property string          $name
+ * @property integer         $is_default
  * @property string          $date_create
  *
  * @property Order[]         $orders
@@ -20,7 +26,6 @@ use common\models\process\ProcessSource;
 class Source extends ActiveRecord
 {
     const DEFAULT_SOURCE = 1;
-    const SOURCE_OPERATOR = 2;
 
     /**
      * @inheritdoc
@@ -38,7 +43,7 @@ class Source extends ActiveRecord
         return [
             [['name'], 'required'],
             [['name'], 'string', 'max' => 200],
-            [['date_create'], 'safe'],
+            [['date_create', 'is_default'], 'safe'],
         ];
     }
 
@@ -50,8 +55,23 @@ class Source extends ActiveRecord
         return [
             'id'          => 'ID',
             'name'        => 'Название',
+            'is_default'  => 'По умолчанию',
             'date_create' => 'Дата создания',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    private static function _getQueryForList()
+    {
+        $query = self::find();
+        if (!empty(Yii::$app->user->id) && !User::isAdmin()) {
+            $query->andWhere('id IN (SELECT source_id FROM ' . UserSource::tableName()
+                . ' WHERE user_id = ' . Yii::$app->user->id . ')');
+        }
+
+        return $query;
     }
 
     /**
@@ -76,5 +96,23 @@ class Source extends ActiveRecord
     public function getSourceSystems()
     {
         return $this->hasMany(SourceSystem::className(), ['source_id' => 'id']);
+    }
+
+    /**
+     * @return array
+     */
+    public static function getList()
+    {
+        $data = self::_getQueryForList()->all();
+
+        return ArrayHelper::map($data, 'id', 'name');
+    }
+
+    /**
+     * @return self|null
+     */
+    public function getDefaultSource()
+    {
+        return self::_getQueryForList()->andWhere(['is_default' => Status::STATUS_ACTIVE])->one();
     }
 }

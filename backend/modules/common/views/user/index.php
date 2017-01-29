@@ -36,6 +36,14 @@ echo GridView::widget([
             }
         ],
         [
+            'attribute' => 'source',
+            'filter'    => \common\models\source\Source::getList(),
+            'format'    => 'raw',
+            'value'     => function ($model) {
+                return implode(', ', ArrayHelper::getColumn($model->userSources, 'source.name'));
+            }
+        ],
+        [
             'attribute' => 'date_create',
             'format'    => 'date',
             'filter'    => DatePicker::getInput($searchModel)

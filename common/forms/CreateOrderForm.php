@@ -11,7 +11,6 @@ use common\components\helpers\ArrayHelper;
 use common\components\nomenclature\Currency;
 use common\models\product\Product;
 use common\models\source\Source;
-use common\components\Role;
 
 class CreateOrderForm extends Order
 {
@@ -175,8 +174,13 @@ class CreateOrderForm extends Order
         }
 
         $this->source_id = Source::DEFAULT_SOURCE;
-        if ($this->scenario == self::SCENARIO_BY_PARAMS) {
-            $this->source_id = Source::SOURCE_OPERATOR;
+    }
+
+    public function setDefaultParams()
+    {
+        $model = (new Source())->getDefaultSource();
+        if (!empty($model)) {
+            $this->source_id = $model->id;
         }
     }
 }

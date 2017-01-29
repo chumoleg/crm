@@ -33,8 +33,8 @@ echo GridView::widget(
                 },
                 'visible'   => !User::isOperator()
             ],
-            'name',
             'brand',
+            'name',
             [
                 'attribute' => 'date_create',
                 'format'    => 'date',

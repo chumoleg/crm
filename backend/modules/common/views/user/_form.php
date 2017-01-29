@@ -27,6 +27,14 @@ $this->context->addBreadCrumb($this->title);
                     'placeholder' => '',
                 ]
             ]); ?>
+
+            <?= $form->field($model, 'sourceData')->widget(\kartik\widgets\Select2::className(), [
+                'data'    =>\common\models\source\Source::getList(),
+                'options' => [
+                    'multiple'    => true,
+                    'placeholder' => '',
+                ]
+            ]); ?>
         </div>
     </div>
 

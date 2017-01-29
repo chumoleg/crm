@@ -5,11 +5,13 @@ use common\components\Status;
 use common\models\user\User;
 use common\components\Role;
 use common\components\helpers\ArrayHelper;
+use common\models\user\UserSource;
 use common\models\user\UserTag;
 
 class UserForm extends User
 {
     public $tagData = [];
+    public $sourceData = [];
     public $password;
     private $_oldRole;
 
@@ -30,7 +32,7 @@ class UserForm extends User
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             ['password', 'string', 'min' => 6],
-            [['tagData'], 'safe', 'on' => ['create', 'update']],
+            [['tagData', 'sourceData'], 'safe', 'on' => ['create', 'update']],
         ];
     }
 
@@ -39,8 +41,9 @@ class UserForm extends User
         return ArrayHelper::merge(
             parent::attributeLabels(),
             [
-                'password' => 'Пароль',
-                'tagData'  => 'Теги',
+                'password'   => 'Пароль',
+                'tagData'    => 'Теги',
+                'sourceData' => 'Источники',
             ]
         );
     }
@@ -54,6 +57,7 @@ class UserForm extends User
     {
         $this->_oldRole = $this->role;
         $this->tagData = ArrayHelper::getColumn($this->userTags, 'tag_id');
+        $this->sourceData = ArrayHelper::getColumn($this->userSources, 'source_id');
 
         parent::afterFind();
     }
@@ -84,6 +88,7 @@ class UserForm extends User
         }
 
         $this->_saveTagData();
+        $this->_saveSourceData();
 
         parent::afterSave($insert, $changedAttributes);
     }
@@ -95,10 +100,25 @@ class UserForm extends User
             return;
         }
 
-        foreach ($this->tagData as $item) {
+        foreach ($this->tagData as $tagId) {
             $model = new UserTag();
             $model->user_id = $this->id;
-            $model->tag_id = $item;
+            $model->tag_id = $tagId;
+            $model->save();
+        }
+    }
+
+    private function _saveSourceData()
+    {
+        UserSource::deleteAll(['user_id' => $this->id]);
+        if (empty($this->sourceData)) {
+            return;
+        }
+
+        foreach ($this->sourceData as $sourceId) {
+            $model = new UserSource();
+            $model->user_id = $this->id;
+            $model->source_id = $sourceId;
             $model->save();
         }
     }

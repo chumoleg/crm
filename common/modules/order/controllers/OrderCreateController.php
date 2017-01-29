@@ -15,6 +15,7 @@ class OrderCreateController extends BaseController
         $formModelClass = $this->_getFormClassName();
         $this->model = new $formModelClass();
         $this->model->setScenario(CreateOrderForm::SCENARIO_BY_PARAMS);
+        $this->model->setDefaultParams();
 
         return $this->_renderAndSave('index');
     }

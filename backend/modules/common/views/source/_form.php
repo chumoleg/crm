@@ -12,6 +12,7 @@ $this->context->addBreadCrumb($this->title);
     <div class="row">
         <div class="col-md-3">
             <?= $form->field($model, 'name')->textInput(); ?>
+            <?= $form->field($model, 'is_default')->dropDownList(\common\components\Status::getStatusListYesNo()); ?>
 
             <?= $form->field($model, 'systemData')->widget(\kartik\widgets\Select2::className(), [
                 'data'    => \common\models\system\System::getList(),

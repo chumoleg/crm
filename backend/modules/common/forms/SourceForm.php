@@ -2,6 +2,7 @@
 
 namespace backend\modules\common\forms;
 
+use common\components\Status;
 use common\models\source\Source;
 use common\components\helpers\ArrayHelper;
 use common\models\source\SourceSystem;
@@ -30,6 +31,9 @@ class SourceForm extends Source
     public function afterSave($insert, $changedAttributes)
     {
         $this->_saveSystemData();
+        if ($this->is_default == Status::STATUS_ACTIVE) {
+            $this->updateAll(['is_default' => Status::STATUS_NOT_ACTIVE], 'id != ' . $this->id);
+        }
 
         parent::afterSave($insert, $changedAttributes);
     }

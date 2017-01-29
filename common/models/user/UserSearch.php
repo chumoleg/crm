@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 class UserSearch extends User
 {
     public $tag;
+    public $source;
 
     /**
      * @inheritdoc
@@ -23,6 +24,7 @@ class UserSearch extends User
                     'role',
                     'fio',
                     'tag',
+                    'source',
                     'date_create'
                 ],
                 'safe'
@@ -33,7 +35,8 @@ class UserSearch extends User
     public function attributeLabels()
     {
         return ArrayHelper::merge(parent::attributeLabels(), [
-            'tag' => 'Теги'
+            'tag'    => 'Теги',
+            'source' => 'Источники'
         ]);
     }
 
@@ -52,11 +55,11 @@ class UserSearch extends User
         }
 
         $query->andFilterWhere([
-            'id'          => $this->id,
-            'email'       => $this->email,
-            'fio'         => $this->fio,
-            'role'        => $this->role,
-            'status'      => $this->status,
+            'id'     => $this->id,
+            'email'  => $this->email,
+            'fio'    => $this->fio,
+            'role'   => $this->role,
+            'status' => $this->status,
         ]);
 
         $query->andFilterWhere(['LIKE', 'date_create', $this->date_create]);
@@ -64,6 +67,11 @@ class UserSearch extends User
         if (!empty($this->tag)) {
             $userTagQuery = UserTag::find()->select(['user_id'])->andWhere(['tag_id' => $this->tag]);
             $query->andWhere(['IN', 'id', $userTagQuery]);
+        }
+
+        if (!empty($this->source)) {
+            $userSourceQuery = UserSource::find()->select(['user_id'])->andWhere(['source_id' => $this->source]);
+            $query->andWhere(['IN', 'id', $userSourceQuery]);
         }
 
         return $dataProvider;
