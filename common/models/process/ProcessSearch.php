@@ -40,11 +40,12 @@ class ProcessSearch extends Process
         }
 
         $query->andFilterWhere([
-            'id'          => $this->id,
-            'name'        => $this->name,
-            'status'      => $this->status,
-            'date_create' => $this->date_create
+            'id'     => $this->id,
+            'name'   => $this->name,
+            'status' => $this->status,
         ]);
+
+        $query->andFilterWhere(['LIKE', 'date_create', $this->date_create]);
 
         return $dataProvider;
     }

@@ -55,7 +55,7 @@ class BaseController extends Controller
             $url = ['create'];
         }
 
-        $html = Html::a($label, $url, ['class' => 'btn btn-success']) . '&nbsp;';
+        $html = Html::a($label, $url, ['class' => 'btn btn-success orderCreateButton']) . '&nbsp;';
         if ($showDivBlock) {
             $html .= Html::tag('div', '&nbsp;');
         }

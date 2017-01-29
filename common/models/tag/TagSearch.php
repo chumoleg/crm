@@ -42,8 +42,9 @@ class TagSearch extends Tag
             'id'          => $this->id,
             'name'        => $this->name,
             'label_class' => $this->label_class,
-            'date_create' => $this->date_create
         ]);
+
+        $query->andFilterWhere(['LIKE', 'date_create', $this->date_create]);
 
         return $dataProvider;
     }

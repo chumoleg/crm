@@ -40,12 +40,13 @@ class StageSearch extends Stage
         }
 
         $query->andFilterWhere([
-            'id'          => $this->id,
-            'department'        => $this->department,
-            'name'        => $this->name,
-            'alias'       => $this->alias,
-            'date_create' => $this->date_create
+            'id'         => $this->id,
+            'department' => $this->department,
+            'name'       => $this->name,
+            'alias'      => $this->alias,
         ]);
+
+        $query->andFilterWhere(['LIKE', 'date_create', $this->date_create]);
 
         return $dataProvider;
     }

@@ -2,10 +2,11 @@
 
 namespace common\models\order;
 
-use common\models\user\User;
 use Yii;
-use common\components\helpers\DepartmentHelper;
 use yii\data\ActiveDataProvider;
+use common\models\stage\StageMethod;
+use common\models\user\User;
+use common\components\helpers\DepartmentHelper;
 use common\components\helpers\ArrayHelper;
 
 class OrderSearch extends Order
@@ -14,6 +15,7 @@ class OrderSearch extends Order
     public $fio;
     public $phone;
     public $department;
+    public $currentOperator;
 
     /**
      * @inheritdoc
@@ -32,9 +34,11 @@ class OrderSearch extends Order
                     'department',
                     'source_id',
                     'date_create',
+                    'time_postponed',
                     'fio',
                     'phone',
                     'tag_id',
+                    'currentOperator',
                 ],
                 'safe',
             ],
@@ -48,10 +52,11 @@ class OrderSearch extends Order
     {
         return ArrayHelper::merge(
             [
-                'fio'        => 'ФИО клиента',
-                'phone'      => 'Телефон',
-                'tag_id'     => 'Теги',
-                'department' => 'Отдел',
+                'fio'             => 'ФИО клиента',
+                'phone'           => 'Телефон',
+                'tag_id'          => 'Теги',
+                'department'      => 'Отдел',
+                'currentOperator' => 'Текущий оператор',
             ],
             parent::attributeLabels()
         );
@@ -102,10 +107,13 @@ class OrderSearch extends Order
             }
         }
 
+        if (!empty($this->currentOperator)) {
+            $query->andWhere(['customer.current_operator' => $this->currentOperator]);
+        }
+
         $query->andFilterWhere(
             [
                 'order.id'               => $this->id,
-                'order.date_create'      => $this->date_create,
                 'order.company_executor' => $this->company_executor,
                 'order.company_customer' => $this->company_customer,
                 'order.process_id'       => $this->process_id,
@@ -116,6 +124,8 @@ class OrderSearch extends Order
         );
 
         $query->andFilterWhere(['LIKE', 'order.name', $this->name]);
+        $query->andFilterWhere(['LIKE', 'order.date_create', $this->date_create]);
+        $query->andFilterWhere(['LIKE', 'order.time_postponed', $this->time_postponed]);
 
         if (!empty($this->tag_id)) {
             $tagId = $this->tag_id;
@@ -131,6 +141,9 @@ class OrderSearch extends Order
 
             $query->andWhere(['IN', 'order.id', $innerQuery]);
         }
+
+        $closeListStages = StageMethod::getStagesList(StageMethod::HIDE_ORDER_FROM_LIST);
+        $query->andWhere(['NOT IN', 'stage.id', $closeListStages]);
 
         return $dataProvider;
     }

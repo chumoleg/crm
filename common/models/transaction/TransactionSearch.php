@@ -44,11 +44,12 @@ class TransactionSearch extends Transaction
         }
 
         $query->andFilterWhere([
-            'id'          => $this->id,
-            'name'        => $this->name,
-            'type'        => $this->type,
-            'date_create' => $this->date_create
+            'id'   => $this->id,
+            'name' => $this->name,
+            'type' => $this->type,
         ]);
+
+        $query->andFilterWhere(['LIKE', 'date_create', $this->date_create]);
 
         return $dataProvider;
     }

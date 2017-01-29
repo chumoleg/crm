@@ -56,10 +56,11 @@ class ProductComponentStockSearch extends ProductComponentStock
         $query->andFilterWhere([
             'product_component_id'   => $this->product_component_id,
             'quantity'               => $this->quantity,
-            'date_update'            => $this->date_update,
-            'date_create'            => $this->date_create,
             'product_component.name' => $this->productComponentName
         ]);
+
+        $query->andFilterWhere(['LIKE', 'date_update', $this->date_update]);
+        $query->andFilterWhere(['LIKE', 'date_create', $this->date_create]);
 
         return $dataProvider;
     }

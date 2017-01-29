@@ -27,4 +27,12 @@ $model = $this->context->model;
         </div>
         <div class="clearfix"></div>
     <?php endif; ?>
+
+    <?php
+    $companyList = \common\models\company\Company::getListCustomers();
+    if (!empty($companyList)) {
+        echo $this->context->getCreateButton('Заключить новую сделку',
+            ['/order/order-create/index', 'company' => $model->company_customer], false);
+    }
+    ?>
 </div>

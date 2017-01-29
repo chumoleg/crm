@@ -39,11 +39,12 @@ class ActionSearch extends Action
         }
 
         $query->andFilterWhere([
-            'id'          => $this->id,
-            'name'        => $this->name,
-            'hold'        => $this->hold,
-            'date_create' => $this->date_create
+            'id'   => $this->id,
+            'name' => $this->name,
+            'hold' => $this->hold,
         ]);
+
+        $query->andFilterWhere(['LIKE', 'date_create', $this->date_create]);
 
         return $dataProvider;
     }

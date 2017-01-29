@@ -39,11 +39,12 @@ class SourceSearch extends Source
         }
 
         $query->andFilterWhere([
-            'id'          => $this->id,
-            'name'        => $this->name,
-            'is_default'  => $this->is_default,
-            'date_create' => $this->date_create
+            'id'         => $this->id,
+            'name'       => $this->name,
+            'is_default' => $this->is_default,
         ]);
+
+        $query->andFilterWhere(['LIKE', 'date_create', $this->date_create]);
 
         return $dataProvider;
     }

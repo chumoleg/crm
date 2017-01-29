@@ -41,6 +41,14 @@ $this->context->addBreadCrumb($this->title);
 
         <div class="col-md-8 col-md-offset-1">
             <?= $this->render('_form-contacts', ['form' => $form]); ?>
+
+            <?php
+            if (!$model->isNewRecord && $model->type == CompanyForm::TYPE_CUSTOMER) {
+                echo Html::tag('div', '&nbsp;');
+                echo $this->context->getCreateButton('Заключить новую сделку',
+                    ['/order/order-create/index', 'company' => $model->id], false);
+            }
+            ?>
         </div>
     </div>
 

@@ -31,10 +31,11 @@ class SystemSearch extends System
         }
 
         $query->andFilterWhere([
-            'id'          => $this->id,
-            'name'        => $this->name,
-            'date_create' => $this->date_create
+            'id'   => $this->id,
+            'name' => $this->name,
         ]);
+
+        $query->andFilterWhere(['LIKE', 'date_create', $this->date_create]);
 
         return $dataProvider;
     }

@@ -176,11 +176,15 @@ class CreateOrderForm extends Order
         $this->source_id = Source::DEFAULT_SOURCE;
     }
 
-    public function setDefaultParams()
+    public function setDefaultParams($companyId = null)
     {
         $model = (new Source())->getDefaultSource();
         if (!empty($model)) {
             $this->source_id = $model->id;
+        }
+
+        if (!empty($companyId)) {
+            $this->company_customer = $companyId;
         }
     }
 }

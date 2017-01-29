@@ -12,10 +12,12 @@ class OrderCreateController extends BaseController
 
     public function actionIndex()
     {
+        $company = Yii::$app->request->get('company');
+
         $formModelClass = $this->_getFormClassName();
         $this->model = new $formModelClass();
         $this->model->setScenario(CreateOrderForm::SCENARIO_BY_PARAMS);
-        $this->model->setDefaultParams();
+        $this->model->setDefaultParams($company);
 
         return $this->_renderAndSave('index');
     }

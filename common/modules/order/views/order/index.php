@@ -6,8 +6,13 @@ use yii\widgets\Pjax;
 use yii\helpers\Html;
 use common\components\helpers\DatePicker;
 use common\models\company\Company;
+use common\models\user\User;
 
 $this->title = $this->context->indexTitle;
+
+\common\assets\order\OrderListAsset::register($this);
+
+$companyList = Company::getListCustomers();
 
 if ($this->context->module->accessCreateOrder) {
     if (\common\models\user\User::isAdmin()) {
@@ -22,7 +27,7 @@ if ($this->context->module->accessCreateOrder) {
     }
 
 //    if ($this->context->id == 'my-order') {
-    $companyList = Company::getListCustomers();
+
     if (!empty($companyList)) {
         echo $this->context->getCreateButton('Заключить новую сделку', ['/order/order-create/index'], false);
     }
@@ -35,8 +40,6 @@ if ($this->context->module->accessCreateOrder) {
 
     echo Html::tag('div', '&nbsp;');
 }
-
-\common\assets\order\OrderListAsset::register($this);
 
 Pjax::begin(['id' => 'orderGrid']);
 echo GridView::widget(
@@ -51,15 +54,30 @@ echo GridView::widget(
                 'filter'    => \common\models\source\Source::getList(),
                 'value'     => 'source.name',
             ],
-            [
-                'attribute' => 'company_executor',
-                'filter'    => Company::getListExecutors(),
-                'value'     => 'companyExecutor.name',
-            ],
+//            [
+//                'attribute' => 'company_executor',
+//                'filter'    => Company::getListExecutors(),
+//                'value'     => 'companyExecutor.name',
+//            ],
             [
                 'attribute' => 'company_customer',
-                'filter'    => Company::getListCustomers(),
+                'filter'    => \kartik\select2\Select2::widget([
+                    'data'          => $companyList,
+                    'model'         => $searchModel,
+                    'attribute'     => 'company_customer',
+                    'options'       => [
+                        'placeholder' => '',
+                        'allowClear'  => true
+                    ],
+                    'pluginOptions' => ['allowClear' => true]
+                ]),
                 'value'     => 'companyCustomer.name',
+            ],
+            [
+                'attribute' => 'currentOperator',
+                'filter'    => User::getListByRole(\common\components\Role::OPERATOR),
+                'value'     => 'companyCustomer.currentOperator.fio',
+                'visible'   => User::isAdmin()
             ],
             [
                 'attribute' => 'tag_id',
@@ -69,13 +87,20 @@ echo GridView::widget(
                     return $this->render('partial/_tags', ['model' => $model]);
                 },
             ],
-            [
-                'attribute' => 'process_id',
-                'filter'    => \common\models\process\Process::getList(),
-                'value'     => 'process.name',
-            ],
+//            [
+//                'attribute' => 'process_id',
+//                'filter'    => \common\models\process\Process::getList(),
+//                'value'     => 'process.name',
+//            ],
             [
                 'attribute' => 'current_stage_id',
+//                'filter' => AutoComplete::widget([
+//                    'model' => $searchModel,
+//                    'attribute' => 'current_stage_id',
+//                    'clientOptions' => [
+//                        'source' => \common\models\stage\Stage::getList(),
+//                    ],
+//                ]),
                 'filter'    => \common\models\stage\Stage::getList(),
                 'value'     => 'currentStage.name',
             ],
@@ -83,6 +108,11 @@ echo GridView::widget(
                 'attribute' => 'date_create',
                 'format'    => 'datetime',
                 'filter'    => DatePicker::getInput($searchModel),
+            ],
+            [
+                'attribute' => 'time_postponed',
+                'format'    => 'datetime',
+                'filter'    => DatePicker::getInput($searchModel, 'time_postponed'),
             ],
             [
                 'class'    => 'common\components\grid\ActionColumn',
