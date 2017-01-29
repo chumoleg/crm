@@ -7,6 +7,7 @@ use yii\helpers\Html;
 use common\components\helpers\DatePicker;
 use common\models\company\Company;
 use common\models\user\User;
+use kartik\select2\Select2;
 
 $this->title = $this->context->indexTitle;
 
@@ -61,7 +62,7 @@ echo GridView::widget(
 //            ],
             [
                 'attribute' => 'company_customer',
-                'filter'    => \kartik\select2\Select2::widget([
+                'filter'    => Select2::widget([
                     'data'          => $companyList,
                     'model'         => $searchModel,
                     'attribute'     => 'company_customer',
@@ -75,7 +76,16 @@ echo GridView::widget(
             ],
             [
                 'attribute' => 'currentOperator',
-                'filter'    => User::getListByRole(\common\components\Role::OPERATOR),
+                'filter'    => Select2::widget([
+                    'data'          => User::getListByRole(\common\components\Role::OPERATOR),
+                    'model'         => $searchModel,
+                    'attribute'     => 'currentOperator',
+                    'options'       => [
+                        'placeholder' => '',
+                        'allowClear'  => true
+                    ],
+                    'pluginOptions' => ['allowClear' => true]
+                ]),
                 'value'     => 'companyCustomer.currentOperator.fio',
                 'visible'   => User::isAdmin()
             ],
@@ -94,14 +104,16 @@ echo GridView::widget(
 //            ],
             [
                 'attribute' => 'current_stage_id',
-//                'filter' => AutoComplete::widget([
-//                    'model' => $searchModel,
-//                    'attribute' => 'current_stage_id',
-//                    'clientOptions' => [
-//                        'source' => \common\models\stage\Stage::getList(),
-//                    ],
-//                ]),
-                'filter'    => \common\models\stage\Stage::getList(),
+                'filter'    => Select2::widget([
+                    'data'          => \common\models\stage\Stage::getList(),
+                    'model'         => $searchModel,
+                    'attribute'     => 'current_stage_id',
+                    'options'       => [
+                        'placeholder' => '',
+                        'allowClear'  => true
+                    ],
+                    'pluginOptions' => ['allowClear' => true]
+                ]),
                 'value'     => 'currentStage.name',
             ],
             [
