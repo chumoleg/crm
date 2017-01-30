@@ -65,11 +65,10 @@ class OrderSearch extends Order
     /**
      * @param array $params
      * @param array $defaultOrder
-     * @param bool  $onlyMyOrders
      *
      * @return ActiveDataProvider
      */
-    public function search($params, $defaultOrder = [], $onlyMyOrders = false)
+    public function search($params, $defaultOrder = [])
     {
         $query = parent::find()
             ->joinWith('process')
@@ -96,15 +95,10 @@ class OrderSearch extends Order
             return $dataProvider;
         }
 
-        if ($onlyMyOrders) {
-            $query->andWhere(['order.created_user_id' => Yii::$app->user->id]);
+        $this->_compareWithCurrentApp($query);
 
-        } else {
-            $this->_compareWithCurrentApp($query);
-
-            if (User::isOperator()) {
-                $query->andWhere(['customer.current_operator' => Yii::$app->user->id]);
-            }
+        if (User::isOperator()) {
+            $query->andWhere(['customer.current_operator' => Yii::$app->user->id]);
         }
 
         if (!empty($this->currentOperator)) {
@@ -145,7 +139,26 @@ class OrderSearch extends Order
         $closeListStages = StageMethod::getStagesList(StageMethod::HIDE_ORDER_FROM_LIST);
         $query->andWhere(['NOT IN', 'stage.id', $closeListStages]);
 
+        $postponedKey = Yii::$app->session->get(self::POSTPONED_SESSION_KEY);
+        if (!empty($postponedKey)) {
+            $dateTo = $this->_getPostponedFilterDates($postponedKey);
+            $query->andWhere('order.time_postponed <= "' . $dateTo . '"');
+        }
+
         return $dataProvider;
+    }
+
+    private function _getPostponedFilterDates($postponedKey)
+    {
+        $dateTo = date('Y-m-d');
+        if ($postponedKey == self::POSTPONED_ON_WEEK) {
+            $dateTo = date('Y-m-d', strtotime('+6 days'));
+
+        } elseif ($postponedKey == self::POSTPONED_ON_MONTH) {
+            $dateTo = date('Y-m-d', strtotime('+30 days'));
+        }
+
+        return $dateTo;
     }
 
     private function _compareWithCurrentApp($query)

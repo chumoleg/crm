@@ -49,6 +49,19 @@ use common\components\Role;
  */
 class Order extends ActiveRecord
 {
+    const POSTPONED_SESSION_KEY = 'postponedSessionKey';
+
+    const POSTPONED_ON_TODAY = 1;
+    const POSTPONED_ON_WEEK = 2;
+    const POSTPONED_ON_MONTH = 3;
+
+    public static $postponedFilterList
+        = [
+            self::POSTPONED_ON_TODAY => 'На сегодня',
+            self::POSTPONED_ON_WEEK  => 'На неделю',
+            self::POSTPONED_ON_MONTH => 'На месяц',
+        ];
+
     /**
      * @inheritdoc
      */

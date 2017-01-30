@@ -29,4 +29,24 @@ class IndexController extends BaseController
 
         return $this->renderAjax('contactForm', ['model' => $model]);
     }
+
+    public function actionChangePostponedFilter()
+    {
+        $key = Yii::$app->request->post('key');
+        if (empty($key)) {
+            return true;
+        }
+
+        $session = Yii::$app->session;
+
+        $keyName = Order::POSTPONED_SESSION_KEY;
+        $currentKey = $session->get($keyName);
+        if ($currentKey == $key) {
+            $session->set($keyName, null);
+        } else {
+            $session->set($keyName, $key);
+        }
+
+        return true;
+    }
 }

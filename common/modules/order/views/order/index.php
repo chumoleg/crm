@@ -6,6 +6,7 @@ use yii\helpers\Html;
 use common\components\helpers\DatePicker;
 use common\models\company\Company;
 use common\models\user\User;
+use common\models\order\Order;
 use kartik\select2\Select2;
 
 $this->title = $this->context->indexTitle;
@@ -13,35 +14,53 @@ $this->title = $this->context->indexTitle;
 \common\assets\order\OrderListAsset::register($this);
 
 $companyList = Company::getListCustomers();
+?>
 
-if ($this->context->module->accessCreateOrder) {
-    if (\common\models\user\User::isAdmin()) {
-        $checkOrders = \common\models\order\Order::getOrderWithoutProcess(true);
-        if ($checkOrders) {
-            echo Html::a(
-                    'Запуск заказов без процессов',
-                    ['/order/order/update-process'],
-                    ['class' => 'btn btn-primary']
-                ) . '&nbsp;';
-        }
-    }
+    <div class="row">
+        <div class="col-md-6">
+            <?php
+            if ($this->context->module->accessCreateOrder) {
+                if (\common\models\user\User::isAdmin()) {
+                    $checkOrders = \common\models\order\Order::getOrderWithoutProcess(true);
+                    if ($checkOrders) {
+                        echo Html::a(
+                                'Запуск заказов без процессов',
+                                ['/order/order/update-process'],
+                                ['class' => 'btn btn-primary']
+                            ) . '&nbsp;';
+                    }
+                }
 
-//    if ($this->context->id == 'my-order') {
+                if (!empty($companyList)) {
+                    echo $this->context->getCreateButton(
+                        'Заключить новую сделку',
+                        ['/order/order-create/index'],
+                        false
+                    );
+                }
+            }
 
-    if (!empty($companyList)) {
-        echo $this->context->getCreateButton('Заключить новую сделку', ['/order/order-create/index'], false);
-    }
+            echo Html::a('Список организаций', ['/company/index/index'], ['class' => 'btn btn-default']);
+            ?>
+        </div>
 
-    echo Html::a('Список организаций', ['/company/index/index'], ['class' => 'btn btn-default']);
+        <div class="col-md-6 text-right">
+            Отложенные:
+            <?php
+            $currentSelected = Yii::$app->session->get(Order::POSTPONED_SESSION_KEY);
+            foreach (Order::$postponedFilterList as $key => $label) {
+                $class = $currentSelected == $key ? 'btn-success' : 'btn-default';
+                echo Html::a(
+                        $label,
+                        'javascript:;',
+                        ['class' => 'changeCurrentPostponedFilter btn ' . $class, 'data-key' => $key]
+                    ) . '&nbsp;';
+            }
+            ?>
+        </div>
+    </div>
 
-//    } else {
-//        echo Html::a('Сделки, заключенные мной', ['/order/my-order/index'], ['class' => 'btn btn-default']);
-//    }
-
-    echo Html::tag('div', '&nbsp;');
-}
-
-echo GridView::widget(
+<?= GridView::widget(
     [
         'dataProvider' => $dataProvider,
         'filterModel'  => $searchModel,
@@ -60,32 +79,36 @@ echo GridView::widget(
 //            ],
             [
                 'attribute' => 'company_customer',
-                'filter'    => Select2::widget([
-                    'data'          => $companyList,
-                    'model'         => $searchModel,
-                    'attribute'     => 'company_customer',
-                    'options'       => [
-                        'placeholder' => '',
-                        'allowClear'  => true
-                    ],
-                    'pluginOptions' => ['allowClear' => true]
-                ]),
+                'filter'    => Select2::widget(
+                    [
+                        'data'          => $companyList,
+                        'model'         => $searchModel,
+                        'attribute'     => 'company_customer',
+                        'options'       => [
+                            'placeholder' => '',
+                            'allowClear'  => true,
+                        ],
+                        'pluginOptions' => ['allowClear' => true],
+                    ]
+                ),
                 'value'     => 'companyCustomer.name',
             ],
             [
                 'attribute' => 'currentOperator',
-                'filter'    => Select2::widget([
-                    'data'          => User::getListByRole(\common\components\Role::OPERATOR),
-                    'model'         => $searchModel,
-                    'attribute'     => 'currentOperator',
-                    'options'       => [
-                        'placeholder' => '',
-                        'allowClear'  => true
-                    ],
-                    'pluginOptions' => ['allowClear' => true]
-                ]),
+                'filter'    => Select2::widget(
+                    [
+                        'data'          => User::getListByRole(\common\components\Role::OPERATOR),
+                        'model'         => $searchModel,
+                        'attribute'     => 'currentOperator',
+                        'options'       => [
+                            'placeholder' => '',
+                            'allowClear'  => true,
+                        ],
+                        'pluginOptions' => ['allowClear' => true],
+                    ]
+                ),
                 'value'     => 'companyCustomer.currentOperator.fio',
-                'visible'   => User::isAdmin()
+                'visible'   => User::isAdmin(),
             ],
             [
                 'attribute' => 'tag_id',
@@ -102,16 +125,18 @@ echo GridView::widget(
 //            ],
             [
                 'attribute' => 'current_stage_id',
-                'filter'    => Select2::widget([
-                    'data'          => \common\models\stage\Stage::getList(),
-                    'model'         => $searchModel,
-                    'attribute'     => 'current_stage_id',
-                    'options'       => [
-                        'placeholder' => '',
-                        'allowClear'  => true
-                    ],
-                    'pluginOptions' => ['allowClear' => true]
-                ]),
+                'filter'    => Select2::widget(
+                    [
+                        'data'          => \common\models\stage\Stage::getList(),
+                        'model'         => $searchModel,
+                        'attribute'     => 'current_stage_id',
+                        'options'       => [
+                            'placeholder' => '',
+                            'allowClear'  => true,
+                        ],
+                        'pluginOptions' => ['allowClear' => true],
+                    ]
+                ),
                 'value'     => 'currentStage.name',
             ],
             [
