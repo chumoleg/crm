@@ -2,7 +2,6 @@
 /** @var \common\models\order\OrderSearch $searchModel */
 
 use yii\grid\GridView;
-use yii\widgets\Pjax;
 use yii\helpers\Html;
 use common\components\helpers\DatePicker;
 use common\models\company\Company;
@@ -42,7 +41,6 @@ if ($this->context->module->accessCreateOrder) {
     echo Html::tag('div', '&nbsp;');
 }
 
-Pjax::begin(['id' => 'orderGrid']);
 echo GridView::widget(
     [
         'dataProvider' => $dataProvider,
@@ -133,4 +131,3 @@ echo GridView::widget(
         ],
     ]
 );
-Pjax::end();
