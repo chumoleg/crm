@@ -4,12 +4,15 @@ namespace common\components\base;
 
 use Yii;
 use yii\data\ActiveDataProvider;
+use common\models\history\History;
 use common\components\Status;
 use common\components\helpers\ArrayHelper;
 use common\models\user\User;
 
 class ActiveRecord extends \yii\db\ActiveRecord
 {
+    protected $saveHistory = true;
+
     /**
      * @param int $id
      *
@@ -69,6 +72,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public function getStatusLabel()
     {
         $list = Status::getStatusList();
+
         return ArrayHelper::getValue($list, $this->status);
     }
 
@@ -85,6 +89,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public function getReflectionClassName()
     {
         $reflect = new \ReflectionClass($this->className());
+
         return $reflect->getShortName();
     }
 
@@ -100,15 +105,17 @@ class ActiveRecord extends \yii\db\ActiveRecord
             $defaultOrder = ['id' => SORT_DESC];
         }
 
-        return new ActiveDataProvider([
-            'query'      => $query,
-            'sort'       => [
-                'defaultOrder' => $defaultOrder
-            ],
-            'pagination' => [
-                'pageSize' => 20,
+        return new ActiveDataProvider(
+            [
+                'query'      => $query,
+                'sort'       => [
+                    'defaultOrder' => $defaultOrder,
+                ],
+                'pagination' => [
+                    'pageSize' => 20,
+                ],
             ]
-        ]);
+        );
     }
 
     /**
@@ -117,6 +124,39 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public static function getList()
     {
         $data = self::find()->all();
+
         return ArrayHelper::map($data, 'id', 'name');
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+
+        if ($this->saveHistory) {
+            $type = History::TYPE_CREATE;
+            if (!$this->isNewRecord) {
+                $type = History::TYPE_UPDATE;
+            }
+
+            $this->_saveHistory($type);
+        }
+    }
+
+    public function afterDelete()
+    {
+        parent::afterDelete();
+
+        if ($this->saveHistory) {
+            $this->_saveHistory(History::TYPE_DELETE);
+        }
+    }
+
+    private function _saveHistory($type)
+    {
+        $model = new History();
+        $model->type = $type;
+        $model->model = $this->className();
+        $model->setData($this->getAttributes());
+        $model->save();
     }
 }
