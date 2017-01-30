@@ -23,6 +23,8 @@ class History extends ActiveRecord
     const TYPE_CREATE = 1;
     const TYPE_UPDATE = 2;
     const TYPE_DELETE = 3;
+    const TYPE_LOGIN = 10;
+    const TYPE_LOGOUT = 11;
 
     protected $saveHistory = false;
 
@@ -63,5 +65,18 @@ class History extends ActiveRecord
     public function getData()
     {
         return Json::decode($this->data);
+    }
+
+    public static function createModel($type, $className, $attributes = [])
+    {
+        try {
+            $model = new self();
+            $model->type = $type;
+            $model->model = $className;
+            $model->setData($attributes);
+            $model->save();
+
+        } catch (\Exception $e) {
+        }
     }
 }

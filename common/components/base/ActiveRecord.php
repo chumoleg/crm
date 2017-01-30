@@ -138,7 +138,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
                 $type = History::TYPE_UPDATE;
             }
 
-            $this->_saveHistory($type);
+            History::createModel($type, $this->className(), $this->getAttributes());
         }
     }
 
@@ -147,16 +147,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         parent::afterDelete();
 
         if ($this->saveHistory) {
-            $this->_saveHistory(History::TYPE_DELETE);
+            History::createModel(History::TYPE_DELETE, $this->className(), $this->getAttributes());
         }
-    }
-
-    private function _saveHistory($type)
-    {
-        $model = new History();
-        $model->type = $type;
-        $model->model = $this->className();
-        $model->setData($this->getAttributes());
-        $model->save();
     }
 }
