@@ -9,6 +9,7 @@ class UserSearch extends User
 {
     public $tag;
     public $source;
+    public $mailSending;
 
     /**
      * @inheritdoc
@@ -25,19 +26,24 @@ class UserSearch extends User
                     'fio',
                     'tag',
                     'source',
-                    'date_create'
+                    'mailSending',
+                    'date_create',
                 ],
-                'safe'
+                'safe',
             ],
         ];
     }
 
     public function attributeLabels()
     {
-        return ArrayHelper::merge(parent::attributeLabels(), [
-            'tag'    => 'Теги',
-            'source' => 'Источники'
-        ]);
+        return ArrayHelper::merge(
+            parent::attributeLabels(),
+            [
+                'tag'         => 'Теги',
+                'source'      => 'Источники',
+                'mailSending' => 'Рассылки',
+            ]
+        );
     }
 
     /**
@@ -54,13 +60,15 @@ class UserSearch extends User
             return $dataProvider;
         }
 
-        $query->andFilterWhere([
-            'id'     => $this->id,
-            'email'  => $this->email,
-            'fio'    => $this->fio,
-            'role'   => $this->role,
-            'status' => $this->status,
-        ]);
+        $query->andFilterWhere(
+            [
+                'id'     => $this->id,
+                'email'  => $this->email,
+                'fio'    => $this->fio,
+                'role'   => $this->role,
+                'status' => $this->status,
+            ]
+        );
 
         $query->andFilterWhere(['LIKE', 'date_create', $this->date_create]);
 
@@ -72,6 +80,11 @@ class UserSearch extends User
         if (!empty($this->source)) {
             $userSourceQuery = UserSource::find()->select(['user_id'])->andWhere(['source_id' => $this->source]);
             $query->andWhere(['IN', 'id', $userSourceQuery]);
+        }
+
+        if (!empty($this->mailSending)) {
+            $mailSendingQuery = UserMailSending::find()->select(['user_id'])->andWhere(['type' => $this->mailSending]);
+            $query->andWhere(['IN', 'id', $mailSendingQuery]);
         }
 
         return $dataProvider;

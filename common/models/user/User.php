@@ -13,19 +13,20 @@ use common\components\helpers\ArrayHelper;
 /**
  * This is the model class for table "user".
  *
- * @property integer       $id
- * @property string        $email
- * @property string        $fio
- * @property string        $role
- * @property string        $password_hash
- * @property string        $password_reset_token
- * @property string        $auth_key
- * @property integer       $status
- * @property string        $date_create
+ * @property integer           $id
+ * @property string            $email
+ * @property string            $fio
+ * @property string            $role
+ * @property string            $password_hash
+ * @property string            $password_reset_token
+ * @property string            $auth_key
+ * @property integer           $status
+ * @property string            $date_create
  *
- * @property UserHistory[] $userHistories
- * @property UserTag[]     $userTags
- * @property UserSource[]  $userSources
+ * @property UserHistory[]     $userHistories
+ * @property UserTag[]         $userTags
+ * @property UserSource[]      $userSources
+ * @property UserMailSending[] $userMailSending
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -97,6 +98,14 @@ class User extends ActiveRecord implements IdentityInterface
     public function getUserSources()
     {
         return $this->hasMany(UserSource::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserMailSending()
+    {
+        return $this->hasMany(UserMailSending::className(), ['user_id' => 'id']);
     }
 
     /**

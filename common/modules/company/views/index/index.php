@@ -18,7 +18,10 @@ echo GridView::widget(
         'dataProvider' => $dataProvider,
         'filterModel'  => $searchModel,
         'columns'      => [
-            'id',
+            [
+                'attribute'      => 'id',
+                'contentOptions' => ['class' => 'idColumn'],
+            ],
             [
                 'attribute' => 'current_operator',
                 'filter'    => $searchModel->getOperatorList(),

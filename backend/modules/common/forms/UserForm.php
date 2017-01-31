@@ -5,6 +5,7 @@ use common\components\Status;
 use common\models\user\User;
 use common\components\Role;
 use common\components\helpers\ArrayHelper;
+use common\models\user\UserMailSending;
 use common\models\user\UserSource;
 use common\models\user\UserTag;
 
@@ -12,7 +13,9 @@ class UserForm extends User
 {
     public $tagData = [];
     public $sourceData = [];
+    public $mailSendingData = [];
     public $password;
+
     private $_oldRole;
 
     /**
@@ -32,7 +35,7 @@ class UserForm extends User
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             ['password', 'string', 'min' => 6],
-            [['tagData', 'sourceData'], 'safe', 'on' => ['create', 'update']],
+            [['tagData', 'sourceData', 'mailSendingData'], 'safe', 'on' => ['create', 'update']],
         ];
     }
 
@@ -41,9 +44,10 @@ class UserForm extends User
         return ArrayHelper::merge(
             parent::attributeLabels(),
             [
-                'password'   => 'Пароль',
-                'tagData'    => 'Теги',
-                'sourceData' => 'Источники',
+                'password'        => 'Пароль',
+                'tagData'         => 'Теги',
+                'sourceData'      => 'Источники',
+                'mailSendingData' => 'Рассылка',
             ]
         );
     }
@@ -56,8 +60,9 @@ class UserForm extends User
     public function afterFind()
     {
         $this->_oldRole = $this->role;
-        $this->tagData = ArrayHelper::getColumn($this->userTags, 'tag_id');
-        $this->sourceData = ArrayHelper::getColumn($this->userSources, 'source_id');
+        $this->tagData = $this->_getTagData();
+        $this->sourceData = $this->_getSourceData();
+        $this->mailSendingData = $this->_getMailSendingData();
 
         parent::afterFind();
     }
@@ -89,12 +94,42 @@ class UserForm extends User
 
         $this->_saveTagData();
         $this->_saveSourceData();
+        $this->_saveMailSendingData();
 
         parent::afterSave($insert, $changedAttributes);
     }
 
+    /**
+     * @return array
+     */
+    private function _getMailSendingData()
+    {
+        return ArrayHelper::getColumn($this->userMailSending, 'type');
+    }
+
+    /**
+     * @return array
+     */
+    private function _getSourceData()
+    {
+        return ArrayHelper::getColumn($this->userSources, 'source_id');
+    }
+
+    /**
+     * @return array
+     */
+    private function _getTagData()
+    {
+        return ArrayHelper::getColumn($this->userTags, 'tag_id');
+    }
+
     private function _saveTagData()
     {
+        $oldTags = $this->_getTagData();
+        if ($this->tagData == $oldTags) {
+            return;
+        }
+
         UserTag::deleteAll(['user_id' => $this->id]);
         if (empty($this->tagData)) {
             return;
@@ -110,6 +145,11 @@ class UserForm extends User
 
     private function _saveSourceData()
     {
+        $oldSources = $this->_getSourceData();
+        if ($this->sourceData == $oldSources) {
+            return;
+        }
+
         UserSource::deleteAll(['user_id' => $this->id]);
         if (empty($this->sourceData)) {
             return;
@@ -119,6 +159,26 @@ class UserForm extends User
             $model = new UserSource();
             $model->user_id = $this->id;
             $model->source_id = $sourceId;
+            $model->save();
+        }
+    }
+
+    private function _saveMailSendingData()
+    {
+        $oldMailSendingData = $this->_getMailSendingData();
+        if ($this->mailSendingData == $oldMailSendingData) {
+            return;
+        }
+
+        UserMailSending::deleteAll(['user_id' => $this->id]);
+        if (empty($this->mailSendingData)) {
+            return;
+        }
+
+        foreach ($this->mailSendingData as $type) {
+            $model = new UserMailSending();
+            $model->user_id = $this->id;
+            $model->type = $type;
             $model->save();
         }
     }

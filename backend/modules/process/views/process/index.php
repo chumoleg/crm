@@ -14,7 +14,10 @@ echo GridView::widget([
     'dataProvider' => $dataProvider,
     'filterModel'  => $searchModel,
     'columns'      => [
-        'id',
+        [
+            'attribute'      => 'id',
+            'contentOptions' => ['class' => 'idColumn'],
+        ],
         'name',
         [
             'attribute' => 'date_create',

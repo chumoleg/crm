@@ -215,3 +215,7 @@ textarea.fixed {
     height: 58px;
     width: 100%;
 }
+
+.grid-view .idColumn {
+    width: 90px;
+}

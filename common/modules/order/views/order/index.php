@@ -65,7 +65,10 @@ $companyList = Company::getListCustomers();
         'dataProvider' => $dataProvider,
         'filterModel'  => $searchModel,
         'columns'      => [
-            'id',
+            [
+                'attribute'      => 'id',
+                'contentOptions' => ['class' => 'idColumn'],
+            ],
             'name',
             [
                 'attribute' => 'source_id',
