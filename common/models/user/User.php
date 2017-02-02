@@ -2,6 +2,7 @@
 
 namespace common\models\user;
 
+use common\models\company\Company;
 use Yii;
 use common\components\Role;
 use common\components\Status;
@@ -27,6 +28,7 @@ use common\components\helpers\ArrayHelper;
  * @property UserTag[]         $userTags
  * @property UserSource[]      $userSources
  * @property UserMailSending[] $userMailSending
+ * @property Company[]         $userCompanies
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -106,6 +108,14 @@ class User extends ActiveRecord implements IdentityInterface
     public function getUserMailSending()
     {
         return $this->hasMany(UserMailSending::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserCompanies()
+    {
+        return $this->hasMany(Company::className(), ['current_operator' => 'id']);
     }
 
     /**

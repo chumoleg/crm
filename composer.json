@@ -31,7 +31,8 @@
         "symfony/css-selector": "2.8",
         "moonlandsoft/yii2-phpexcel": "*",
         "kartik-v/yii2-editable": "*",
-        "wbraganca/yii2-dynamicform": "*"
+        "wbraganca/yii2-dynamicform": "*",
+        "gofmanaa/yii2-crontask": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

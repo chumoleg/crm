@@ -4,10 +4,12 @@ namespace common\components;
 
 class MailSending
 {
-    const CLIENT_COUNTERS = 1;
+    const ORDERS_ON_TODAY = 1;
+    const OVERDUE_ON_TODAY = 2;
 
     public static $typeList
         = [
-            self::CLIENT_COUNTERS => 'Какая-то рассылка',
+            self::ORDERS_ON_TODAY  => 'По событиям на сегодня',
+            self::OVERDUE_ON_TODAY => 'По просроченным на сегодня',
         ];
 }

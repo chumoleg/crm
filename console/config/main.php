@@ -7,25 +7,43 @@ $params = array_merge(
 );
 
 return [
-    'id' => 'app-console',
-    'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'id'                  => 'app-console',
+    'basePath'            => dirname(__DIR__),
+    'bootstrap'           => ['log'],
     'controllerNamespace' => 'console\controllers',
     'controllerMap'       => [
         'migrate' => [
             'class'        => 'yii\console\controllers\MigrateController',
-            'templateFile' => '@console/templates/migration/templateView.php'
+            'templateFile' => '@console/templates/migration/templateView.php',
         ],
     ],
-    'components' => [
+    'modules'             => [
+        'crontask' => [
+            'class'    => 'gofmanaa\crontask\Module',
+            'fileName' => 'cron.txt',
+            'tasks'    => [
+                'sendOrderOnToday'        => [
+                    'command' => 'mails/send-orders-on-today',
+                    'minute'  => '0',
+                    'hour'    => '4',
+                ],
+                'sendOverdueOrderOnToday' => [
+                    'command' => 'mails/send-overdue-orders-on-today',
+                    'minute'  => '5',
+                    'hour'    => '4',
+                ],
+            ],
+        ],
+    ],
+    'components'          => [
         'log' => [
             'targets' => [
                 [
-                    'class' => 'yii\log\FileTarget',
+                    'class'  => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
             ],
         ],
     ],
-    'params' => $params,
+    'params'              => $params,
 ];
