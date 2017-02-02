@@ -24,12 +24,12 @@ return [
             'tasks'    => [
                 'sendOrderOnToday'        => [
                     'command' => 'mails/send-orders-on-today',
-                    'minute'  => '0',
+                    'min'     => '0',
                     'hour'    => '4',
                 ],
                 'sendOverdueOrderOnToday' => [
                     'command' => 'mails/send-overdue-orders-on-today',
-                    'minute'  => '5',
+                    'min'     => '5',
                     'hour'    => '4',
                 ],
             ],
