@@ -60,7 +60,7 @@ echo GridView::widget(
                         );
                     }
 
-                    return implode(', ', $data);
+                    return implode(',<br />', $data);
                 },
             ],
             [
