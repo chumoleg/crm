@@ -136,8 +136,10 @@ class OrderSearch extends Order
             $query->andWhere(['IN', 'order.id', $innerQuery]);
         }
 
-        $closeListStages = StageMethod::getStagesList(StageMethod::HIDE_ORDER_FROM_LIST);
-        $query->andWhere(['NOT IN', 'stage.id', $closeListStages]);
+        if (empty($this->current_stage_id)){
+            $closeListStages = StageMethod::getStagesList(StageMethod::HIDE_ORDER_FROM_LIST);
+            $query->andWhere(['NOT IN', 'stage.id', $closeListStages]);
+        }
 
         $postponedKey = Yii::$app->session->get(self::POSTPONED_SESSION_KEY);
         if (!empty($postponedKey)) {
