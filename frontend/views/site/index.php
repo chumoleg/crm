@@ -18,21 +18,23 @@
         [
             'label' => 'Админка',
             'href'  => Yii::$app->params['backendUrl'],
-        ]
+        ],
     ];
     ?>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-4">
             <?php foreach ($modules as $module) : ?>
                 <a href="<?= 'http://' . $module['href']; ?>">
-                    <div class="col-md-4">
-                        <div class="well frontModulesBlock">
-                            <?= $module['label']; ?>
-                        </div>
+                    <div class="well frontModulesBlock">
+                        <?= $module['label']; ?>
                     </div>
                 </a>
             <?php endforeach; ?>
+        </div>
+
+        <div class="col-md-7 col-md-offset-1">
+            <?= $this->render('dashboard'); ?>
         </div>
     </div>
 

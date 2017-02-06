@@ -219,3 +219,7 @@ textarea.fixed {
 .grid-view .idColumn {
     width: 90px;
 }
+
+.table-dashboard {
+    font-size: 18px;
+}

@@ -2,8 +2,8 @@
 
 namespace common\models\order;
 
-use common\components\helpers\DepartmentHelper;
 use Yii;
+use common\components\helpers\DepartmentHelper;
 use common\models\company\Company;
 use common\models\transaction\Transaction;
 use common\models\process\ProcessStage;
@@ -16,7 +16,6 @@ use common\models\source\Source;
 use common\models\product\ProductTag;
 use common\models\tag\Tag;
 use common\models\stage\Stage;
-use common\components\Role;
 
 /**
  * This is the model class for table "order".
