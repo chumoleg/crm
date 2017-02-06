@@ -136,7 +136,7 @@ class OrderSearch extends Order
             $query->andWhere(['IN', 'order.id', $innerQuery]);
         }
 
-        if (empty($this->current_stage_id)){
+        if (empty($this->current_stage_id)) {
             $closeListStages = StageMethod::getStagesList(StageMethod::HIDE_ORDER_FROM_LIST);
             $query->andWhere(['NOT IN', 'stage.id', $closeListStages]);
         }
