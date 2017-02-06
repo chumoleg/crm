@@ -13,7 +13,7 @@ return [
     'controllerNamespace' => 'console\controllers',
     'controllerMap'       => [
         'migrate' => [
-            'class'        => 'yii\console\controllers\MigrateController',
+            'class'        => 'console\components\migration\MigrateController',
             'templateFile' => '@console/templates/migration/templateView.php',
         ],
     ],

@@ -1,6 +1,6 @@
 <?php
 
-use common\components\migration\Migration;
+use console\components\migration\Migration;
 
 class m161213_003429_create_order_company extends Migration
 {

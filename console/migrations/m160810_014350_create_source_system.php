@@ -1,6 +1,6 @@
 <?php
 
-use common\components\migration\Migration;
+use console\components\migration\Migration;
 
 class m160810_014350_create_source_system extends Migration
 {

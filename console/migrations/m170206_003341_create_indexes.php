@@ -1,6 +1,6 @@
 <?php
 
-use common\components\migration\Migration;
+use console\components\migration\Migration;
 
 class m170206_003341_create_indexes extends Migration
 {

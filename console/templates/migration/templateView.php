@@ -8,7 +8,7 @@
 echo "<?php\n";
 ?>
 
-use common\components\migration\Migration;
+use console\components\migration\Migration;
 
 class <?= $className ?> extends Migration
 {

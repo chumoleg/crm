@@ -1,6 +1,6 @@
 <?php
 
-use common\components\migration\Migration;
+use console\components\migration\Migration;
 
 class m160719_030254_changeProcessStageStructure extends Migration
 {
