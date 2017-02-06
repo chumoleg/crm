@@ -6,9 +6,9 @@ use common\models\company\Company;
 use yii\helpers\Html;
 use common\models\user\User;
 
-$this->title = 'Список организаций';
+$this->title = 'Список коммуникаций';
 
-echo $this->context->getCreateButton('Добавить новую организацию', null, false);
+echo $this->context->getCreateButton('Добавить новую коммуникацию', null, false);
 echo Html::a('Список сделок', ['/order/order/index'], ['class' => 'btn btn-default']);
 echo Html::tag('div', '&nbsp;');
 

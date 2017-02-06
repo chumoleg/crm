@@ -1,4 +1,4 @@
 <?php
-$this->title = 'Редактирование организации #' . $this->context->model->id;
+$this->title = 'Редактирование коммуникации #' . $this->context->model->id;
 
 echo $this->render('_form');

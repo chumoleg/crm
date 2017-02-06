@@ -126,7 +126,7 @@ class Order extends ActiveRecord
             'id'               => 'ID',
             'name'             => 'Название',
             'source_id'        => 'Источник',
-            'company_customer' => 'Организация (клиент)',
+            'company_customer' => 'Клиент',
             'company_executor' => 'Организация (обработчик)',
             'process_id'       => 'Процесс',
             'current_stage_id' => 'Текущий статус',

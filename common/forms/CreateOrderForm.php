@@ -85,7 +85,7 @@ class CreateOrderForm extends Order
     {
         $companyList = Company::getListCustomers();
         if (!isset($companyList[$this->company_customer])) {
-            $this->addError($attribute, 'Невозможно выбрать данную организацию');
+            $this->addError($attribute, 'Невозможно выбрать данного клиента');
         }
     }
 

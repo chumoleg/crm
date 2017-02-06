@@ -31,7 +31,7 @@ class CompanyForm extends Company
         return ArrayHelper::merge(
             parent::attributeLabels(),
             [
-                'contactData' => 'Контакты организации',
+                'contactData' => 'Контакты',
             ]
         );
     }

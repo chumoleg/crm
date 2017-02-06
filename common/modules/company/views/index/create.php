@@ -1,4 +1,4 @@
 <?php
-$this->title = 'Создание новой организации';
+$this->title = 'Создание новой коммуникации';
 
 echo $this->render('_form');
