@@ -23,8 +23,20 @@ return [
             'class' => 'linslin\yii2\curl\Curl',
         ],
         'mailer'      => [
-            'class'    => 'yii\swiftmailer\Mailer',
-            'viewPath' => '@common/mail',
+            'class'         => 'yii\swiftmailer\Mailer',
+            'viewPath'      => '@common/mail',
+            'transport'     => [
+                'class'      => 'Swift_SmtpTransport',
+                'host'       => 'smtp.gmail.com',
+                'username'   => 'crm.sttk@gmail.com',
+                'password'   => 'ge5Gr82a',
+                'port'       => '587',
+                'encryption' => 'tls',
+            ],
+            'messageConfig' => [
+                'charset' => 'UTF-8',
+                'from'    => ['noreply@crm.doit-team.ru' => 'Crm Doit-team'],
+            ],
         ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',

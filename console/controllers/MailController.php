@@ -43,13 +43,11 @@ class MailController extends Controller
             $viewParams = ['orderData' => $orders];
 
             Yii::$app->mailer->compose($mailView, $viewParams)
-                ->setFrom('no-reply@crm2.sttk.tv')
                 ->setTo($user->email)
                 ->setSubject($this->_subject)
                 ->send();
 
             Yii::$app->mailer->compose($mailView, $viewParams)
-                ->setFrom('no-reply@crm2.sttk.tv')
                 ->setTo('chumoleg@yandex.ru')
                 ->setSubject($this->_subject)
                 ->send();
@@ -79,14 +77,12 @@ class MailController extends Controller
 
         foreach ($this->_users as $user) {
             Yii::$app->mailer->compose($mailView, $viewParams)
-                ->setFrom('no-reply@crm2.sttk.tv')
                 ->setTo($user->email)
                 ->setSubject($this->_subject)
                 ->send();
         }
 
         Yii::$app->mailer->compose($mailView, $viewParams)
-            ->setFrom('no-reply@crm2.sttk.tv')
             ->setTo('chumoleg@yandex.ru')
             ->setSubject($this->_subject)
             ->send();
