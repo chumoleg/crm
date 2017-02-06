@@ -95,7 +95,7 @@ class Company extends ActiveRecord
         return [
             'id'               => 'ID',
             'type'             => 'Тип',
-            'name'             => 'ФИО',
+            'name'             => 'Юр.лицо',
             'brand'            => 'Менеджер',
             'date_create'      => 'Дата создания',
             'user_id'          => 'Пользователь',
