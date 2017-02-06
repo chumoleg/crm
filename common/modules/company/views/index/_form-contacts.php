@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use common\components\widgets\dynamicForm\DynamicFormWidget;
 
 $modelsContact = $this->context->model->contactData;
+$currentModel = $modelsContact[0];
 
 DynamicFormWidget::begin([
     'widgetContainer' => 'dynamicFormContact',
@@ -10,7 +11,8 @@ DynamicFormWidget::begin([
     'widgetItem'      => '.contact-item',
     'insertButton'    => '.add-contact',
     'deleteButton'    => '.remove-contact',
-    'model'           => $modelsContact[0],
+    'model'           => $currentModel,
+    'min'             => 0,
     'formId'          => 'dynamic-form',
     'formFields'      => [
         'person',
@@ -23,9 +25,9 @@ DynamicFormWidget::begin([
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
-            <th>Контактное лицо</th>
-            <th>Тип</th>
-            <th>Значение</th>
+            <th><?= $currentModel->getAttributeLabel('person'); ?></th>
+            <th><?= $currentModel->getAttributeLabel('type'); ?></th>
+            <th><?= $currentModel->getAttributeLabel('value'); ?></th>
             <th class="text-center" style="width:90px;"></th>
         </tr>
         </thead>

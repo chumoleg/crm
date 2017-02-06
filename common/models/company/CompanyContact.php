@@ -45,7 +45,7 @@ class CompanyContact extends ActiveRecord
     public function rules()
     {
         return [
-            [['person', 'type', 'value'], 'required'],
+            [['type', 'value'], 'required'],
             [['company_id', 'type', 'user_id'], 'integer'],
             [['person', 'value'], 'string', 'max' => 200],
             [
@@ -79,7 +79,7 @@ class CompanyContact extends ActiveRecord
         return [
             'id'         => 'ID',
             'company_id' => 'Company ID',
-            'person'     => 'Контактное лицо',
+            'person'     => 'Комментарий',
             'type'       => 'Тип контакта',
             'value'      => 'Значение',
             'user_id'    => 'User ID',
