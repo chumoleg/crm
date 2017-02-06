@@ -1,6 +1,6 @@
 <?php
 
-namespace common\components\migration;
+namespace console\components\migration;
 
 class Migration extends \yii\db\Migration
 {

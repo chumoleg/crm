@@ -1,6 +1,6 @@
 <?php
 
-use common\components\migration\Migration;
+use console\components\migration\Migration;
 
 class m160603_005650_createSourceAndProcessTimings extends Migration
 {

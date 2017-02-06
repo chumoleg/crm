@@ -1,6 +1,6 @@
 <?php
 
-use common\components\migration\Migration;
+use console\components\migration\Migration;
 use common\components\Role;
 
 class m160828_070303_create_roles extends Migration

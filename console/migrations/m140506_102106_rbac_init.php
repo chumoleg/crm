@@ -7,7 +7,7 @@
 
 use yii\base\InvalidConfigException;
 use yii\rbac\DbManager;
-use common\components\migration\Migration;
+use console\components\migration\Migration;
 use common\components\Role;
 
 /**
