@@ -7,7 +7,7 @@ use common\models\user\User;
 /** @var CompanyForm $model */
 $model = $this->context->model;
 
-$this->context->addBreadCrumb('Коммуникации', ['/company/index/index']);
+$this->context->addBreadCrumb('Список контактов', ['/company/index/index']);
 $this->context->addBreadCrumb($this->title);
 
 \common\assets\FormAppendAsset::register($this);

@@ -17,7 +17,7 @@ return [
                 'hostname' => 'localhost',
                 'port'     => 6379,
                 'database' => 0,
-            ]
+            ],
         ],
         'curl'        => [
             'class' => 'linslin\yii2\curl\Curl',
