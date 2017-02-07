@@ -79,7 +79,7 @@ class CompanyContact extends ActiveRecord
         return [
             'id'         => 'ID',
             'company_id' => 'Company ID',
-            'person'     => 'Контактное лицо',
+            'person'     => 'Коммент',
             'type'       => 'Тип контакта',
             'value'      => 'Значение',
             'user_id'    => 'User ID',

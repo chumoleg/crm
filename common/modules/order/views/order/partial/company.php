@@ -19,7 +19,7 @@ $companyCustomer = $model->companyCustomer;
     <table class="table tabel-condensed">
         <thead>
         <tr>
-            <th>Контактное лицо</th>
+            <th>Коммент</th>
             <th>Тип контакта</th>
             <th>Значение</th>
         </tr>
