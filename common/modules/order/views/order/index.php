@@ -40,7 +40,7 @@ $companyList = Company::getListCustomers();
                 }
             }
 
-            echo Html::a('Список коммуникаций', ['/company/index/index'], ['class' => 'btn btn-default']);
+            echo Html::a('Список контактов', ['/company/index/index'], ['class' => 'btn btn-default']);
             ?>
         </div>
 

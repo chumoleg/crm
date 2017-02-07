@@ -11,7 +11,7 @@ $items = [
         'label'  => 'Управление (общее)',
         'items' => [
             [
-                'label'  => 'Коммуникации',
+                'label'  => 'Контакты',
                 'url'    => ['/company/index/index'],
                 'active' => (bool)strstr($url, 'company/')
             ],
