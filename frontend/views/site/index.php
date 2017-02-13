@@ -4,8 +4,12 @@
     <?php
     $modules = [
         [
-            'label' => 'Call-центр',
+            'label' => 'CRM',
             'href'  => Yii::$app->params['callUrl'],
+        ],
+        [
+            'label' => 'Админка',
+            'href'  => Yii::$app->params['backendUrl'],
         ],
         [
             'label' => 'Склад',
@@ -14,10 +18,6 @@
         [
             'label' => 'Отчеты',
             'href'  => Yii::$app->params['reportUrl'],
-        ],
-        [
-            'label' => 'Админка',
-            'href'  => Yii::$app->params['backendUrl'],
         ],
     ];
     ?>
