@@ -80,20 +80,24 @@ $companyList = Company::getListCustomers();
 //                'filter'    => Company::getListExecutors(),
 //                'value'     => 'companyExecutor.name',
 //            ],
+//            [
+//                'attribute' => 'company_customer',
+//                'filter'    => Select2::widget(
+//                    [
+//                        'data'          => $companyList,
+//                        'model'         => $searchModel,
+//                        'attribute'     => 'company_customer',
+//                        'options'       => [
+//                            'placeholder' => '',
+//                            'allowClear'  => true,
+//                        ],
+//                        'pluginOptions' => ['allowClear' => true],
+//                    ]
+//                ),
+//                'value'     => 'companyCustomer.name',
+//            ],
             [
-                'attribute' => 'company_customer',
-                'filter'    => Select2::widget(
-                    [
-                        'data'          => $companyList,
-                        'model'         => $searchModel,
-                        'attribute'     => 'company_customer',
-                        'options'       => [
-                            'placeholder' => '',
-                            'allowClear'  => true,
-                        ],
-                        'pluginOptions' => ['allowClear' => true],
-                    ]
-                ),
+                'attribute' => 'fio',
                 'value'     => 'companyCustomer.name',
             ],
             [

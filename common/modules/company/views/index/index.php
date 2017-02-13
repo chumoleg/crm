@@ -67,15 +67,15 @@ echo GridView::widget(
                 'value'     => 'currentOperator.fio',
                 'visible'   => !User::isOperator(),
             ],
-            [
-                'attribute' => 'type',
-                'filter'    => Company::$typeList,
-                'value'     => function ($data) {
-                    return Company::$typeList[$data->type];
-                },
-                'visible'   => !User::isOperator(),
-            ],
-            'brand',
+//            [
+//                'attribute' => 'type',
+//                'filter'    => Company::$typeList,
+//                'value'     => function ($data) {
+//                    return Company::$typeList[$data->type];
+//                },
+//                'visible'   => !User::isOperator(),
+//            ],
+//            'brand',
             'name',
             [
                 'attribute' => 'date_create',

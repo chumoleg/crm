@@ -27,7 +27,7 @@ $this->context->addBreadCrumb($this->title);
 
             <?= $form->field($model, 'name')->textInput(); ?>
 
-            <?= $form->field($model, 'brand')->textInput(); ?>
+<!--            --><?php //echo $form->field($model, 'brand')->textInput(); ?>
 
             <?php
             if (User::isOperator()) {

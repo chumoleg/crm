@@ -25,9 +25,9 @@ DynamicFormWidget::begin([
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
-            <th><?= $currentModel->getAttributeLabel('person'); ?></th>
             <th><?= $currentModel->getAttributeLabel('type'); ?></th>
             <th><?= $currentModel->getAttributeLabel('value'); ?></th>
+            <th><?= $currentModel->getAttributeLabel('person'); ?></th>
             <th class="text-center" style="width:90px;"></th>
         </tr>
         </thead>
@@ -38,6 +38,16 @@ DynamicFormWidget::begin([
 
             <tr class="contact-item">
                 <td class="vcenter">
+                    <?= $form->field($model, $fieldName . 'type')->label(false)
+                        ->dropDownList(\common\models\company\CompanyContact::$typeList); ?>
+                </td>
+
+                <td class="vcenter">
+                    <?= $form->field($model, $fieldName . 'value')->label(false)
+                        ->textInput(['maxlength' => true]); ?>
+                </td>
+
+                <td class="vcenter">
                     <?php
                     if (!$model->isNewRecord) {
                         echo Html::activeHiddenInput($model, $fieldName . 'id');
@@ -45,16 +55,6 @@ DynamicFormWidget::begin([
                     ?>
 
                     <?= $form->field($model, $fieldName . 'person')->label(false)
-                        ->textInput(['maxlength' => true]); ?>
-                </td>
-
-                <td class="vcenter">
-                    <?= $form->field($model, $fieldName . 'type')->label(false)
-                        ->dropDownList(\common\models\company\CompanyContact::$typeList); ?>
-                </td>
-
-                <td class="vcenter">
-                    <?= $form->field($model, $fieldName . 'value')->label(false)
                         ->textInput(['maxlength' => true]); ?>
                 </td>
 
@@ -69,7 +69,7 @@ DynamicFormWidget::begin([
 
         <tfoot>
         <tr>
-            <th colspan="5" class="text-right">
+            <th colspan="4" class="text-right">
                 <button type="button" class="add-contact btn btn-success btn-xs" title="Добавить контакт">
                     <span class="glyphicon glyphicon-plus"></span>Добавить контакт
                 </button>

@@ -19,17 +19,17 @@ $companyCustomer = $model->companyCustomer;
     <table class="table tabel-condensed">
         <thead>
         <tr>
-            <th>Коммент</th>
             <th>Тип контакта</th>
             <th>Значение</th>
+            <th>Коммент</th>
         </tr>
         </thead>
 
         <?php foreach ($companyCustomer->companyContacts as $companyContact) : ?>
             <tr>
-                <td><?= $companyContact->person; ?></td>
                 <td><?= ArrayHelper::getValue(CompanyContact::$typeList, $companyContact->type); ?></td>
                 <td><?= $companyContact->value; ?></td>
+                <td><?= $companyContact->person; ?></td>
                 <td>
                     <?php if ($model->accessCalling() && $companyContact->type == CompanyContact::TYPE_PHONE) : ?>
                         <button class="btn btn-sm btn-success callOrder" data-contact="<?= $companyContact->id; ?>">

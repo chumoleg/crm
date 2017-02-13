@@ -121,6 +121,8 @@ class OrderSearch extends Order
         $query->andFilterWhere(['LIKE', 'order.date_create', $this->date_create]);
         $query->andFilterWhere(['LIKE', 'order.time_postponed', $this->time_postponed]);
 
+        $query->andFilterWhere(['LIKE', 'customer.name', $this->fio]);
+
         if (!empty($this->tag_id)) {
             $tagId = $this->tag_id;
             $innerQuery = OrderProduct::find()
