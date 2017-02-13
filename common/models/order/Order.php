@@ -132,7 +132,7 @@ class Order extends ActiveRecord
             'price'            => 'Общая стоимость',
             'currency'         => 'Валюта',
             'time_postponed'   => 'Отложен до',
-            'created_user_id'  => 'Создан оператором',
+            'created_user_id'  => 'Создан менеджером',
             'date_create'      => 'Дата создания',
             'date_update'      => 'Дата изменения',
         ];

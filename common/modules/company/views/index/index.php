@@ -22,14 +22,14 @@ $this->title = 'Список контактов';
                 </a>
 
                 <div id="filterBlock" class="collapse">
-                    Перевести выбранные на оператора:<br/>
+                    Перевести выбранные на менеджера:<br/>
                     <?= Html::dropDownList('currentOperatorList', null, $searchModel->getOperatorList(),
                         ['prompt' => '...', 'id' => 'currentOperatorList']); ?>
                     <?= Html::a('Выполнить операцию', '#',
                         ['class' => 'btn btn-danger', 'id' => 'changeCurrentOperatorChecked']); ?>
                     <div>&nbsp;</div>
 
-                    Перевести все с оператора:<br/>
+                    Перевести все с менеджера:<br/>
                     <?= Html::dropDownList('fromOperatorList', null, $searchModel->getOperatorList(),
                         ['prompt' => '...', 'id' => 'currentOperatorFrom']); ?>
                     на

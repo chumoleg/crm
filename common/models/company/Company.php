@@ -96,10 +96,10 @@ class Company extends ActiveRecord
             'id'               => 'ID',
             'type'             => 'Тип',
             'name'             => 'Юр.лицо',
-            'brand'            => 'Менеджер',
+            'brand'            => 'Бренд',
             'date_create'      => 'Дата создания',
             'user_id'          => 'Пользователь',
-            'current_operator' => 'Текущий оператор',
+            'current_operator' => 'Менеджер',
         ];
     }
 
