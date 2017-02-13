@@ -32,7 +32,8 @@
         "moonlandsoft/yii2-phpexcel": "*",
         "kartik-v/yii2-editable": "*",
         "wbraganca/yii2-dynamicform": "*",
-        "gofmanaa/yii2-crontask": "*"
+        "gofmanaa/yii2-crontask": "*",
+        "yiister/yii2-gentelella": "~1.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

@@ -8,7 +8,7 @@ $params = array_merge(
 
 return [
     'id'                  => 'app-backend',
-    'name'                => 'Администрирование',
+    'name'                => 'Админка',
     'basePath'            => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap'           => ['log', 'common\components\AccessControl'],

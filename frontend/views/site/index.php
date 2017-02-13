@@ -1,5 +1,3 @@
-<legend>HOME PAGE</legend>
-
 <?php if (\common\models\user\User::isAdmin()) : ?>
     <?php
     $modules = [

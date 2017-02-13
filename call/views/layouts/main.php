@@ -1,22 +1,8 @@
 <?php
-use yii\helpers\Html;
 
-$this->beginContent('@common/views/layouts/base.php');
-?>
+$this->beginContent('@common/views/layouts/main.php');
 
-<?php \call\assets\AppAsset::register($this); ?>
-
-<?= $this->render('_header'); ?>
-    <div class="clearfix"></div>
-
-<?php
-echo (!empty($this->title)) ? Html::tag('legend', $this->title) : null;
-
-if (!empty($this->context->breadCrumbs)) {
-    echo \yii\widgets\Breadcrumbs::widget([
-        'links' => $this->context->breadCrumbs,
-    ]);
-}
+\call\assets\AppAsset::register($this);
 
 echo $content;
 

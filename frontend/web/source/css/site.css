@@ -223,3 +223,22 @@ textarea.fixed {
 .table-dashboard {
     font-size: 18px;
 }
+
+.login_content form input[type="text"],
+.login_content form input[type="email"],
+.login_content form input[type="password"] {
+    margin: 0;
+}
+
+body.login {
+    height: 0;
+}
+
+legend {
+    margin-bottom: 10px;
+    padding-bottom: 0;
+}
+
+.breadcrumb {
+    padding: 8px 0;
+}

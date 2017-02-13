@@ -2,18 +2,13 @@
 
 namespace common\components\base;
 
+use common\components\Role;
 use Yii;
 use yii\web\IdentityInterface;
 use common\models\history\History;
 
 class User extends \yii\web\User
 {
-    public function init()
-    {
-        parent::init();
-//        $this->loginUrl = 'http://' . Yii::$app->params['baseUrl'] . '/site/login';
-    }
-
     public function getWorkPlace()
     {
         return Yii::$app->session->get('workPlace');
@@ -39,5 +34,28 @@ class User extends \yii\web\User
         History::createModel(History::TYPE_LOGOUT, $this->className());
 
         return true;
+    }
+
+    public function getEmail()
+    {
+        return $this->identity->email;
+    }
+
+    public function getRole()
+    {
+        return $this->identity->role;
+    }
+
+    public function getTags()
+    {
+        return $this->identity->userTags;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return $this->can(Role::ADMIN);
     }
 }
