@@ -26,7 +26,7 @@ class AjaxController extends BaseController
         $operator = (int)Yii::$app->request->post('operator');
         $items = Yii::$app->request->post('items');
         if (empty($operator)) {
-            return ['error' => 'Выберите оператора'];
+            return ['error' => 'Выберите менеджера'];
         }
 
         if (empty($items) || !is_array($items)) {
@@ -43,7 +43,7 @@ class AjaxController extends BaseController
         $fromOperator = (int)Yii::$app->request->post('fromOperator');
         $toOperator = (int)Yii::$app->request->post('toOperator');
         if (empty($fromOperator) || empty($toOperator)) {
-            return ['error' => 'Выберите операторов'];
+            return ['error' => 'Выберите менеджеров'];
         }
 
         Company::updateAll(['current_operator' => $toOperator], 'current_operator = ' . $fromOperator);

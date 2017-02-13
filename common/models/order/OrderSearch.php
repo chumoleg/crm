@@ -56,7 +56,7 @@ class OrderSearch extends Order
                 'phone'           => 'Телефон',
                 'tag_id'          => 'Теги',
                 'department'      => 'Отдел',
-                'currentOperator' => 'Текущий оператор',
+                'currentOperator' => 'Менеджер',
             ],
             parent::attributeLabels()
         );

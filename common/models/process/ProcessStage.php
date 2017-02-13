@@ -86,7 +86,7 @@ class ProcessStage extends ActiveRecord
             'stage_id'             => 'Статус',
             'time_limit'           => 'Время обработки',
             'time_unit'            => 'Ед.изм времени',
-            'type_search_operator' => 'Тип выбора оператора',
+            'type_search_operator' => 'Тип выбора менеджера',
             'first_stage'          => 'Начальный статус',
             'user_id'              => 'User ID',
             'date_create'          => 'Date Create',

@@ -12,7 +12,7 @@ class Role
 
     public static $rolesList
         = [
-            self::OPERATOR          => 'Оператор call-центра',
+            self::OPERATOR          => 'Менеджер',
             self::WAREHOUSE_MANAGER => 'Сотрудник склада',
             self::ADMIN             => 'Администратор',
         ];
