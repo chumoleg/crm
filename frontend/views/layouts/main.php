@@ -1,10 +1,21 @@
 <?php
-$items = [];
-
-if (Yii::$app->user->isGuest) {
-    $items[] = ['label' => 'Login', 'url' => ['/site/login']];
-} else {
-    $items[] = ['label' => 'Logout (' . Yii::$app->user->getEmail() . ')', 'url' => ['/site/logout']];
-}
+$items = [
+    [
+        'label' => 'CRM',
+        'url'   => 'http://' . Yii::$app->params['callUrl'],
+    ],
+    [
+        'label' => 'Админка',
+        'url'   => 'http://' . Yii::$app->params['backendUrl'],
+    ],
+    [
+        'label' => 'Склад',
+        'url'   => 'http://' . Yii::$app->params['warehouseUrl'],
+    ],
+    [
+        'label' => 'Отчеты',
+        'url'   => 'http://' . Yii::$app->params['reportUrl'],
+    ],
+];
 
 echo $this->render('@common/views/layouts/main', ['menuItems' => $items, 'content' => $content]);

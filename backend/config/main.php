@@ -13,10 +13,11 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap'           => ['log', 'common\components\AccessControl'],
     'layout'              => '@app/views/layouts/main',
+    'defaultRoute'        => '/order/order/index',
     'modules'             => [
         'order'   => [
             'basePath' => '@common/modules/order',
-            'class'    => 'common\modules\order\Module'
+            'class'    => 'common\modules\order\Module',
         ],
         'company' => [
             'basePath' => '@common/modules/company',
@@ -24,15 +25,15 @@ return [
         ],
         'common'  => [
             'basePath' => '@app/modules/common',
-            'class'    => 'backend\modules\common\Module'
+            'class'    => 'backend\modules\common\Module',
         ],
         'process' => [
             'basePath' => '@app/modules/process',
-            'class'    => 'backend\modules\process\Module'
+            'class'    => 'backend\modules\process\Module',
         ],
         'system'  => [
             'basePath' => '@app/modules/system',
-            'class'    => 'backend\modules\system\Module'
+            'class'    => 'backend\modules\system\Module',
         ],
     ],
     'params'              => $params,

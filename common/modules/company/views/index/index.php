@@ -13,7 +13,6 @@ $this->title = 'Список контактов';
     <div class="row">
         <div class="col-md-6">
             <?= $this->context->getCreateButton('Добавить новый контакт', null, false); ?>
-            <?= Html::a('Список сделок', ['/order/order/index'], ['class' => 'btn btn-default']); ?>
 
             <?php if (User::isAdmin()) : ?>
                 <div>&nbsp;</div>
@@ -22,12 +21,13 @@ $this->title = 'Список контактов';
                 </a>
 
                 <div id="filterBlock" class="collapse">
+                    <br/>
                     Перевести выбранные на менеджера:<br/>
                     <?= Html::dropDownList('currentOperatorList', null, $searchModel->getOperatorList(),
                         ['prompt' => '...', 'id' => 'currentOperatorList']); ?>
                     <?= Html::a('Выполнить операцию', '#',
                         ['class' => 'btn btn-danger', 'id' => 'changeCurrentOperatorChecked']); ?>
-                    <div>&nbsp;</div>
+                    <br/>
 
                     Перевести все с менеджера:<br/>
                     <?= Html::dropDownList('fromOperatorList', null, $searchModel->getOperatorList(),
@@ -38,7 +38,6 @@ $this->title = 'Список контактов';
 
                     <?= Html::a('Выполнить операцию', '#',
                         ['class' => 'btn btn-danger', 'id' => 'changeCurrentOperatorFromTo']); ?>
-                    <div>&nbsp;</div>
                 </div>
             <?php endif; ?>
         </div>

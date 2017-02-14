@@ -39,8 +39,6 @@ $companyList = Company::getListCustomers();
                     );
                 }
             }
-
-            echo Html::a('Список контактов', ['/company/index/index'], ['class' => 'btn btn-default']);
             ?>
         </div>
 

@@ -1,2 +1,2 @@
 <?php
-$this->title = 'Management';
+$this->title = 'Админка';

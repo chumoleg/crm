@@ -1,9 +1,16 @@
 <?php
 
-$this->beginContent('@common/views/layouts/main.php');
-
 \call\assets\AppAsset::register($this);
 
-echo $content;
+$items = [
+    [
+        'label'  => 'Сделки',
+        'url'    => ['/order/order/index'],
+    ],
+    [
+        'label'  => 'Контакты',
+        'url'    => ['/company/index/index'],
+    ],
+];
 
-$this->endContent();
+echo $this->render('@common/views/layouts/main', ['menuItems' => $items, 'content' => $content]);

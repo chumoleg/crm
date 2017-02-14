@@ -46,82 +46,22 @@ use yii\bootstrap\Modal;
 
                 <br/>
 
-                <!-- sidebar menu -->
-                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                <?php if (!empty($menuItems)) : ?>
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 
-                    <div class="menu_section">
-                        <?= \yiister\gentelella\widgets\Menu::widget(
-                            [
-                                "items" => [
-                                    ["label" => "Home", "url" => "/", "icon" => "home"],
-                                    ["label" => "Layout", "url" => ["site/layout"], "icon" => "files-o"],
-                                    ["label" => "Error page", "url" => ["site/error-page"], "icon" => "close"],
-                                    [
-                                        "label" => "Widgets",
-                                        "icon"  => "th",
-                                        "url"   => "#",
-                                        "items" => [
-                                            ["label" => "Menu", "url" => ["site/menu"]],
-                                            ["label" => "Panel", "url" => ["site/panel"]],
-                                        ],
-                                    ],
-                                    [
-                                        "label" => "Badges",
-                                        "url"   => "#",
-                                        "icon"  => "table",
-                                        "items" => [
-                                            [
-                                                "label" => "Default",
-                                                "url"   => "#",
-                                                "badge" => "123",
-                                            ],
-                                            [
-                                                "label"        => "Success",
-                                                "url"          => "#",
-                                                "badge"        => "new",
-                                                "badgeOptions" => ["class" => "label-success"],
-                                            ],
-                                            [
-                                                "label"        => "Danger",
-                                                "url"          => "#",
-                                                "badge"        => "!",
-                                                "badgeOptions" => ["class" => "label-danger"],
-                                            ],
-                                        ],
-                                    ],
-                                    [
-                                        "label" => "Multilevel",
-                                        "url"   => "#",
-                                        "icon"  => "table",
-                                        "items" => [
-                                            [
-                                                "label" => "Second level 1",
-                                                "url"   => "#",
-                                            ],
-                                            [
-                                                "label" => "Second level 2",
-                                                "url"   => "#",
-                                                "items" => [
-                                                    [
-                                                        "label" => "Third level 1",
-                                                        "url"   => "#",
-                                                    ],
-                                                    [
-                                                        "label" => "Third level 2",
-                                                        "url"   => "#",
-                                                    ],
-                                                ],
-                                            ],
-                                        ],
-                                    ],
-                                ],
-                            ]
-                        )
-                        ?>
+                        <div class="menu_section">
+                            <?= \yiister\gentelella\widgets\Menu::widget(
+                                [
+                                    "items" => $menuItems,
+                                ]
+                            )
+                            ?>
+                        </div>
+
                     </div>
-
-                </div>
-                <!-- /sidebar menu -->
+                    <!-- /sidebar menu -->
+                <?php endif; ?>
             </div>
         </div>
 
@@ -135,7 +75,13 @@ use yii\bootstrap\Modal;
                     </div>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="">
+                        <?php if (Yii::$app->id != 'app-frontend' && Yii::$app->user->isAdmin()) : ?>
+                            <li>
+                                <a href="<?= 'http://' . Yii::$app->params['baseUrl']; ?>">Выход из раздела</a>
+                            </li>
+                        <?php endif; ?>
+
+                        <li>
                             <?php
                             $userLabel = Yii::$app->user->getEmail();
                             $workPlace = Yii::$app->user->getWorkPlace();
@@ -150,14 +96,6 @@ use yii\bootstrap\Modal;
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <?php if (Yii::$app->id != 'app-frontend' && Yii::$app->user->isAdmin()) : ?>
-                                    <li>
-                                        <a href="<?= 'http://' . Yii::$app->params['baseUrl']; ?>">
-                                            <i class="fa fa-sign-out pull-right"></i> Выход из раздела
-                                        </a>
-                                    </li>
-                                <?php endif; ?>
-
                                 <li>
                                     <a href="<?= 'http://' . Yii::$app->params['baseUrl'] . '/auth/logout'; ?>">
                                         <i class="fa fa-sign-out pull-right"></i> Выход из системы
@@ -198,7 +136,7 @@ use yii\bootstrap\Modal;
 
         <!-- footer content -->
         <footer>
-            <div class="pull-right">dgffdg</div>
+            <div class="pull-right">&nbsp;</div>
             <div class="clearfix"></div>
         </footer>
         <!-- /footer content -->
