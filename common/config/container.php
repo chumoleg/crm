@@ -2,8 +2,8 @@
 
 Yii::$container->set('yii\widgets\Pjax', [
     'options' => [
-        'class' => 'pjax-wrapper'
-    ]
+        'class' => 'pjax-wrapper',
+    ],
 ]);
 
 \Yii::$container->set('yii\i18n\Formatter', [
@@ -22,14 +22,14 @@ Yii::$container->set('yii\widgets\Pjax', [
     'clientOptions' => [
         'changeMonth' => true,
         'changeYear'  => true,
-        'yearRange'   => '2016:' . date('Y')
+        'yearRange'   => '2016:' . date('Y'),
     ],
-    'options'       => ['class' => 'form-control']
+    'options'       => ['class' => 'form-control'],
 ]);
 
 \Yii::$container->set('yii\grid\GridView', [
     'layout'    => "{pager}\n{summary}\n{items}",
-    'emptyText' => 'Список пуст!'
+    'emptyText' => 'Список пуст!',
 ]);
 
 \Yii::$container->set('yii\widgets\ListView', [
@@ -42,7 +42,7 @@ Yii::$container->set('yii\grid\GridView', [
         'prevPageLabel'  => '<',
         'nextPageLabel'  => '>',
         'firstPageLabel' => '<<',
-        'lastPageLabel'  => '>>'
+        'lastPageLabel'  => '>>',
     ],
 ]);
 
@@ -55,7 +55,7 @@ Yii::$container->set('kartik\grid\GridView', [
         'prevPageLabel'  => '<',
         'nextPageLabel'  => '>',
         'firstPageLabel' => '<<',
-        'lastPageLabel'  => '>>'
+        'lastPageLabel'  => '>>',
     ],
 ]);
 
