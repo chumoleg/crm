@@ -30,20 +30,27 @@ Yii::$container->set('yii\widgets\Pjax', [
 \Yii::$container->set('yii\grid\GridView', [
     'layout'    => "{pager}\n{summary}\n{items}",
     'emptyText' => 'Список пуст!',
-]);
-
-\Yii::$container->set('yii\widgets\ListView', [
-    'layout' => "{pager}\n{summary}\n{items}",
-]);
-
-Yii::$container->set('yii\grid\GridView', [
-    'layout' => "{pager}\n{summary}\n{items}",
-    'pager'  => [
+    'pager'     => [
         'prevPageLabel'  => '<',
         'nextPageLabel'  => '>',
         'firstPageLabel' => '<<',
         'lastPageLabel'  => '>>',
     ],
+]);
+
+\Yii::$container->set('yiister\gentelella\widgets\grid\GridView', [
+    'layout'    => "{pager}\n{summary}\n{items}",
+    'emptyText' => 'Список пуст!',
+    'pager'     => [
+        'prevPageLabel'  => '<',
+        'nextPageLabel'  => '>',
+        'firstPageLabel' => '<<',
+        'lastPageLabel'  => '>>',
+    ],
+]);
+
+\Yii::$container->set('yii\widgets\ListView', [
+    'layout' => "{pager}\n{summary}\n{items}",
 ]);
 
 Yii::$container->set('kartik\grid\GridView', [

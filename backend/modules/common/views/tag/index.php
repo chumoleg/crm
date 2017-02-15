@@ -1,5 +1,5 @@
 <?php
-use yii\grid\GridView;
+use yiister\gentelella\widgets\grid\GridView;
 use yii\widgets\Pjax;
 use common\components\helpers\DatePicker;
 use common\models\tag\Tag;

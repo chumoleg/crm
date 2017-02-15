@@ -1,7 +1,7 @@
 <?php
 /** @var \common\models\user\UserSearch $searchModel */
 
-use yii\grid\GridView;
+use yiister\gentelella\widgets\grid\GridView;
 use yii\widgets\Pjax;
 use common\components\helpers\ArrayHelper;
 use common\components\helpers\DatePicker;

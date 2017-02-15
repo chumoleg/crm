@@ -1,7 +1,7 @@
 <?php
 /** @var \common\models\order\OrderSearch $searchModel */
 
-use yii\grid\GridView;
+use yiister\gentelella\widgets\grid\GridView;
 use yii\helpers\Html;
 use common\components\helpers\DatePicker;
 use common\models\company\Company;

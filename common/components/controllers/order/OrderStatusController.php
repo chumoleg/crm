@@ -127,8 +127,6 @@ abstract class OrderStatusController extends OrderManageController
                     );
                 }
 
-//                $this->model->setOrderOperator();
-
                 $this->_sendRequestToForeignSystem($followToStage);
             }
         }

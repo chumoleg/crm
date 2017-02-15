@@ -1,5 +1,5 @@
 <?php
-use yii\grid\GridView;
+use yiister\gentelella\widgets\grid\GridView;
 use common\components\helpers\DatePicker;
 use common\models\company\Company;
 use yii\helpers\Html;

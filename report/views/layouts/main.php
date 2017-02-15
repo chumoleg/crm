@@ -1,12 +1,14 @@
 <?php
 $items = [
     [
-        'label'  => 'По сделкам (в разрезе клиентов)',
-        'url'    => ['/client/index'],
+        'label' => 'По сделкам (в разрезе клиентов)',
+        'url'   => ['/client/index'],
+        'icon'  => 'bar-chart-o',
     ],
     [
-        'label'  => 'По времени обработки сделок',
-        'url'    => ['/time/index'],
+        'label' => 'По времени обработки сделок',
+        'url'   => ['/time/index'],
+        'icon'  => 'bar-chart-o',
     ],
 ];
 

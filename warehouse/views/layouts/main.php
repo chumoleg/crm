@@ -3,10 +3,12 @@ $items = [
     [
         'label' => 'Сделки',
         'url'   => ['/order/order/index'],
+        'icon'  => 'th',
     ],
     [
         'label' => 'Номенклатура',
         'url'   => '#',
+        'icon'  => 'clone',
         'items' => [
             [
                 'label' => 'Комплектующие',
@@ -19,8 +21,9 @@ $items = [
         ],
     ],
     [
-        'label' => 'Склад комплектующих',
+        'label' => 'Склад',
         'url'   => '#',
+        'icon'  => 'sitemap',
         'items' => [
             [
                 'label' => 'Наличие на складе',

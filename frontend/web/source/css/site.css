@@ -242,3 +242,12 @@ legend {
 .breadcrumb {
     padding: 8px 0;
 }
+
+.dataTables_paginate {
+    float: none;
+    text-align: left;
+}
+
+.dataTables_paginate .pagination {
+    margin: 10px 0;
+}

@@ -1,9 +1,8 @@
 <?php
-use yii\grid\GridView;
+use yiister\gentelella\widgets\grid\GridView;
 use yii\widgets\Pjax;
 use common\components\helpers\DatePicker;
 use common\components\helpers\ManageButton;
-use common\models\process\Process;
 
 $this->title = 'Список процессов';
 

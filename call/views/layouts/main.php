@@ -4,12 +4,14 @@
 
 $items = [
     [
-        'label'  => 'Сделки',
-        'url'    => ['/order/order/index'],
+        'label' => 'Сделки',
+        'url'   => ['/order/order/index'],
+        'icon'  => 'th',
     ],
     [
-        'label'  => 'Контакты',
-        'url'    => ['/company/index/index'],
+        'label' => 'Контакты',
+        'url'   => ['/company/index/index'],
+        'icon'  => 'table',
     ],
 ];
 

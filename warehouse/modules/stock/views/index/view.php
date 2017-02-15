@@ -1,6 +1,6 @@
 <?php
 use yii\widgets\Pjax;
-use yii\grid\GridView;
+use yiister\gentelella\widgets\grid\GridView;
 use yii\widgets\DetailView;
 use common\models\transaction\Transaction;
 use common\components\helpers\DatePicker;
