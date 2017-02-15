@@ -24,6 +24,8 @@ class SiteController extends BaseController
 
     public function actionIndex()
     {
+        $this->showTitleLegend = false;
+
         return $this->render('index');
     }
 }

@@ -11,7 +11,7 @@ use common\forms\CreateOrderForm;
 
 class OrderController extends CrudController
 {
-    public $indexTitle = 'Список сделок в работе';
+    public $indexTitle = 'Список сделок';
 
     protected function _getSearchClassName()
     {

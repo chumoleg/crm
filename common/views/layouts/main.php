@@ -110,7 +110,7 @@ use yii\bootstrap\Modal;
         <div class="right_col" role="main">
             <div class="row">
                 <div class="col-sm-12">
-                    <?php if (!empty($this->title)) : ?>
+                    <?php if (!empty($this->title) && $this->context->showTitleLegend) : ?>
                         <legend><?= Html::encode($this->title); ?></legend>
                     <?php endif; ?>
 
