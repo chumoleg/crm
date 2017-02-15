@@ -40,7 +40,7 @@ use yii\bootstrap\Modal;
             <div class="left_col scroll-view">
 
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="/" class="site_title"><i class="fa fa-paw"></i> <span><?= Yii::$app->name; ?></span></a>
+                    <a href="/" class="site_title"><i class="fa fa-bomb"></i> <span><?= Yii::$app->name; ?></span></a>
                 </div>
                 <div class="clearfix"></div>
 
@@ -75,6 +75,13 @@ use yii\bootstrap\Modal;
                     </div>
 
                     <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="<?= 'http://' . Yii::$app->params['baseUrl'] . '/auth/logout'; ?>"
+                               title="Выход из системы">
+                                <i class="fa fa-sign-out pull-right"></i>&nbsp;
+                            </a>
+                        </li>
+
                         <?php if (Yii::$app->id != 'app-frontend' && Yii::$app->user->isAdmin()) : ?>
                             <li>
                                 <a href="<?= 'http://' . Yii::$app->params['baseUrl']; ?>">Выход из раздела</a>
@@ -90,18 +97,7 @@ use yii\bootstrap\Modal;
                             }
                             ?>
 
-                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
-                               aria-expanded="false">
-                                <?= $userLabel; ?>
-                                <span class=" fa fa-angle-down"></span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li>
-                                    <a href="<?= 'http://' . Yii::$app->params['baseUrl'] . '/auth/logout'; ?>">
-                                        <i class="fa fa-sign-out pull-right"></i> Выход из системы
-                                    </a>
-                                </li>
-                            </ul>
+                            <a href="#"><?= $userLabel; ?></a>
                         </li>
                     </ul>
                 </nav>

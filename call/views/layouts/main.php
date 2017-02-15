@@ -6,12 +6,12 @@ $items = [
     [
         'label' => 'Сделки',
         'url'   => ['/order/order/index'],
-        'icon'  => 'th',
+        'icon'  => 'table',
     ],
     [
         'label' => 'Контакты',
         'url'   => ['/company/index/index'],
-        'icon'  => 'table',
+        'icon'  => 'users',
     ],
 ];
 

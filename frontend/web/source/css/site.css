@@ -251,3 +251,7 @@ legend {
 .dataTables_paginate .pagination {
     margin: 10px 0;
 }
+
+.nav_menu .nav.navbar-nav .fa {
+    line-height: inherit;
+}

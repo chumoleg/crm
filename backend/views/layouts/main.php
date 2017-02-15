@@ -5,12 +5,12 @@ $items = [
     [
         'label' => 'Сделки',
         'url'   => ['/order/order/index'],
-        'icon'  => 'th',
+        'icon'  => 'table',
     ],
     [
         'label' => 'Общие настройки',
         "url"   => "#",
-        'icon'  => 'edit',
+        'icon'  => 'gear',
         'items' => [
             [
                 'label' => 'Контакты',
@@ -37,7 +37,7 @@ $items = [
     [
         'label' => 'Процессы',
         "url"   => "#",
-        'icon'  => 'edit',
+        'icon'  => 'sitemap',
         'items' => [
             [
                 'label' => 'Действия',
@@ -60,7 +60,7 @@ $items = [
     [
         'label' => 'Внешние системы',
         'url'   => ['/system/system/index'],
-        'icon'  => 'edit',
+        'icon'  => 'cubes',
     ],
 ];
 

@@ -8,17 +8,17 @@ $items = [
     [
         'label' => 'Админка',
         'url'   => 'http://' . Yii::$app->params['backendUrl'],
-        'icon'  => 'edit',
+        'icon'  => 'gears',
     ],
     [
         'label' => 'Склад',
         'url'   => 'http://' . Yii::$app->params['warehouseUrl'],
-        'icon'  => 'sitemap',
+        'icon'  => 'archive',
     ],
     [
         'label' => 'Отчеты',
         'url'   => 'http://' . Yii::$app->params['reportUrl'],
-        'icon'  => 'bar-chart-o',
+        'icon'  => 'bar-chart',
     ],
 ];
 
