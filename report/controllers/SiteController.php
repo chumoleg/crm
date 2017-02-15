@@ -7,7 +7,7 @@ class SiteController extends \common\components\controllers\SiteController
     public function actions()
     {
         return [
-            'error'   => [
+            'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
         ];
@@ -15,6 +15,8 @@ class SiteController extends \common\components\controllers\SiteController
 
     public function actionIndex()
     {
+        $this->showTitleLegend = false;
+
         return $this->render('index');
     }
 }

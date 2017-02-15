@@ -1,4 +1,4 @@
 <?php
 $this->title = 'Dashboard';
 
-echo $this->render('_dashboard');
+echo $this->render('@common/views/dashboard/index');

@@ -12,5 +12,6 @@ return [
     'bootstrap'           => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'layout'              => '@app/views/layouts/main',
+    'name'                => 'CRM-система',
     'params'              => $params,
 ];
