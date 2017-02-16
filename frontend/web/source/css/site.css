@@ -255,3 +255,8 @@ legend {
 .nav_menu .nav.navbar-nav .fa {
     line-height: inherit;
 }
+
+.stage-item.active td,
+.stage-item.active th {
+    background-color: lightblue !important;
+}
