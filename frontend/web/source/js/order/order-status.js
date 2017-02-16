@@ -28,10 +28,14 @@ $(document).ready(function () {
 
     $(document).on('click', '.changeStatusButton', function () {
         var holdTime = null;
-        if ($(this).closest('.modal-body').find('.holdTimeInput').length > 0) {
-            holdTime = $(this).closest('.modal-body').find('.holdTimeInput').val();
+        var holdDate = null;
 
-            if (!holdTime) {
+        var modalBody = $(this).closest('.modal-body');
+        if (modalBody.find('.holdTimeInput').length > 0) {
+            holdTime = modalBody.find('.holdTimeInput').val();
+            holdDate = modalBody.find('.holdDateInput').val();
+
+            if (!holdTime || !holdDate) {
                 alert('Выберите дату и время!');
                 return false;
             }
@@ -41,7 +45,8 @@ $(document).ready(function () {
             orderId: orderId,
             action: $(this).data('action'),
             reason: $(this).data('reason'),
-            holdTime: holdTime
+            holdTime: holdTime,
+            holdDate: holdDate
         };
 
         preLoaderShow();

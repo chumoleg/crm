@@ -1,6 +1,6 @@
 <?php
 use yiister\gentelella\widgets\grid\GridView;
-use common\components\helpers\DatePicker;
+use common\components\helpers\DatePickerHelper;
 use common\models\company\Company;
 use yii\helpers\Html;
 use common\models\user\User;
@@ -79,7 +79,7 @@ echo GridView::widget(
             [
                 'attribute' => 'date_create',
                 'format'    => 'date',
-                'filter'    => DatePicker::getInput($searchModel),
+                'filter'    => DatePickerHelper::getInput($searchModel),
             ],
             [
                 'class'    => 'common\components\grid\ActionColumn',

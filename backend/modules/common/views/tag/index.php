@@ -1,7 +1,7 @@
 <?php
 use yiister\gentelella\widgets\grid\GridView;
 use yii\widgets\Pjax;
-use common\components\helpers\DatePicker;
+use common\components\helpers\DatePickerHelper;
 use common\models\tag\Tag;
 
 $this->title = 'Список тегов';
@@ -29,7 +29,7 @@ echo GridView::widget(
             [
                 'attribute' => 'date_create',
                 'format'    => 'date',
-                'filter'    => DatePicker::getInput($searchModel),
+                'filter'    => DatePickerHelper::getInput($searchModel),
             ],
             [
                 'class'    => 'common\components\grid\ActionColumn',

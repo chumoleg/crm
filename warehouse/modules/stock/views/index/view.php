@@ -3,7 +3,7 @@ use yii\widgets\Pjax;
 use yiister\gentelella\widgets\grid\GridView;
 use yii\widgets\DetailView;
 use common\models\transaction\Transaction;
-use common\components\helpers\DatePicker;
+use common\components\helpers\DatePickerHelper;
 
 $this->title = $model->name;
 
@@ -44,7 +44,7 @@ echo GridView::widget([
         [
             'attribute' => 'date_create',
             'format'    => 'datetime',
-            'filter'    => DatePicker::getInput($modelTransaction)
+            'filter'    => DatePickerHelper::getInput($modelTransaction)
         ],
         [
             'label' => 'Кол-во',

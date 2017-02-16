@@ -74,4 +74,15 @@ class TimeHelper
 
         return $text;
     }
+
+    public static function getTimesArray()
+    {
+        $data = [];
+        for ($i = 0; $i < 24; $i++) {
+            $time = $i . ':00';
+            $data[$time] = $time;
+        }
+
+        return $data;
+    }
 }
