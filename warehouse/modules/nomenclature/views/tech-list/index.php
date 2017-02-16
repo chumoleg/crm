@@ -1,7 +1,7 @@
 <?php
 use yiister\gentelella\widgets\grid\GridView;
 use yii\widgets\Pjax;
-use common\components\helpers\DatePickerHelper;
+use common\components\helpers\DateHelper;
 
 $this->title = 'Список тех.листов';
 
@@ -17,7 +17,7 @@ echo GridView::widget([
         [
             'attribute' => 'date_create',
             'format'    => 'date',
-            'filter'    => DatePickerHelper::getInput($searchModel)
+            'filter'    => DateHelper::getInput($searchModel)
         ],
         [
             'label'  => 'Комплектующие',

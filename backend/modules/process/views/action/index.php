@@ -1,7 +1,7 @@
 <?php
 use yiister\gentelella\widgets\grid\GridView;
 use yii\widgets\Pjax;
-use common\components\helpers\DatePickerHelper;
+use common\components\helpers\DateHelper;
 use common\components\Status;
 
 $this->title = 'Список действий';
@@ -29,7 +29,7 @@ echo GridView::widget(
             [
                 'attribute' => 'date_create',
                 'format'    => 'date',
-                'filter'    => DatePickerHelper::getInput($searchModel),
+                'filter'    => DateHelper::getInput($searchModel),
             ],
             [
                 'class'    => 'common\components\grid\ActionColumn',

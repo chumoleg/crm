@@ -3,7 +3,7 @@
 
 use yiister\gentelella\widgets\grid\GridView;
 use yii\helpers\Html;
-use common\components\helpers\DatePickerHelper;
+use common\components\helpers\DateHelper;
 use common\models\company\Company;
 use common\models\user\User;
 use common\models\order\Order;
@@ -143,12 +143,12 @@ $companyList = Company::getListCustomers();
             [
                 'attribute' => 'date_create',
                 'format'    => 'datetime',
-                'filter'    => DatePickerHelper::getInput($searchModel),
+                'filter'    => DateHelper::getInput($searchModel),
             ],
             [
                 'attribute' => 'time_postponed',
                 'format'    => 'datetime',
-                'filter'    => DatePickerHelper::getInput($searchModel, 'time_postponed'),
+                'filter'    => DateHelper::getInput($searchModel, 'time_postponed'),
             ],
             [
                 'class'    => 'common\components\grid\ActionColumn',

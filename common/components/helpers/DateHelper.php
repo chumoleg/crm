@@ -4,7 +4,7 @@ namespace common\components\helpers;
 
 use Yii;
 
-class DatePickerHelper
+class DateHelper
 {
     /**
      * @param        $searchModel
