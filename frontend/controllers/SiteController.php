@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\user\User;
 use Yii;
 use common\components\controllers\BaseController;
 
@@ -25,6 +26,9 @@ class SiteController extends BaseController
     public function actionIndex()
     {
         $this->showTitleLegend = false;
+        if (!User::isAdmin()) {
+            return $this->redirect(Yii::$app->getHomeUrl());
+        }
 
         return $this->render('index');
     }
