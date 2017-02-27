@@ -21,7 +21,7 @@ $companyCustomer = $model->companyCustomer;
         <tr>
             <th>Тип контакта</th>
             <th>Значение</th>
-            <th>Коммент</th>
+            <th>Комментарий</th>
         </tr>
         </thead>
 

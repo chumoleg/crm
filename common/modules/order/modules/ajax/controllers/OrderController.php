@@ -98,7 +98,7 @@ class OrderController extends OrderManageController
         $model->save();
 
         $attributes = [
-            'Коммент: ' . $model->person,
+            'Комментарий: ' . $model->person,
             CompanyContact::$typeList[$model->type] . ': ' . $model->value
         ];
 
