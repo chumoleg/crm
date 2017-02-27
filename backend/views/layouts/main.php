@@ -3,71 +3,64 @@ $url = Yii::$app->request->url;
 
 $items = [
     [
-        'label'  => 'Сделки',
-        'url'    => ['/order/order/index'],
-        'active' => (bool)strstr($url, '/order/')
+        'label' => 'Сделки',
+        'url'   => ['/order/order/index'],
+        'icon'  => 'table',
     ],
     [
-        'label'  => 'Управление (общее)',
+        'label' => 'Общие настройки',
+        "url"   => "#",
+        'icon'  => 'gear',
         'items' => [
             [
-                'label'  => 'Контакты',
-                'url'    => ['/company/index/index'],
-                'active' => (bool)strstr($url, 'company/')
+                'label' => 'Контакты',
+                'url'   => ['/company/index/index'],
             ],
             [
-                'label'  => 'Пользователи',
-                'url'    => ['/common/user/index'],
-                'active' => (bool)strstr($url, 'common/user/')
+                'label' => 'Пользователи',
+                'url'   => ['/common/user/index'],
             ],
             [
-                'label'  => 'Источники',
-                'url'    => ['/common/source/index'],
-                'active' => (bool)strstr($url, 'common/source/')
+                'label' => 'Источники',
+                'url'   => ['/common/source/index'],
             ],
             [
-                'label'  => 'Товары',
-                'url'    => ['/common/product/index'],
-                'active' => (bool)strstr($url, 'common/product')
+                'label' => 'Товары',
+                'url'   => ['/common/product/index'],
             ],
             [
-                'label'  => 'Тэги',
-                'url'    => ['/common/tag/index'],
-                'active' => (bool)strstr($url, 'common/tag')
+                'label' => 'Тэги',
+                'url'   => ['/common/tag/index'],
             ],
         ],
-        'active' => (bool)strstr(Yii::$app->request->url, '/common/')
     ],
     [
-        'label'  => 'Управление бизнес-процессами',
+        'label' => 'Процессы',
+        "url"   => "#",
+        'icon'  => 'sitemap',
         'items' => [
             [
-                'label'  => 'Действия',
-                'url'    => ['/process/action/index'],
-                'active' => (bool)strstr($url, 'process/action/')
+                'label' => 'Действия',
+                'url'   => ['/process/action/index'],
             ],
             [
-                'label'  => 'Причины для действий',
-                'url'    => ['/process/reason/index'],
-                'active' => (bool)strstr($url, 'process/reason/')
+                'label' => 'Причины для действий',
+                'url'   => ['/process/reason/index'],
             ],
             [
-                'label'  => 'Статусы сделок',
-                'url'    => ['/process/stage/index'],
-                'active' => (bool)strstr($url, 'process/stage/')
+                'label' => 'Статусы сделок',
+                'url'   => ['/process/stage/index'],
             ],
             [
-                'label'  => 'Процессы обработки сделок',
-                'url'    => ['/process/process/index'],
-                'active' => (bool)strstr($url, 'process/process')
+                'label' => 'Процессы обработки сделок',
+                'url'   => ['/process/process/index'],
             ],
         ],
-        'active' => (bool)strstr(Yii::$app->request->url, '/process/')
     ],
     [
-        'label'  => 'Управление внешними системами',
-        'url'    => ['/system/system/index'],
-        'active' => (bool)strstr(Yii::$app->request->url, '/system/')
+        'label' => 'Внешние системы',
+        'url'   => ['/system/system/index'],
+        'icon'  => 'cubes',
     ],
 ];
 

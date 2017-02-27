@@ -1,2 +1,4 @@
 <?php
-$this->title = 'Reports';
+$this->title = 'Отчеты';
+
+echo $this->render('@common/views/dashboard/index');

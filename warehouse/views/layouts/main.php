@@ -1,40 +1,40 @@
 <?php
 $items = [
     [
-        'label'  => 'Сделки',
-        'url'    => ['/order/order/index'],
-        'active' => (bool)strstr(Yii::$app->request->url, 'warehouse/order/')
+        'label' => 'Сделки',
+        'url'   => ['/order/order/index'],
+        'icon'  => 'table',
     ],
     [
         'label' => 'Номенклатура',
+        'url'   => '#',
+        'icon'  => 'barcode',
         'items' => [
             [
-                'label'  => 'Комплектующие',
-                'url'    => ['/nomenclature/product-component/index'],
-                'active' => (bool)strstr(Yii::$app->request->url, 'warehouse/nomenclature/product-component')
+                'label' => 'Комплектующие',
+                'url'   => ['/nomenclature/product-component/index'],
             ],
             [
-                'label'  => 'Тех.листы',
-                'url'    => ['/nomenclature/tech-list/index'],
-                'active' => (bool)strstr(Yii::$app->request->url, 'warehouse/nomenclature/tech-list')
-            ]
-        ]
+                'label' => 'Тех.листы',
+                'url'   => ['/nomenclature/tech-list/index'],
+            ],
+        ],
     ],
     [
-        'label' => 'Склад комплектующих',
+        'label' => 'Учет',
+        'url'   => '#',
+        'icon'  => 'archive',
         'items' => [
             [
-                'label'  => 'Наличие на складе',
-                'url'    => ['/stock/index/index'],
-                'active' => (bool)strstr(Yii::$app->request->url, 'warehouse/stock/index')
+                'label' => 'Наличие на складе',
+                'url'   => ['/stock/index/index'],
             ],
             [
-                'label'  => 'Операции',
-                'url'    => ['/stock/transaction/index'],
-                'active' => (bool)strstr(Yii::$app->request->url, 'warehouse/stock/transaction')
+                'label' => 'Операции',
+                'url'   => ['/stock/transaction/index'],
             ],
-        ]
-    ]
+        ],
+    ],
 ];
 
 echo $this->render('@common/views/layouts/main', ['menuItems' => $items, 'content' => $content]);

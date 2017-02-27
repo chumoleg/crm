@@ -11,7 +11,7 @@ use common\forms\CreateOrderForm;
 
 class OrderController extends CrudController
 {
-    public $indexTitle = 'Список сделок в работе';
+    public $indexTitle = 'Список сделок';
 
     protected function _getSearchClassName()
     {
@@ -43,7 +43,6 @@ class OrderController extends CrudController
             $order->save();
 
             $order->saveFirstOrderStage();
-//            $order->setOrderOperator();
         }
 
         return $this->redirect('index');

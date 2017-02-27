@@ -1,9 +1,8 @@
 <?php
-use yii\grid\GridView;
+use yiister\gentelella\widgets\grid\GridView;
 use yii\widgets\Pjax;
-use common\components\helpers\DatePicker;
+use common\components\helpers\DateHelper;
 use common\components\helpers\ManageButton;
-use common\models\process\Process;
 
 $this->title = 'Список процессов';
 
@@ -22,7 +21,7 @@ echo GridView::widget([
         [
             'attribute' => 'date_create',
             'format'    => 'date',
-            'filter'    => DatePicker::getInput($searchModel)
+            'filter'    => DateHelper::getInput($searchModel)
         ],
         [
             'attribute' => 'status',

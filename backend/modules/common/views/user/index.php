@@ -1,10 +1,10 @@
 <?php
 /** @var \common\models\user\UserSearch $searchModel */
 
-use yii\grid\GridView;
+use yiister\gentelella\widgets\grid\GridView;
 use yii\widgets\Pjax;
 use common\components\helpers\ArrayHelper;
-use common\components\helpers\DatePicker;
+use common\components\helpers\DateHelper;
 use common\components\Role;
 use common\components\helpers\ManageButton;
 
@@ -66,7 +66,7 @@ echo GridView::widget(
             [
                 'attribute' => 'date_create',
                 'format'    => 'date',
-                'filter'    => DatePicker::getInput($searchModel),
+                'filter'    => DateHelper::getInput($searchModel),
             ],
             [
                 'attribute' => 'status',

@@ -24,7 +24,7 @@ class AccessControl implements BootstrapInterface
             Yii::$app->end();
 
         } else {
-            $userRole = Yii::$app->user->identity->role;
+            $userRole = Yii::$app->user->getRole();
             if ($userRole != Role::ADMIN && !in_array($userRole, $this->roles)) {
                 $url = Yii::$app->getHomeUrl();
 

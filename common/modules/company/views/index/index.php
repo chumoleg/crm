@@ -1,6 +1,6 @@
 <?php
-use yii\grid\GridView;
-use common\components\helpers\DatePicker;
+use yiister\gentelella\widgets\grid\GridView;
+use common\components\helpers\DateHelper;
 use common\models\company\Company;
 use yii\helpers\Html;
 use common\models\user\User;
@@ -13,7 +13,6 @@ $this->title = 'Список контактов';
     <div class="row">
         <div class="col-md-6">
             <?= $this->context->getCreateButton('Добавить новый контакт', null, false); ?>
-            <?= Html::a('Список сделок', ['/order/order/index'], ['class' => 'btn btn-default']); ?>
 
             <?php if (User::isAdmin()) : ?>
                 <div>&nbsp;</div>
@@ -22,12 +21,13 @@ $this->title = 'Список контактов';
                 </a>
 
                 <div id="filterBlock" class="collapse">
+                    <br/>
                     Перевести выбранные на менеджера:<br/>
                     <?= Html::dropDownList('currentOperatorList', null, $searchModel->getOperatorList(),
                         ['prompt' => '...', 'id' => 'currentOperatorList']); ?>
                     <?= Html::a('Выполнить операцию', '#',
                         ['class' => 'btn btn-danger', 'id' => 'changeCurrentOperatorChecked']); ?>
-                    <div>&nbsp;</div>
+                    <br/>
 
                     Перевести все с менеджера:<br/>
                     <?= Html::dropDownList('fromOperatorList', null, $searchModel->getOperatorList(),
@@ -38,7 +38,6 @@ $this->title = 'Список контактов';
 
                     <?= Html::a('Выполнить операцию', '#',
                         ['class' => 'btn btn-danger', 'id' => 'changeCurrentOperatorFromTo']); ?>
-                    <div>&nbsp;</div>
                 </div>
             <?php endif; ?>
         </div>
@@ -80,7 +79,7 @@ echo GridView::widget(
             [
                 'attribute' => 'date_create',
                 'format'    => 'date',
-                'filter'    => DatePicker::getInput($searchModel),
+                'filter'    => DateHelper::getInput($searchModel),
             ],
             [
                 'class'    => 'common\components\grid\ActionColumn',

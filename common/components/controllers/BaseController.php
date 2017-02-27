@@ -9,6 +9,7 @@ use yii\helpers\Html;
 class BaseController extends Controller
 {
     public $breadCrumbs = [];
+    public $showTitleLegend = true;
 
     public function beforeAction($action)
     {

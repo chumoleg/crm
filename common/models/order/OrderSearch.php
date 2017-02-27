@@ -168,7 +168,7 @@ class OrderSearch extends Order
     private function _compareWithCurrentApp($query)
     {
         $department = DepartmentHelper::getDepartmentByApplication();
-        if (empty($department) || $department == DepartmentHelper::CALL_CENTER) {
+        if (empty($department) || $department == DepartmentHelper::CRM) {
             return;
         }
 

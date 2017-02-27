@@ -32,11 +32,11 @@ Yii::$container = new yii\di\Container;
  * Class WebApplication
  * Include only Web application related components here
  *
- * @property \common\models\user\User | \yii\web\IdentityInterface $user
- * @property \yii\web\Response                                  $response
- * @property yii\redis\Cache                                    $cache
- * @property linslin\yii2\curl\Curl                             $curl
- * @property yii\swiftmailer\Mailer                             $mailer
+ * @property \common\components\base\User $user
+ * @property \yii\web\Response            $response
+ * @property yii\redis\Cache              $cache
+ * @property linslin\yii2\curl\Curl       $curl
+ * @property yii\swiftmailer\Mailer       $mailer
  */
 class WebApplication extends yii\web\Application
 {

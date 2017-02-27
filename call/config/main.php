@@ -8,7 +8,7 @@ $params = array_merge(
 
 return [
     'id'                  => 'app-call-center',
-    'name'                => 'Call-центр',
+    'name'                => 'CRM',
     'basePath'            => dirname(__DIR__),
     'bootstrap'           => [
         'log',

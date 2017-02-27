@@ -1,23 +1,18 @@
 <?php
-use yii\helpers\Html;
 
-$this->beginContent('@common/views/layouts/base.php');
-?>
+\call\assets\AppAsset::register($this);
 
-<?php \call\assets\AppAsset::register($this); ?>
+$items = [
+    [
+        'label' => 'Сделки',
+        'url'   => ['/order/order/index'],
+        'icon'  => 'table',
+    ],
+    [
+        'label' => 'Контакты',
+        'url'   => ['/company/index/index'],
+        'icon'  => 'users',
+    ],
+];
 
-<?= $this->render('_header'); ?>
-    <div class="clearfix"></div>
-
-<?php
-echo (!empty($this->title)) ? Html::tag('legend', $this->title) : null;
-
-if (!empty($this->context->breadCrumbs)) {
-    echo \yii\widgets\Breadcrumbs::widget([
-        'links' => $this->context->breadCrumbs,
-    ]);
-}
-
-echo $content;
-
-$this->endContent();
+echo $this->render('@common/views/layouts/main', ['menuItems' => $items, 'content' => $content]);

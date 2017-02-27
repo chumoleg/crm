@@ -30,17 +30,20 @@ $(document).ready(function () {
         return true;
     });
 
-    $(".dynamicFormStage").on("beforeDelete", function (e, item) {
-        if (!confirm("Вы уверены, что хотите удалить данный статус из списка?")) {
-            return false;
-        }
+    $(".dynamicFormStage")
+        .on("beforeDelete", function (e, item) {
+            if (!confirm("Вы уверены, что хотите удалить данный статус из списка?")) {
+                return false;
+            }
 
-        return true;
-
-    }).on("afterDelete", function (e, item) {
-        _updateActionSelect();
-
-    });
+            return true;
+        })
+        .on("afterDelete", function (e, item) {
+            _updateActionSelect();
+        })
+        .on("beforeInsert", function (e, item) {
+            preLoaderShow();
+        });
 
     $(document).on("change", '.stageSelect', function () {
         _updateActionSelect();
@@ -60,8 +63,16 @@ function actionAfterInsert(widgetOptions) {
         _updateActionSelect();
 
     } else if (widgetOptions.widgetContainer == 'dynamicFormStage') {
-        $('.stage-item:last .firstStageCheckBox').prop('checked', false);
+        preLoaderHide();
+
+        var stageRow = $('.stage-item:last');
+        stageRow.find('.firstStageCheckBox').prop('checked', false);
         _updateActionSelect();
+
+        stageRow.addClass('active');
+        setTimeout(function () {
+            stageRow.removeClass('active');
+        }, 1000);
     }
 }
 
