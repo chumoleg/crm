@@ -2,6 +2,7 @@
 
 namespace common\models\order;
 
+use common\models\source\Source;
 use Yii;
 use yii\data\ActiveDataProvider;
 use common\models\stage\StageMethod;
@@ -99,6 +100,11 @@ class OrderSearch extends Order
 
         if (User::isOperator()) {
             $query->andWhere(['customer.current_operator' => Yii::$app->user->id]);
+        }
+
+        if (!User::isAdmin()) {
+            $sourceList = Source::getList();
+            $query->andWhere(['source.id' => array_keys($sourceList)]);
         }
 
         if (!empty($this->currentOperator)) {
