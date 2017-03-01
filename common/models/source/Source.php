@@ -36,6 +36,38 @@ class Source extends ActiveRecord
     }
 
     /**
+     * @return array
+     */
+    public static function getList()
+    {
+        $data = self::_getQueryForList()->all();
+
+        return ArrayHelper::map($data, 'id', 'name');
+    }
+
+    /**
+     * @return \yii\db\ActiveRecord|self
+     */
+    public static function getDefaultSource()
+    {
+        return self::_getQueryForList()->andWhere(['is_default' => Status::STATUS_ACTIVE])->one();
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    private static function _getQueryForList()
+    {
+        $query = self::find();
+        if (!empty(Yii::$app->user->id) && !User::isAdmin()) {
+            $query->andWhere('id IN (SELECT source_id FROM ' . UserSource::tableName()
+                . ' WHERE user_id = ' . Yii::$app->user->id . ')');
+        }
+
+        return $query;
+    }
+
+    /**
      * @inheritdoc
      */
     public function rules()
@@ -63,20 +95,6 @@ class Source extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    private static function _getQueryForList()
-    {
-        $query = self::find();
-        if (!empty(Yii::$app->user->id) && !User::isAdmin()) {
-            $query->andWhere('id IN (SELECT source_id FROM ' . UserSource::tableName()
-                . ' WHERE user_id = ' . Yii::$app->user->id . ')');
-        }
-
-        return $query;
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getOrders()
     {
         return $this->hasMany(Order::className(), ['source_id' => 'id']);
@@ -96,23 +114,5 @@ class Source extends ActiveRecord
     public function getSourceSystems()
     {
         return $this->hasMany(SourceSystem::className(), ['source_id' => 'id']);
-    }
-
-    /**
-     * @return array
-     */
-    public static function getList()
-    {
-        $data = self::_getQueryForList()->all();
-
-        return ArrayHelper::map($data, 'id', 'name');
-    }
-
-    /**
-     * @return self|null
-     */
-    public function getDefaultSource()
-    {
-        return self::_getQueryForList()->andWhere(['is_default' => Status::STATUS_ACTIVE])->one();
     }
 }
