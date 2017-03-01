@@ -57,6 +57,10 @@ echo GridView::widget([
                         return ManageButton::activate($url);
                     }
                 },
+                'manage-user' => function ($url, $model) {
+                    $url = ['process-user/index', 'id' => $model->id];
+                    return ManageButton::manage($url);
+                },
             ]
         ],
     ],
