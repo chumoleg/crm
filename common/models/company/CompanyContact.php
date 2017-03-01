@@ -48,26 +48,6 @@ class CompanyContact extends ActiveRecord
             [['type', 'value'], 'required'],
             [['company_id', 'type', 'user_id'], 'integer'],
             [['person', 'value'], 'string', 'max' => 200],
-            [
-                'value',
-                'email',
-                'when'       => function ($model) {
-                    return $model->type == self::TYPE_EMAIL;
-                },
-                'whenClient' => "function (attribute, value) {
-                    return false;
-                }"
-            ],
-            [
-                'value',
-                'number',
-                'when'       => function ($model) {
-                    return $model->type == self::TYPE_PHONE;
-                },
-                'whenClient' => "function (attribute, value) {
-                    return false;
-                }"
-            ]
         ];
     }
 
