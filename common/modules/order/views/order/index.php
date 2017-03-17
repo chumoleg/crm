@@ -69,7 +69,10 @@ $companyList = Company::getListCustomers();
             }
 
             $currentOrderStage = $model->currentOrderStage;
-            if (!empty($currentOrderStage) && strtotime($currentOrderStage->date_create) + $currentOrderStage->time_limit <= time()) {
+            if (!empty($currentOrderStage)
+                && !empty($currentOrderStage->time_limit)
+                && (strtotime($currentOrderStage->date_create) + $currentOrderStage->time_limit) <= time()
+            ) {
                 return ['class' => 'warning'];
             }
 
