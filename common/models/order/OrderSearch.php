@@ -150,7 +150,7 @@ class OrderSearch extends Order
         $postponedKey = Yii::$app->session->get(self::POSTPONED_SESSION_KEY);
         if (!empty($postponedKey)) {
             $dateTo = $this->_getPostponedFilterDates($postponedKey);
-            $query->andWhere('order.time_postponed <= "' . $dateTo . '"');
+            $query->andWhere('order.time_postponed <= "' . $dateTo . ' 23:59:59"');
         }
 
         return $dataProvider;
