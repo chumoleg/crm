@@ -62,6 +62,22 @@ $companyList = Company::getListCustomers();
     [
         'dataProvider' => $dataProvider,
         'filterModel'  => $searchModel,
+        'rowOptions'   => function ($model, $index, $widget, $grid) {
+            /** @var Order $model */
+            if (!empty($model->time_postponed) && strtotime($model->time_postponed) <= time()) {
+                return ['class' => 'danger'];
+            }
+
+            $currentOrderStage = $model->currentOrderStage;
+            if (!empty($currentOrderStage)
+                && !empty($currentOrderStage->time_limit)
+                && (strtotime($currentOrderStage->date_create) + $currentOrderStage->time_limit) <= time()
+            ) {
+                return ['class' => 'warning'];
+            }
+
+            return [];
+        },
         'columns'      => [
             [
                 'attribute'      => 'id',

@@ -99,6 +99,9 @@ abstract class OrderStatusController extends OrderManageController
                 'Сделка отложена до: '
                 . Yii::$app->formatter->asDatetime($this->model->time_postponed)
             );
+
+        } else {
+            $this->model->time_postponed = null;
         }
 
         $this->model->save();
