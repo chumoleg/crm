@@ -32,6 +32,10 @@ $items = [
                 'label' => 'Тэги',
                 'url'   => ['/common/tag/index'],
             ],
+            [
+                'label' => 'Проекты',
+                'url'   => ['/common/project/index'],
+            ],
         ],
     ],
     [

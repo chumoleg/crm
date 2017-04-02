@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 class UserSearch extends User
 {
     public $tag;
+    public $project;
     public $source;
     public $mailSending;
 
@@ -25,6 +26,7 @@ class UserSearch extends User
                     'role',
                     'fio',
                     'tag',
+                    'project',
                     'source',
                     'mailSending',
                     'date_create',
@@ -39,6 +41,7 @@ class UserSearch extends User
         return ArrayHelper::merge(
             parent::attributeLabels(),
             [
+                'project'     => 'Проекты',
                 'tag'         => 'Теги',
                 'source'      => 'Источники',
                 'mailSending' => 'Рассылки',
@@ -71,6 +74,11 @@ class UserSearch extends User
         );
 
         $query->andFilterWhere(['LIKE', 'date_create', $this->date_create]);
+
+        if (!empty($this->project)) {
+            $userProjectQuery = UserProject::find()->select(['user_id'])->andWhere(['project_id' => $this->project]);
+            $query->andWhere(['IN', 'id', $userProjectQuery]);
+        }
 
         if (!empty($this->tag)) {
             $userTagQuery = UserTag::find()->select(['user_id'])->andWhere(['tag_id' => $this->tag]);

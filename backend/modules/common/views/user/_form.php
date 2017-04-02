@@ -52,6 +52,17 @@ $this->context->addBreadCrumb($this->title);
                     ],
                 ]
             ); ?>
+
+            <?= $form->field($model, 'projectData')->widget(
+                \kartik\widgets\Select2::className(),
+                [
+                    'data'    => \common\models\project\Project::getList(),
+                    'options' => [
+                        'multiple'    => true,
+                        'placeholder' => '',
+                    ],
+                ]
+            ); ?>
         </div>
     </div>
 
