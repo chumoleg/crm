@@ -2,7 +2,7 @@
 use yiister\gentelella\widgets\grid\GridView;
 use yii\widgets\Pjax;
 use common\components\helpers\DateHelper;
-use common\models\tag\Tag;
+use common\models\project\Project;
 
 $this->title = 'Список проектов';
 
@@ -21,9 +21,9 @@ echo GridView::widget(
             'name',
             [
                 'attribute' => 'label_class',
-                'filter'    => Tag::$labelClassList,
+                'filter'    => Project::$labelClassList,
                 'value'     => function ($model) {
-                    return \yii\helpers\ArrayHelper::getValue(Tag::$labelClassList, $model->label_class);
+                    return \yii\helpers\ArrayHelper::getValue(Project::$labelClassList, $model->label_class);
                 },
             ],
             'comment',
