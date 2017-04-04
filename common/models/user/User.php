@@ -26,6 +26,7 @@ use common\components\helpers\ArrayHelper;
  *
  * @property UserHistory[]     $userHistories
  * @property UserTag[]         $userTags
+ * @property UserProject[]     $userProjects
  * @property UserSource[]      $userSources
  * @property UserMailSending[] $userMailSending
  * @property Company[]         $userCompanies
@@ -92,6 +93,14 @@ class User extends ActiveRecord implements IdentityInterface
     public function getUserTags()
     {
         return $this->hasMany(UserTag::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserProjects()
+    {
+        return $this->hasMany(UserProject::className(), ['user_id' => 'id']);
     }
 
     /**

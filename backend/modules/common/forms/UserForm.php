@@ -6,12 +6,14 @@ use common\models\user\User;
 use common\components\Role;
 use common\components\helpers\ArrayHelper;
 use common\models\user\UserMailSending;
+use common\models\user\UserProject;
 use common\models\user\UserSource;
 use common\models\user\UserTag;
 
 class UserForm extends User
 {
     public $tagData = [];
+    public $projectData = [];
     public $sourceData = [];
     public $mailSendingData = [];
     public $password;
@@ -35,7 +37,7 @@ class UserForm extends User
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             ['password', 'string', 'min' => 6],
-            [['tagData', 'sourceData', 'mailSendingData'], 'safe', 'on' => ['create', 'update']],
+            [['projectData', 'tagData', 'sourceData', 'mailSendingData'], 'safe', 'on' => ['create', 'update']],
         ];
     }
 
@@ -46,6 +48,7 @@ class UserForm extends User
             [
                 'password'        => 'Пароль',
                 'tagData'         => 'Теги',
+                'projectData'     => 'Проекты',
                 'sourceData'      => 'Источники',
                 'mailSendingData' => 'Рассылка',
             ]
@@ -61,6 +64,7 @@ class UserForm extends User
     {
         $this->_oldRole = $this->role;
         $this->tagData = $this->_getTagData();
+        $this->projectData = $this->_getProjectData();
         $this->sourceData = $this->_getSourceData();
         $this->mailSendingData = $this->_getMailSendingData();
 
@@ -93,6 +97,7 @@ class UserForm extends User
         }
 
         $this->_saveTagData();
+        $this->_saveProjectData();
         $this->_saveSourceData();
         $this->_saveMailSendingData();
 
@@ -123,6 +128,14 @@ class UserForm extends User
         return ArrayHelper::getColumn($this->userTags, 'tag_id');
     }
 
+    /**
+     * @return array
+     */
+    private function _getProjectData()
+    {
+        return ArrayHelper::getColumn($this->userProjects, 'project_id');
+    }
+
     private function _saveTagData()
     {
         $oldTags = $this->_getTagData();
@@ -139,6 +152,26 @@ class UserForm extends User
             $model = new UserTag();
             $model->user_id = $this->id;
             $model->tag_id = $tagId;
+            $model->save();
+        }
+    }
+
+    private function _saveProjectData()
+    {
+        $oldProject = $this->_getProjectData();
+        if ($this->projectData == $oldProject) {
+            return;
+        }
+
+        UserProject::deleteAll(['user_id' => $this->id]);
+        if (empty($this->projectData)) {
+            return;
+        }
+
+        foreach ($this->projectData as $projectId) {
+            $model = new UserProject();
+            $model->user_id = $this->id;
+            $model->project_id = $projectId;
             $model->save();
         }
     }

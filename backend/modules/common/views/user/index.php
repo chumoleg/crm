@@ -25,6 +25,14 @@ echo GridView::widget(
             'email',
             'fio',
             [
+                'attribute' => 'project',
+                'filter'    => \common\models\project\Project::getList(),
+                'format'    => 'raw',
+                'value'     => function ($model) {
+                    return $this->render('_projects', ['model' => $model]);
+                },
+            ],
+            [
                 'attribute' => 'role',
                 'filter'    => Role::$rolesList,
                 'value'     => function ($data) {
