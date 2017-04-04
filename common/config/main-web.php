@@ -17,7 +17,7 @@ return \common\components\helpers\ArrayHelper::merge([
             'identityCookie'  => [
                 'name'     => '_identity',
                 'domain'   => '.' . $domain,
-                'httpOnly' => true,
+//                'httpOnly' => true,
             ],
             'loginUrl'        => ['auth/login'],
         ],
@@ -26,8 +26,8 @@ return \common\components\helpers\ArrayHelper::merge([
             'cookieParams' => [
                 'domain'   => '.' . $domain,
                 'path'     => '/',
-                'httpOnly' => true,
-                'secure'   => false,
+//                'httpOnly' => true,
+//                'secure'   => false,
             ],
         ],
         'urlManager'    => [
@@ -42,6 +42,11 @@ return \common\components\helpers\ArrayHelper::merge([
         'request'       => [
             'csrfParam'           => '_csrf-param',
             'cookieValidationKey' => '65gqHETurm6vbfvEoebgMguxh9-jZZA4',
+            'csrfCookie' => [
+                'name' => '_csrf',
+                'path' => '/',
+                'domain' => '.' . $domain,
+            ],
         ],
         'errorHandler'  => [
             'errorAction' => 'site/error',
