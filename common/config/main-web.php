@@ -1,6 +1,6 @@
 <?php
 
-$domain = 'crm2.sttk.tv';
+$domain = 'lisscrm.ru';
 
 return \common\components\helpers\ArrayHelper::merge([
     'defaultRoute' => 'site/index',
